@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jaejuning.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Tibero Table을 Sqoop 을 이용해 HDFS에 저장함과 동시에, Hive 로 조회하는 예제를 살펴본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Hadoop] Sqoop을 이용한 Table 조회">
+<meta property="og:url" content="https://jaejuning.github.io/2019/11/07/2019-11-07-hadoop-sqoop-example/index.html">
+<meta property="og:site_name" content="Jj블로그">
+<meta property="og:description" content="Tibero Table을 Sqoop 을 이용해 HDFS에 저장함과 동시에, Hive 로 조회하는 예제를 살펴본다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-06T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.578Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jaejuning.github.io/2019/11/07/2019-11-07-hadoop-sqoop-example/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Hadoop] Sqoop을 이용한 Table 조회 | Jj블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jj블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">burning@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/11/07/2019-11-07-hadoop-sqoop-example/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jj블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Hadoop] Sqoop을 이용한 Table 조회
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-07 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-07T00:00:00+09:00">2019-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Tibero Table을 <code>Sqoop</code> 을 이용해 HDFS에 저장함과 동시에, <code>Hive</code> 로 조회하는 예제를 살펴본다.</p>
+<a id="more"></a>
+
+<h1 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h1><h2 id="RDBMS-Table"><a href="#RDBMS-Table" class="headerlink" title="RDBMS Table"></a>RDBMS Table</h2><p>BPRJT00T 테이블을 확인한다.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ DESC BPRJT00T;</span><br><span class="line">COLUMN_NAME                              TYPE               CONSTRAINT          </span><br><span class="line"><span class="comment">---------------------------------------- ------------------ --------------------</span></span><br><span class="line">PRJT_CD                                  VARCHAR(10)        PRIMARY KEY</span><br><span class="line">PRJT_NM                                  VARCHAR(1000)      </span><br><span class="line">COMP_CD                                  VARCHAR(10)        </span><br><span class="line">CUST_CD                                  VARCHAR(10)        </span><br><span class="line">PRJT_ENV                                 VARCHAR(3000)      </span><br><span class="line">BUSI_AMT                                 NUMBER(13)         </span><br><span class="line">ATTACH_NO_ORG                            VARCHAR(20)        </span><br><span class="line">IMPORTANT_CLS                            VARCHAR(1)         NOT NULL</span><br><span class="line">MA_PRJT_CLS                              VARCHAR(1)         NOT NULL</span><br><span class="line">REPORT_CLS                               VARCHAR(4)         NOT NULL</span><br><span class="line">PRIORITY_CD                              VARCHAR(4)         NOT NULL</span><br><span class="line">PRJT_STATUS                              VARCHAR(4)         NOT NULL</span><br><span class="line">SALE_EMP                                 VARCHAR(7)         </span><br><span class="line">REMARK                                   VARCHAR(4000)      </span><br><span class="line">REG_EMP                                  VARCHAR(7)         </span><br><span class="line">REG_DATE                                 VARCHAR(8)         </span><br><span class="line">MOD_EMP                                  VARCHAR(7)         </span><br><span class="line">MOD_DATE                                 VARCHAR(8)         </span><br><span class="line">LOSS_PROD                                VARCHAR(200)       </span><br><span class="line">CURRENCY_KIND                            VARCHAR(4)         NOT NULL</span><br><span class="line">RECNTR_YN                                VARCHAR(1)         NOT NULL</span><br><span class="line">RECNTR_STATUS                            VARCHAR(4)         </span><br><span class="line">DIST_PATH                                VARCHAR(100)       </span><br><span class="line">DISTRIB_YN                               VARCHAR(1)         NOT NULL</span><br><span class="line">DISTRIB_PRJTCD                           VARCHAR(10)        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INDEX_NAME                       TYPE                     COLUMN_NAME           </span><br><span class="line"><span class="comment">-------------------------------- ------------------------ ----------------------</span></span><br><span class="line">BPRJT00T_IDX01                   NORMAL                   SALE_EMP</span><br><span class="line">BPRJT00T_IDX02                   NORMAL                   COMP_CD</span><br><span class="line">BPRJT00T_PK                      NORMAL                   PRJT_CD</span><br><span class="line">$ <span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> BPRJT00T;</span><br><span class="line">  COUNT(*)</span><br><span class="line"><span class="comment">----------</span></span><br><span class="line">     56125</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sqoop-eval"><a href="#Sqoop-eval" class="headerlink" title="Sqoop eval"></a>Sqoop eval</h2><p><code>Sqoop</code>을 이용해 테이블 접근이 가능한지 확인한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sqoop <span class="built_in">eval</span> \</span><br><span class="line">-connect jdbc:tibero:thin:@[ip]:[port]:[DB SID]] \</span><br><span class="line">-driver com.tmax.tibero.jdbc.TbDriver \</span><br><span class="line">-username XXX -password XXX \</span><br><span class="line">-e <span class="string">"select * from BPRJT00T where rownum &lt; 10"</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>보안상 조회 결과는 생략하였다</em></p>
+</blockquote>
+<h1 id="RDMBS-to-HDFS"><a href="#RDMBS-to-HDFS" class="headerlink" title="RDMBS to HDFS"></a>RDMBS to HDFS</h1><p>확인이 끝났다면, 아래 명령어를 통해 <code>Sqoop</code>으로 HDFS에 저장하고 동시에 <code>Hive</code>로 Import 한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop import <span class="string">"-Dorg.apache.sqoop.splitter.allow_text_splitter=true"</span> \</span><br><span class="line">--connect jdbc:tibero:thin:@[ip]:[port]:[DB SID] \</span><br><span class="line">--driver com.tmax.tibero.jdbc.TbDriver \</span><br><span class="line">--target-dir /project/BPRJT00T \</span><br><span class="line">--username XXX --password XXX \</span><br><span class="line">--table BPRJT00T \</span><br><span class="line">--fields-terminated-by <span class="string">","</span> \</span><br><span class="line">--hive-import \</span><br><span class="line">--create-hive-table \</span><br><span class="line">--hive-table project.BPRJT00T</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>Hive로 Import 하기 위해서는 미리 Database가 구성되어 있어야 한다. (나의 경우 DB Name은 project)</em></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">19/11/07 16:28:43 INFO hive.HiveImport: OK</span><br><span class="line">19/11/07 16:28:43 INFO hive.HiveImport: Time taken: 4.162 seconds</span><br><span class="line">19/11/07 16:28:44 INFO hive.HiveImport: Loading data to table project.bprjt00t</span><br><span class="line">19/11/07 16:28:44 INFO hive.HiveImport: OK</span><br><span class="line">19/11/07 16:28:44 INFO hive.HiveImport: Time taken: 0.611 seconds</span><br><span class="line">19/11/07 16:28:45 INFO hive.HiveImport: Hive import complete.</span><br><span class="line">19/11/07 16:28:45 INFO hive.HiveImport: Export directory is contains the _SUCCESS file only, removing the directory.</span><br></pre></td></tr></table></figure>
+
+<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p>우선, <code>Hive</code>로 Import 한 테이블을 hdfs 명렁어로 확인한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ hdfs dfs -ls /user/hive/warehouse</span><br><span class="line">Found 1 items</span><br><span class="line">drwxrwxrwx   - hive supergroup          0 2019-11-07 16:27 /user/hive/warehouse/project.db</span><br><span class="line">$ hdfs dfs -ls /user/hive/warehouse/project.db/</span><br><span class="line">Found 1 items</span><br><span class="line">drwxrwxrwx   - hive supergroup          0 2019-11-07 16:28 /user/hive/warehouse/project.db/bprjt00t</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>잘 들어갔다.</em></p>
+</blockquote>
+<p>그럼 <code>Hive</code> 콘솔로 접속하여 BPRJT00T 테이블을 조회해보자.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ hive</span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/app/hive/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/app/hadoop/2.9.2/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html<span class="comment">#multiple_bindings for an explanation.</span></span><br><span class="line">SLF4J: Actual binding is of <span class="built_in">type</span> [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line"></span><br><span class="line">Logging initialized using configuration <span class="keyword">in</span> jar:file:/app/hive/lib/hive-common-2.3.6.jar!/hive-log4j2.properties Async: <span class="literal">true</span></span><br><span class="line">Hive-on-MR is deprecated <span class="keyword">in</span> Hive 2 and may not be available <span class="keyword">in</span> the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">hive&gt; $ use project;</span><br><span class="line">OK</span><br><span class="line">Time taken: 2.963 seconds</span><br><span class="line">hive&gt; $ select * from bprjt00t <span class="built_in">limit</span> 10;</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>이또한, 조회결과는 생략</em></p>
+</blockquote>
+<hr>
+<p>2019.11.07 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/06/2019-11-06-database-install%20mysql/" rel="prev" title="[Database] Install MySQL 8.0">
+      <i class="fa fa-chevron-left"></i> [Database] Install MySQL 8.0
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/07/2019-11-07-hadoop-error/" rel="next" title="[Hadoop] Hive Import 시 Could not initialize class org.apache.derby.jdbc.EmbeddedDriver 문제해결">
+      [Hadoop] Hive Import 시 Could not initialize class org.apache.derby.jdbc.EmbeddedDriver 문제해결 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preliminaries"><span class="nav-number">1.</span> <span class="nav-text">Preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDBMS-Table"><span class="nav-number">1.1.</span> <span class="nav-text">RDBMS Table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sqoop-eval"><span class="nav-number">1.2.</span> <span class="nav-text">Sqoop eval</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RDMBS-to-HDFS"><span class="nav-number">2.</span> <span class="nav-text">RDMBS to HDFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Result"><span class="nav-number">3.</span> <span class="nav-text">Result</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

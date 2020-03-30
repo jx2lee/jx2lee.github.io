@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jaejuning.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="나에게 코딩테스트는 아직 버겁다(안전한 합격을 위해 Python과 SQL를 열심히 공부할 것이다). 이번 포스트에는 Python 알고리즘 문제와 MySQL 문제를 풀어본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Etc] 코딩테스트 연습">
+<meta property="og:url" content="https://jaejuning.github.io/2019/10/13/2019-10-13-python-sql_practice/index.html">
+<meta property="og:site_name" content="Jj블로그">
+<meta property="og:description" content="나에게 코딩테스트는 아직 버겁다(안전한 합격을 위해 Python과 SQL를 열심히 공부할 것이다). 이번 포스트에는 Python 알고리즘 문제와 MySQL 문제를 풀어본다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-12T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.551Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jaejuning.github.io/2019/10/13/2019-10-13-python-sql_practice/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Etc] 코딩테스트 연습 | Jj블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jj블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">burning@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/10/13/2019-10-13-python-sql_practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jj블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Etc] 코딩테스트 연습
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-13 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-13T00:00:00+09:00">2019-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Etc/" itemprop="url" rel="index"><span itemprop="name">Etc</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>나에게 코딩테스트는 아직 버겁다<em>(안전한 합격을 위해 <code>Python</code>과 <code>SQL</code>를 열심히 공부할 것이다)</em>.</p>
+<p>이번 포스트에는 <code>Python</code> 알고리즘 문제와 <code>MySQL</code> 문제를 풀어본다.</p>
+<a id="more"></a>
+
+<h1 id="Python-N진수의-각-자리-숫자-곱의-최댓값-구하기"><a href="#Python-N진수의-각-자리-숫자-곱의-최댓값-구하기" class="headerlink" title="Python - N진수의 각 자리 숫자 곱의 최댓값 구하기"></a>Python - N진수의 각 자리 숫자 곱의 최댓값 구하기</h1><h2 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h2><p><strong>문제</strong>  <strong>설명</strong><br>어떤  수의 0이  아닌  각  자릿수를  모두  곱한  값을  자릿수  곱이라고  합니다. 자릿수  곱은  주어진  수를  몇  진수로  나타내느냐에  따라  달라질  수가  있습니다. 예를  들어, 10진수 10을 3진수로  나타내면 101이며, 자릿수  곱은 1입니다. 그리고 4진수로  나타내면 22이며, 자릿수  곱은 4입니다.<br>10진수 N을 <strong>k(1 &lt; k &lt; 10)</strong> <strong>진법</strong>으로  나타내려고  할  때, 자릿수  곱이  최대가  되는 k와  그때의  자릿수  곱을  구해주세요. 만약  자릿수  곱이  최대가  되는 k가  여러  개  있다면  그중  가장  큰 k를  구해주세요.<br>예를  들어 N = 10일  때, 4진수로  나타내면 22이고, 0이  아닌  자릿수들의  곱은 4입니다. 또한, 6진수로  나타내면 14이고, 0이  아닌  자릿수들의  곱은 4입니다. 두  경우  모두  진법  자릿수  곱이  최대가  되는데  둘  중 k가  더  큰  경우는 6진수로  나타낼  때입니다.<br>10진수 N이  매개변수로  주어질  때, 자릿수  곱이  최대가  되는 k 진법과  그때의  자릿수  곱을 return 하는 solution 함수를  완성해주세요.</p>
+<p><strong>제한사항</strong></p>
+<ul>
+<li>N은 10 이상 1,000,000 이하의 정수입니다.</li>
+<li>return하는  배열은 [자릿수  곱이  최대가  되는 k 진법, 그때의  자릿수  곱] 순서여야  합니다.</li>
+</ul>
+<p>입출력  예</p>
+<table>
+<thead>
+<tr>
+<th><strong>N</strong></th>
+<th><strong>result</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10</td>
+<td>[6,4]</td>
+</tr>
+<tr>
+<td>14</td>
+<td>[5,8]</td>
+</tr>
+</tbody></table>
+<p><strong>입출력  예  설명</strong><br>입출력  예 #1문제의  예시와  같습니다.</p>
+<p><strong>입출력  예 #2</strong><br>10진수 14를 5진수로  나타내면 24이고, 0이  아닌  자릿수들의  곱은 8이며, 이때가  최대입니다.</p>
+<h2 id="접근"><a href="#접근" class="headerlink" title="접근"></a>접근</h2><p>우선은 함수 두 개로 접근하였다. N진법으로 표현하는 함수, 다른 하나는 문제의 답을 구하는 solution 함수이다.</p>
+<p>N진법으로 표현하는 함수<em>(get_n)*는 <code>divmod</code>내장함수를 이용해 몫과 나머지를 구해나간다. 이후 나머지</em>(<code>q</code>)*와  <code>t</code>를 이용해 N진법으로 표현한 수를 구한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_n</span><span class="params">(n, base)</span>:</span></span><br><span class="line">	t = <span class="string">'0123456789'</span></span><br><span class="line">	q, r = divmod(n, base)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> q == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> t[r]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> get_n(q, base) + t[r]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>변수 설명<ul>
+<li><code>n</code>, <code>base</code> : N진법으로 표현하고자 하는 수<em>(십 진수)</em>와 표현하고자 하는 진수(N)</li>
+<li><code>q</code>, <code>r</code> : 몫, 나머지</li>
+</ul>
+</li>
+</ul>
+<p>solution 함수는 다음과 같이 구성된다. <code>answer</code> 변수에 주어진 수에 대한 N진법의 각 숫자 곱을 구한다. 입력값에 대한 N진법은 <code>tmp</code>에 담아두며 0이 아닌 수를 곱해 <code>answer</code>에 담고 <em>(<code>ans</code>는 각 자리 숫자의 곱),</em> 이를 key 기준 정렬 후 결과값을 <strong>return</strong> 한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(N)</span>:</span></span><br><span class="line">	answer = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">9</span>):</span><br><span class="line">		tmp = get_n(N, i)</span><br><span class="line">		ans = <span class="number">1</span></span><br><span class="line">		<span class="keyword">for</span> t <span class="keyword">in</span> tmp:</span><br><span class="line">			<span class="keyword">if</span> t != <span class="string">'0'</span>:</span><br><span class="line">				ans *= int(t)</span><br><span class="line">		answer.append(ans)</span><br><span class="line">		</span><br><span class="line">	answer = sorted(answer, key = <span class="keyword">lambda</span> x: (x[<span class="number">-1</span>], x[<span class="number">0</span>]))</span><br><span class="line">	<span class="keyword">return</span> answer[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_n</span><span class="params">(n, base)</span>:</span></span><br><span class="line">	t = <span class="string">'0123456789'</span></span><br><span class="line">	q, r = divmod(n, base)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> q == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> t[r]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> get_n(q, base) + t[r]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(N)</span>:</span></span><br><span class="line">	answer = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, <span class="number">9</span>):</span><br><span class="line">		tmp = get_n(N, i)</span><br><span class="line">		ans = <span class="number">1</span></span><br><span class="line">		<span class="keyword">for</span> t <span class="keyword">in</span> tmp:</span><br><span class="line">			<span class="keyword">if</span> t != <span class="string">'0'</span>:</span><br><span class="line">				ans *= int(t)</span><br><span class="line">		answer.append(ans)</span><br><span class="line">		</span><br><span class="line">	answer = sorted(answer, key = <span class="keyword">lambda</span> x: (x[<span class="number">-1</span>], x[<span class="number">0</span>]))</span><br><span class="line">	<span class="keyword">return</span> answer[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+<h1 id="SQL-vevo가-포함된-회사를-알려주세요"><a href="#SQL-vevo가-포함된-회사를-알려주세요" class="headerlink" title="SQL - vevo가 포함된 회사를 알려주세요"></a>SQL - vevo가 포함된 회사를 알려주세요</h1><h2 id="문제-1"><a href="#문제-1" class="headerlink" title="문제"></a>문제</h2><p><strong>문제</strong>  <strong>설명</strong><br>YOUTUBES 테이블은 스트리밍 서비스에 등록된 동영상의 정보를 담은 테이블입니다. YOUTUBES 테이블 구조는 다음과 같으며, ID, TITLE, CHANNEL_TITLE, TAGS, VIEWS, LIKES, DISLIKES 는 각각 영상의 아이디, 제목, 채널 이름, 태그, 조회수, 좋아요 수, 싫어요 수를 나타냅니다.<br>|<strong>NAME</strong>|<strong>TYPE</strong>|<strong>NULLABLE</strong>|<br>|————|———–|—————|<br>|ID|VARCHAR(N)|FALSE|<br>|TITLE|VARCHAR(N)|FALSE|<br>|CHANNEL_TITLE|VARCHAR(N)|FALSE|<br>|TAGS|JSON|FALSE|<br>|VIEWS|INTEGER|FALSE|<br>|LIKES|INTEGER|FALSE|<br>|DISLIKES|INTEGER|FALSE|</p>
+<p>VEVO 회사가 올린 영상은 영상의 채널 이름에 ‘VEVO’라는 단어가 들어있습니다(대소문자는 구분하지 않습니다). ‘MorrisseyOnVEVO’, ‘SamSmithWorldVEVO’가 그 예입니다. VEVO 회사가 올린 영상의 아이디, 제목, 채널 이름을 아이디 순으로 조회하는 SQL 문을 작성해주세요.</p>
+<p>예시</p>
+<p>예를 들어, YOUTUBES 테이블이 다음과 같다면</p>
+<table>
+<thead>
+<tr>
+<th><strong>ID</strong></th>
+<th><strong>TITLE</strong></th>
+<th><strong>CHANNEL_TITLE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gosm-dyaehy</td>
+<td>Imagine Dragons - Whatever It Takes</td>
+<td>ImagineDragonsVEVO</td>
+</tr>
+<tr>
+<td>il_-gwbep4g</td>
+<td>Morrissey - Spent the Day in Bed (Official Lyric Video)</td>
+<td>MorrisseyOnVEVO</td>
+</tr>
+<tr>
+<td>0hlx_1q15ey</td>
+<td>Where Do Our Drugs Come From?</td>
+<td>MinuteEarth</td>
+</tr>
+</tbody></table>
+<p>SQL 문을  실행하면  다음과  같이  나와야  합니다.</p>
+<table>
+<thead>
+<tr>
+<th><strong>ID</strong></th>
+<th><strong>TITLE</strong></th>
+<th><strong>CHANNEL_TITLE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gosm-dyaehy</td>
+<td>Imagine Dragons - Whatever It Takes</td>
+<td>ImagineDragonsVEVO</td>
+</tr>
+<tr>
+<td>il_-gwbep4g</td>
+<td>Morrissey - Spent the Day in Bed (Official Lyric Video)</td>
+<td>MorrisseyOnVEVO</td>
+</tr>
+</tbody></table>
+<h2 id="접근-1"><a href="#접근-1" class="headerlink" title="접근"></a>접근</h2><p>어렵지 않았다. 이전에 <code>hackerrank</code> 문제 중 <em>특정 문자열이 포함된 행</em> 을 이용한 문제가 있었다. <code>where</code>절 안에 <code>like</code>와 정규 표현식을 이용해 쉽게 문제를 해결할 수 있다.</p>
+<p><code>channal_title</code> 내 <em>vevo</em>문자열이 포함된  <code>id</code>, <code>title</code>, <code>channel_title</code>을 조회하는 쿼리는 다음과 같다.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>, title, channel_title</span><br><span class="line"><span class="keyword">from</span> youtubes</span><br><span class="line"><span class="keyword">where</span> channel_title <span class="keyword">like</span> <span class="string">'%vevo%'</span></span><br></pre></td></tr></table></figure>
+<p>이후 <code>id</code>를 기준으로 정렬하면 문제 끝!</p>
+<h2 id="CODE-1"><a href="#CODE-1" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>, title, channel_title</span><br><span class="line"><span class="keyword">from</span> youtubes</span><br><span class="line"><span class="keyword">where</span> channel_title <span class="keyword">like</span> <span class="string">'%vevo%'</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="SQL-친구가-없는-유저에게-선물을"><a href="#SQL-친구가-없는-유저에게-선물을" class="headerlink" title="SQL - 친구가 없는 유저에게 선물을 !"></a>SQL - 친구가 없는 유저에게 선물을 !</h1><h2 id="문제-2"><a href="#문제-2" class="headerlink" title="문제"></a>문제</h2><p><strong>문제</strong>  <strong>설명</strong></p>
+<p>GAME_USERS 테이블은 XX런 게임 유저의 정보를 담고 있는 테이블입니다. GAME_USERS 테이블 구조는 다음과 같으며, ID, DISTANCE, TIME_SPENT, BEST_DATE는 각각 유저의 아이디, 최고 기록(미터 단위), 최고 기록 달성시 플레이한 시간, 최고기록 경신 날짜를 나타냅니다.</p>
+<table>
+<thead>
+<tr>
+<th><strong>NAME</strong></th>
+<th><strong>TYPE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID</td>
+<td>VARCHAR</td>
+</tr>
+<tr>
+<td>DISTANCE</td>
+<td>INT</td>
+</tr>
+<tr>
+<td>TIME_SPENT</td>
+<td>DECIMAL</td>
+</tr>
+<tr>
+<td>BEST_DATE</td>
+<td>DATETIME</td>
+</tr>
+</tbody></table>
+<p>FRIENDS 테이블은  게임  내  친구  관계  정보를  담고  있습니다. FRIENDS 테이블  구조는  다음과  같으며 ID1, ID2 쌍은 ID1과 ID2가  서로  친구라는  뜻입니다. 이  테이블에서, 친구  관계는  양방향이며, 친구  관계가  중복으로  등록되는  경우는  없습니다. (id1가 id2의  친구이면 id2는 id1의  친구이고, 레코드 id1, id2가  등록되어  있을  때, 레코드 id2, id1가  등록되는  경우는  없습니다)</p>
+<table>
+<thead>
+<tr>
+<th><strong>NAME</strong></th>
+<th><strong>TYPE</strong></th>
+<th><strong>NULLABLE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID1</td>
+<td>VARCHAR(N)</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>ID2</td>
+<td>VARCHAR(N)</td>
+<td>FALSE</td>
+</tr>
+</tbody></table>
+<p>XX런  게임  유저  중, 친구가  한  명도  없는  유저를  대상으로  이벤트를  진행하려  합니다. 친구가  한  명도  없는  유저의  아이디를  사전  순으로  조회하는 SQL 문을  작성해주세요.</p>
+<p>예시</p>
+<p>예를 들어 GAME_USERS 테이블과 FRIENDS 테이블이 다음과 같다면</p>
+<p>GAME_USERS:</p>
+<table>
+<thead>
+<tr>
+<th><strong>ID</strong></th>
+<th><strong>DISTANCE</strong></th>
+<th><strong>TIME_SPENT</strong></th>
+<th><strong>BEST_DATE</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mahjongsooty678</td>
+<td>59400</td>
+<td>4.721477229</td>
+<td>2016-11-02 20:48:41</td>
+</tr>
+<tr>
+<td>ayrmogul500</td>
+<td>99000</td>
+<td>4.376248407</td>
+<td>2016-12-09 14:18:32</td>
+</tr>
+<tr>
+<td>crestrumble1879</td>
+<td>118300</td>
+<td>3.033516385</td>
+<td>2016-11-11 09:05:23</td>
+</tr>
+<tr>
+<td>dineronoodle1236</td>
+<td>59500</td>
+<td>4.987321227</td>
+<td>2016-12-22 02:26:06</td>
+</tr>
+<tr>
+<td>formflat1915</td>
+<td>15200</td>
+<td>2.954442763</td>
+<td>2016-11-03 23:35:53</td>
+</tr>
+</tbody></table>
+<p>FRIENDS:</p>
+<table>
+<thead>
+<tr>
+<th><strong>ID1</strong></th>
+<th><strong>ID2</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ayrmogul500</td>
+<td>frenchchampagne1501</td>
+</tr>
+<tr>
+<td>crestrumble1879</td>
+<td>toucanmoaning1646</td>
+</tr>
+<tr>
+<td>chamaeleonbullhorn1467</td>
+<td>crestrumble1879</td>
+</tr>
+<tr>
+<td>mastmilo1852</td>
+<td>formflat1915</td>
+</tr>
+</tbody></table>
+<ul>
+<li>mahjongsooty678는 친구가 없습니다.</li>
+<li>ayrmogul500는 친구가 한 명 있습니다.</li>
+<li>crestrumble1879는 친구가 두 명 있습니다.</li>
+<li>dineronoodle1236는 친구가 없습니다.</li>
+<li>formflat1915는 친구가 한 명 있습니다.</li>
+</ul>
+<p>따라서 SQL 문을  실행하면  다음과  같이  나와야  합니다.</p>
+<table>
+<thead>
+<tr>
+<th><strong>USER_ID</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dineronoodle1236</td>
+</tr>
+<tr>
+<td>mahjongsooty678</td>
+</tr>
+</tbody></table>
+<h2 id="접근-2"><a href="#접근-2" class="headerlink" title="접근"></a>접근</h2><p>핵심은 <code>friends</code> 테이블을 이해하는 것이었다.</p>
+<p>처음에는 <code>friends</code> 테이블을 잘못 이해하여, <code>id</code>가 컬럼 <code>id1</code> <strong>또는</strong> 컬럼 <code>id2</code>에 포함하지 않아도 되는 쿼리를 작성하였다. <strong>하지만, 테이블을 자세히 살펴보면 문제는 친구가 없는 유저를 구해야하므로 아무런 친구관계가 없어야 한다. 이는 곧 <code>id1, id2</code>에 모두 속하지 않아야 한다.</strong></p>
+<p>따라서, <code>where</code> 절 부분을 <code>and</code>를 이용해 <code>friends</code> 내 칼럼 <code>id1, id2</code>에 모두 포함되지 않는 <code>id</code>를 조회하면 된다. 위 점만 주의하면 문제를 쉽게 풀 수 있을 것이다.</p>
+<blockquote>
+<p><em>제대로 낚일 뻔</em>. 한번 더 보는 자세를 기르자.</p>
+</blockquote>
+<h2 id="CODE-2"><a href="#CODE-2" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span></span><br><span class="line"><span class="keyword">from</span> game_users</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> id1 <span class="keyword">from</span> friends) <span class="keyword">and</span> <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> id2 <span class="keyword">from</span> friends)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">id</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>2019.10.13 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/10/2019-10-10-sql-contest_leaderboard/" rel="prev" title="[SQL] Contest Leaderboard">
+      <i class="fa fa-chevron-left"></i> [SQL] Contest Leaderboard
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/14/2019-10-14-sql-symmetric_pairs_draw_triangle_1/" rel="next" title="[SQL] Symmetric Pairs & Draw The Triangle 1">
+      [SQL] Symmetric Pairs & Draw The Triangle 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-N진수의-각-자리-숫자-곱의-최댓값-구하기"><span class="nav-number">1.</span> <span class="nav-text">Python - N진수의 각 자리 숫자 곱의 최댓값 구하기</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#문제"><span class="nav-number">1.1.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#접근"><span class="nav-number">1.2.</span> <span class="nav-text">접근</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CODE"><span class="nav-number">1.3.</span> <span class="nav-text">CODE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-vevo가-포함된-회사를-알려주세요"><span class="nav-number">2.</span> <span class="nav-text">SQL - vevo가 포함된 회사를 알려주세요</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#문제-1"><span class="nav-number">2.1.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#접근-1"><span class="nav-number">2.2.</span> <span class="nav-text">접근</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CODE-1"><span class="nav-number">2.3.</span> <span class="nav-text">CODE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-친구가-없는-유저에게-선물을"><span class="nav-number">3.</span> <span class="nav-text">SQL - 친구가 없는 유저에게 선물을 !</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#문제-2"><span class="nav-number">3.1.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#접근-2"><span class="nav-number">3.2.</span> <span class="nav-text">접근</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CODE-2"><span class="nav-number">3.3.</span> <span class="nav-text">CODE</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jaejuning.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="docker private registry 를 생성하고, tar 파일로 변환한 이미지를 load 및 registry 에 push 하는 과정을 다룬다. 사이트에 나가게 되면 폐쇄망인 경우가 대부분인데, 이럴 경우를 대비해서 이미지 리스트를 읽어들여 docker image 를 tar로 변환하고 registry 에 push 하는 쉘 스크립트를 작성하였다. Upd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Cloud] Docker private registry 설정">
+<meta property="og:url" content="https://jaejuning.github.io/2020/03/18/2020-03-18-cloud-docker_registry/index.html">
+<meta property="og:site_name" content="Jj블로그">
+<meta property="og:description" content="docker private registry 를 생성하고, tar 파일로 변환한 이미지를 load 및 registry 에 push 하는 과정을 다룬다. 사이트에 나가게 되면 폐쇄망인 경우가 대부분인데, 이럴 경우를 대비해서 이미지 리스트를 읽어들여 docker image 를 tar로 변환하고 registry 에 push 하는 쉘 스크립트를 작성하였다. Upd">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-17T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.566Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jaejuning.github.io/2020/03/18/2020-03-18-cloud-docker_registry/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Cloud] Docker private registry 설정 | Jj블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jj블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">burning@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2020/03/18/2020-03-18-cloud-docker_registry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jj블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Cloud] Docker private registry 설정
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-18 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-18T00:00:00+09:00">2020-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>docker private registry 를 생성하고, tar 파일로 변환한 이미지를 load 및 registry 에 push 하는 과정을 다룬다. 사이트에 나가게 되면 폐쇄망인 경우가 대부분인데, 이럴 경우를 대비해서 <strong>이미지 리스트를 읽어들여 docker image 를 tar로 변환하고 registry 에 push 하는 쉘 스크립트</strong>를 작성하였다.</p>
+<p><strong>Update Note</strong></p>
+<ul>
+<li>2020.03.30 : docker run 시 mount 방법(-v 옵션) 및 docker image pull / push 스크립트 추가</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="Private-registry-생성"><a href="#Private-registry-생성" class="headerlink" title="Private registry 생성"></a>Private registry 생성</h1><h2 id="registry-이미지를-Pull-하고-container-를-기동한다"><a href="#registry-이미지를-Pull-하고-container-를-기동한다" class="headerlink" title="registry 이미지를 Pull 하고 container 를 기동한다."></a>registry 이미지를 Pull 하고 container 를 기동한다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry</span><br><span class="line">docker run -dit --name bips-registry -p 5000:5000 -v /data/registry:/var/lib/registry registry:latest</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>-v 플래그를 이용해 레지스트리 저장소를 /data/registry 마운트 시켜 컨테이너를 동작한다. 이는 이미지가 많아질 경우 용량이 큰 디바이스에 직접 설정하여 이미지를 관리할 수 있다.</em></p>
+</blockquote>
+<h1 id="Image-push"><a href="#Image-push" class="headerlink" title="Image push"></a>Image push</h1><h2 id="tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다"><a href="#tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다" class="headerlink" title="tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다."></a>tar 파일로 묶은 이미지를 <code>docker load -i {tar_name}</code> 으로 이미지를 생성하고, 이를 registry 에 push 한다.</h2><ul>
+<li>원래 이미지 : 192.168.17.131:5000/ubuntu_t6:2020303_v2</li>
+<li>태그 변경 후 이미지 : 92.168.179.185:5000/ubuntu_t6:2020303_v2</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag 192.168.17.131:5000/ubuntu_t6:2020303_v2 192.168.179.185:5000/ubuntu_t6:2020303_v2</span><br><span class="line">docker push 192.168.179.185:5000/ubuntu_t6:2020303_v2</span><br></pre></td></tr></table></figure>
+
+<h1 id="Image-확인"><a href="#Image-확인" class="headerlink" title="Image 확인"></a>Image 확인</h1><h2 id="registry-에-해당-이미지가-존재하는지-curl-명령어로-확인한다"><a href="#registry-에-해당-이미지가-존재하는지-curl-명령어로-확인한다" class="headerlink" title="registry 에 해당 이미지가 존재하는지 curl 명령어로 확인한다."></a>registry 에 해당 이미지가 존재하는지 <code>curl</code> 명령어로 확인한다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~<span class="comment"># curl -X GET 192.168.179.185:5000/v2/_catalog</span></span><br><span class="line">&#123;<span class="string">"repositories"</span>:[<span class="string">"dfa-module"</span>,<span class="string">"hd8.3_rel"</span>,<span class="string">"hl_r172919"</span>,<span class="string">"ubuntu_t6"</span>]&#125;</span><br><span class="line">root@k8s-master:~<span class="comment"># curl -X GET 192.168.179.185:5000/v2/ubuntu_t6/tags/list</span></span><br><span class="line">&#123;<span class="string">"name"</span>:<span class="string">"ubuntu_t6"</span>,<span class="string">"tags"</span>:[<span class="string">"2020303_v2"</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>잘~ 등록되었다!</p>
+</blockquote>
+<h1 id="Docker-Image-Pull-amp-Push-스크립트"><a href="#Docker-Image-Pull-amp-Push-스크립트" class="headerlink" title="Docker Image Pull &amp; Push 스크립트"></a>Docker Image Pull &amp; Push 스크립트</h1><p>폐쇄망 환경에서 docker hub 의 이미지를 가져올 수 없는 상황이 발생하였다. 이를 위해 폐쇄망이 아닌 환경에서 이미지를 pull 하고, 이를 폐쇄망 환경에서 특정 registry (private docker registry) 에 push 하는 스크립트를 작성하였다.</p>
+<ul>
+<li>기능<ul>
+<li>pull : docker hub 의 이미지를 가져와 <code>tars</code> 디렉토리에 저장한다.</li>
+<li>push : <code>tars</code> 디렉토리에 tar 이미지를 특정 registry 에 push 한다.<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ ./imageLoader</span><br><span class="line">usage:</span><br><span class="line">  ./imageLoader pull</span><br><span class="line">  ./imageLoader push &#123;registry_endpoint&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>이미지:태그 로 이루어진 <code>.imageList</code> 가 선행으로 준비해야 한다. 또한, <code>.imageListHash</code> 는 태그명이 아닌 해쉬값으로 되어있는 이미지를 받을 때 사용한다. 만약 둘 중 사용하지 않는 이미지가 있다면 선택에 따라 삭제하고 해당 스크립트에 주석을 설정한다.<ul>
+<li>첫 번째 pull/push 하는 부분이 <code>이미지:태그</code>, 두 번째가 <code>이미지@해쉬</code></li>
+<li>본인은 Kubeflow 를 폐쇄망 환경에서 설치할 이슈가 생겨 필요한 이미지 리스트를 .imageList / .imageListHash 에 작성하였다.</li>
+<li>참고로 Kubeflow 폐쇄망 설치 시 이미지 버젼 때문에 애를 많이 먹었다..</li>
+</ul>
+</li>
+<li><a href="https://github.com/jaejuning/kubeflow-image-loader" target="_blank" rel="noopener">github</a> 에 올려두었다. 허접한 스크립트 이지만, 현 직장에서는 편하게(?) 사용할 수 있을 것 같아 공유한다. <del>많은 별 부탁드립니다.</del></li>
+</ul>
+<hr>
+<p>2020.03.18 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/12/2020-03-12-cloud-orphaned_pod_error/" rel="prev" title="[Cloud] Orphaned pod found 에러 해결">
+      <i class="fa fa-chevron-left"></i> [Cloud] Orphaned pod found 에러 해결
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/30/2020-03-30-cloud-kubeflow_error/" rel="next" title="[Cloud] Kubeflow 폐쇄망 설치 중 Namespace 생성 화면이 나오지 않는 문제">
+      [Cloud] Kubeflow 폐쇄망 설치 중 Namespace 생성 화면이 나오지 않는 문제 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Private-registry-생성"><span class="nav-number">1.</span> <span class="nav-text">Private registry 생성</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-이미지를-Pull-하고-container-를-기동한다"><span class="nav-number">1.1.</span> <span class="nav-text">registry 이미지를 Pull 하고 container 를 기동한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-push"><span class="nav-number">2.</span> <span class="nav-text">Image push</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다"><span class="nav-number">2.1.</span> <span class="nav-text">tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-확인"><span class="nav-number">3.</span> <span class="nav-text">Image 확인</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-에-해당-이미지가-존재하는지-curl-명령어로-확인한다"><span class="nav-number">3.1.</span> <span class="nav-text">registry 에 해당 이미지가 존재하는지 curl 명령어로 확인한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image-Pull-amp-Push-스크립트"><span class="nav-number">4.</span> <span class="nav-text">Docker Image Pull &amp; Push 스크립트</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
