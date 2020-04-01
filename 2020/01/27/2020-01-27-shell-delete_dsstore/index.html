@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jaejuning.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Mac Finder로 파일을 탐색하다 보면 .DS_Store 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다 (Mac 유저라면..?). 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다">
+  <meta name="description" content="Mac Finder로 파일을 탐색하다 보면 .DS_Store 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다. 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다. Update Note  2020.04.01 : 스크립트 수정 (변수 입력 및 usage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Shell] .DS_Store 삭제 script">
 <meta property="og:url" content="https://jaejuning.github.io/2020/01/27/2020-01-27-shell-delete_dsstore/index.html">
 <meta property="og:site_name" content="Jj블로그">
-<meta property="og:description" content="Mac Finder로 파일을 탐색하다 보면 .DS_Store 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다 (Mac 유저라면..?). 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다">
+<meta property="og:description" content="Mac Finder로 파일을 탐색하다 보면 .DS_Store 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다. 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다. Update Note  2020.04.01 : 스크립트 수정 (변수 입력 및 usage">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-26T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.555Z">
+<meta property="article:modified_time" content="2020-04-01T14:18:05.613Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta name="twitter:card" content="summary">
 
@@ -243,21 +243,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Mac Finder로 파일을 탐색하다 보면 <code>.DS_Store</code> 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다 <em>(Mac 유저라면..?)</em>. 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다 </p>
+        <p>Mac Finder로 파일을 탐색하다 보면 <code>.DS_Store</code> 이라는 파일이 생성된다. 성가시다! git을 사용할 때항상 .gitignore로 명시를 해야되며, 모든 폴더에 적용하고 push 한 경험이 있을거다. 쉘 공부하면서 간단한 스크립트를 이번 포스트에서 작성해본다.</p>
+<p><strong>Update Note</strong></p>
+<ul>
+<li>2020.04.01 : 스크립트 수정 (변수 입력 및 usage)</li>
+</ul>
 <a id="more"></a>
 
 <h1 id="DS-Store"><a href="#DS-Store" class="headerlink" title=".DS_Store?"></a>.DS_Store?</h1><p>DS_STORE 파일이란 Desktop Services Store의 약자로 애플에서 정의한 파일 포맷이다. 애플의 맥 OS X 시스템이 폴더에 접근할 때 생기는 해당 폴더에 대한 메타데이터를 저장하는 파일이다. 윈도우의 thumb.db 파일과 비슷하다. 분석해보면 해당 디렉토리 크기, 아이콘의 위치, 폴더의 배경에 대한 정보들을 얻을 수 있다. 맥 OS 환경에서만 생성 및 사용되지만,파일을 공유하는 과정에서 이 파일도 같이 공유되는 경우가 있다. <a href="https://chp747.tistory.com/54" target="_blank" rel="noopener">출처</a></p>
 <h1 id="Shell-script"><a href="#Shell-script" class="headerlink" title="Shell script"></a>Shell script</h1><p>간단한 한 줄 짜리 명령으로 루트 디렉토리부터 삭제할 수 있다. 하지만 나는 이게 귀찮았다. 그리고 Finder로는 <code>/</code> 디렉토리까지 갈 일이 없고, <code>/Users/jj</code> 아래 하위 디렉토리에 생성되는 DS_Store 파일이 거슬렸다. hackerrank shell 문제를 푸는 디렉토리에 <code>rm-ds-store.sh</code> 파일을 생성하고 스크립트를 작성하였다</p>
 <p>sudo와 find로 쉽게 작성할 수 있다. 쉘 실행 시 <code>stdin</code>으로 패스워드 입력값을 받아 sudo 명렁을 실행하고, 삭제되는 내역을 print 한다. 내용은 하기와 같다</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># delete all .DS_Store files</span></span><br><span class="line">sudo --stdin find /Users/&#123;User name&#125; -name <span class="string">".DS_Store"</span> -<span class="built_in">print</span> -delete</span><br><span class="line"><span class="built_in">echo</span> <span class="string">".DS_Store clear..!"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># delete all .DS_Store file from path</span></span><br><span class="line"><span class="comment"># Wed, 01.04.2020</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>  [ <span class="string">"<span class="variable">$#</span>"</span> -ne 1 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"usage   : <span class="variable">$0</span> &#123;path&#125;"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"example : <span class="variable">$0</span> /Users/jj"</span></span><br><span class="line">        <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">path=<span class="variable">$1</span></span><br><span class="line">sudo --stdin find <span class="variable">$&#123;path&#125;</span> -name <span class="string">".DS_Store"</span> -<span class="built_in">print</span> -delete</span><br><span class="line"><span class="built_in">echo</span> <span class="string">".DS_Store clear in <span class="variable">$&#123;path&#125;</span> !"</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p><code>./rm-ds-store.sh</code> 명령어를 실행해보자</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./rm-ds-store.sh </span></span><br><span class="line">Password:</span><br><span class="line">/Users/jj/Documents/blog/source/.DS_Store</span><br><span class="line">.DS_Store clear..!</span><br></pre></td></tr></table></figure>
+<h1 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h1><p><code>./rm-ds-store.sh</code> 명령어를 실행하면 Usage 를 확인할 수 있다. 정리하고자 하는 디렉토리를 삽입하면 된다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">~/shell/custom</span><br><span class="line">❯ ./rm-ds-store.sh</span><br><span class="line">usage   : ./rm-ds-store.sh &#123;path&#125;</span><br><span class="line">example : ./rm-ds-store.sh /Users/jj</span><br><span class="line"></span><br><span class="line">~/shell/custom</span><br><span class="line">❯ ./rm-ds-store.sh /Users/jj</span><br><span class="line">Password:</span><br><span class="line">.DS_Store clear <span class="keyword">in</span> /Users/jj..!</span><br></pre></td></tr></table></figure>
 
-<p>삭제된 위치가 프린트하며 동시에 삭제하여 완료됨을 확인할 수 있다. 원래는 <code>/</code> 하위 디렉토리 모두 검사하였지만 굳이 검사할 필요가 없었다 <em>(이유는 .DS_Store 의 정의를 생각하면 된다)</em>. 쉘 스크립트 공부하면서 실제로 써볼 수 있는 toy project 였고 더 활용할 수 있는 방안을 고민해야겠다</p>
-<blockquote>
-<p><em>내 공부를 위해..?</em></p>
-</blockquote>
+<p><del>삭제된 위치가 프린트하며 동시에 삭제하여 완료됨을 확인할 수 있다. 원래는 <code>/</code> 하위 디렉토리 모두 검사하였지만 굳이 검사할 필요가 없었다 <em>(이유는 .DS_Store 의 정의를 생각하면 된다)</em>. 쉘 스크립트 공부하면서 실제로 써볼 수 있는 toy project 였고 더 활용할 수 있는 방안을 고민해야겠다.</del> 인자값이 없으면 Usage 를 출력하고 원하는 디렉토리를 추가하여 하위 디렉토리를 모두 검색하는 스크립트로 수정하였다. 조금씩 더 활용할 방안을 생각하면서 수정할 계획이다.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://chp747.tistory.com/54" target="_blank" rel="noopener">.DS_STORE 파일이란, https://chp747.tistory.com/54</a></li>
 </ul>
@@ -356,7 +357,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
