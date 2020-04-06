@@ -8,6 +8,13 @@
     </url>
     
     <url>
+        <loc>https://jaejuning.github.io/about/</loc>
+        <lastmod>2020-04-06T07:09:00.016Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://jaejuning.github.io/tags/</loc>
         <lastmod>2020-03-30T15:06:23.606Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,13 +24,6 @@
     <url>
         <loc>https://jaejuning.github.io/categories/</loc>
         <lastmod>2020-03-30T15:06:23.592Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>https://jaejuning.github.io/about/</loc>
-        <lastmod>2020-03-30T15:06:23.591Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
