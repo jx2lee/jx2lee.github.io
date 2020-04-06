@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/11/06/2019-11-06-hadoop-install_hive/">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/11/06/2019-11-06-database-install%20mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +207,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/06/2019-11-06-hadoop-install_hive/" class="post-title-link" itemprop="url">[Hadoop] Install Hive</a>
+            <a href="/2019/11/06/2019-11-06-database-install%20mysql/" class="post-title-link" itemprop="url">[Database] Install MySQL 8.0</a>
         </h2>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
                 </span>
             </span>
 
@@ -240,10 +240,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Hive를 설치하는 과정을 살펴본다</p>
+          <p>Hive의 Meta Store로 MySQL를 사용하기 위해 설치하고, 이를 정리한다</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/11/06/2019-11-06-hadoop-install_hive/#more" rel="contents">
+              <a class="btn" href="/2019/11/06/2019-11-06-database-install%20mysql/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -341,7 +341,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/10/30/2019-10-30-hadoop-sqoop_test/">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -355,7 +355,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/30/2019-10-30-hadoop-sqoop_test/" class="post-title-link" itemprop="url">[Hadoop] Sqoop import/export with Tibero</a>
+            <a href="/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/" class="post-title-link" itemprop="url">[Hadoop] Sqoop import 시 JDBC-90401:Connection refused by the server Error 발생</a>
         </h2>
 
         <div class="post-meta">
@@ -388,10 +388,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><code>Sqoop</code>을 이용해 Tibero table을 HDFS로 저장하고 이를 다시 table로 변환하는 테스트를 진행한다.</p>
+          <h1 id="상황"><a href="#상황" class="headerlink" title="상황"></a>상황</h1><p>Sqoop을 이용해 Tibero Table을 hdfs 형태로 변환하는 import 과정에서 ERROR가 발생하였다. 상황을 간단히 설명하면, 정보시스템 개발기 DB<em>(Tibero)</em> Tabel을 팀 서버에 구축한 Hadoop 에<em>(51, 52 : DataNode, 53 : NameNode로 이하 숫자로 표현)</em> 저장하고자 했다.
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/30/2019-10-30-hadoop-sqoop_test/#more" rel="contents">
+              <a class="btn" href="/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -489,7 +489,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/">
+    <link itemprop="mainEntityOfPage" href="https://jaejuning.github.io/2019/10/30/2019-10-30-hadoop-sqoop_test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -503,7 +503,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/" class="post-title-link" itemprop="url">[Hadoop] Sqoop import 시 JDBC-90401:Connection refused by the server Error 발생</a>
+            <a href="/2019/10/30/2019-10-30-hadoop-sqoop_test/" class="post-title-link" itemprop="url">[Hadoop] Sqoop import/export with Tibero</a>
         </h2>
 
         <div class="post-meta">
@@ -536,10 +536,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="상황"><a href="#상황" class="headerlink" title="상황"></a>상황</h1><p>Sqoop을 이용해 Tibero Table을 hdfs 형태로 변환하는 import 과정에서 ERROR가 발생하였다. 상황을 간단히 설명하면, 정보시스템 개발기 DB<em>(Tibero)</em> Tabel을 팀 서버에 구축한 Hadoop 에<em>(51, 52 : DataNode, 53 : NameNode로 이하 숫자로 표현)</em> 저장하고자 했다.
+          <p><code>Sqoop</code>을 이용해 Tibero table을 HDFS로 저장하고 이를 다시 table로 변환하는 테스트를 진행한다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/#more" rel="contents">
+              <a class="btn" href="/2019/10/30/2019-10-30-hadoop-sqoop_test/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
