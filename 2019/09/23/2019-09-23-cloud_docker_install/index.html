@@ -247,6 +247,20 @@
             </span>
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/09/23/2019-09-23-cloud_docker_install/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/23/2019-09-23-cloud_docker_install/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -339,12 +353,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/09/23/2019-09-23-python-baekJoon_online_judge_1541/" rel="prev" title="[Python] 잃어버린 괄호">
-      <i class="fa fa-chevron-left"></i> [Python] 잃어버린 괄호
+    <a href="/2019/09/23/2019-09-23-python-baekJoon_online_judge_4949/" rel="prev" title="[Python] 균형잡힌 세상">
+      <i class="fa fa-chevron-left"></i> [Python] 균형잡힌 세상
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/09/23/2019-09-23-cloud-docker_image/" rel="next" title="[Cloud] Docker Image">
-      [Cloud] Docker Image <i class="fa fa-chevron-right"></i>
+    <a href="/2019/09/24/2019-09-24-python-baekJoon_online_judge_1874/" rel="next" title="[Python] 스택 수열">
+      [Python] 스택 수열 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -358,6 +372,13 @@
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -529,6 +550,37 @@
   
 
   
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jaejuning.github.io/2019/09/23/2019-09-23-cloud_docker_install/";
+    this.page.identifier = "2019/09/23/2019-09-23-cloud_docker_install/";
+    this.page.title = "[Cloud] Install Docker";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
 
   <!-- Google AdSense-level start -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
