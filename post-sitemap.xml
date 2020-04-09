@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://jaejuning.github.io/2020/04/09/2020-04-09-shell-image_updater/</loc>
+        <lastmod>2020-04-09T14:06:08.226Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jaejuning.github.io/2020/04/06/2020-04-06-cloud-install_metallb/</loc>
         <lastmod>2020-04-06T08:32:21.785Z</lastmod>
         <changefreq>weekly</changefreq>
