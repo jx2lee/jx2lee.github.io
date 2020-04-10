@@ -2,27 +2,27 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://jaejuning.github.io</loc>
+        <loc>https://jx2lee.github.io</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     
     <url>
-        <loc>https://jaejuning.github.io/about/</loc>
+        <loc>https://jx2lee.github.io/about/</loc>
         <lastmod>2020-04-08T13:25:57.752Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://jaejuning.github.io/tags/</loc>
+        <loc>https://jx2lee.github.io/tags/</loc>
         <lastmod>2020-03-30T15:06:23.606Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://jaejuning.github.io/categories/</loc>
+        <loc>https://jx2lee.github.io/categories/</loc>
         <lastmod>2020-03-30T15:06:23.592Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
