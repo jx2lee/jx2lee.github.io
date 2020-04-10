@@ -992,7 +992,7 @@ pre .javascript .function {
 }
 .headband {
   background: #ff2a2a;
-  height: 3px;
+  height: 1px;
 }
 .site-meta {
   flex-grow: 1;
@@ -1190,7 +1190,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c1b454;
+  background: #1803cb;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1696,7 +1696,7 @@ pre .javascript .function {
 .post-eof {
   background: #ccc;
   height: 1px;
-  margin: 10px auto 60px;
+  margin: 10px auto 110px;
   text-align: center;
   width: 8%;
 }
