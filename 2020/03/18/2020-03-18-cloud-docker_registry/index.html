@@ -30,7 +30,7 @@
 <meta property="og:description" content="docker private registry 를 생성하고, tar 파일로 변환한 이미지를 load 및 registry 에 push 하는 과정을 다룬다. 사이트에 나가게 되면 폐쇄망인 경우가 대부분인데, 이럴 경우를 대비해서 이미지 리스트를 읽어들여 docker image 를 tar로 변환하고 registry 에 push 하는 쉘 스크립트를 작성하였다. Upd">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-17T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-10T02:58:16.676Z">
+<meta property="article:modified_time" content="2020-04-13T02:44:32.828Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -224,7 +224,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-10 11:58:16" itemprop="dateModified" datetime="2020-04-10T11:58:16+09:00">2020-04-10</time>
+                <time title="Modified: 2020-04-13 11:44:32" itemprop="dateModified" datetime="2020-04-13T11:44:32+09:00">2020-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,13 +265,17 @@
 <p><strong>Update Note</strong></p>
 <ul>
 <li>2020.03.30 : docker run 시 mount 방법(-v 옵션) 및 docker image pull / push 스크립트 추가</li>
+<li>2020.04.13 : docker run 시 restart argument 추가</li>
 </ul>
 <a id="more"></a>
 
-<h1 id="Private-registry-생성"><a href="#Private-registry-생성" class="headerlink" title="Private registry 생성"></a>Private registry 생성</h1><h2 id="registry-이미지를-Pull-하고-container-를-기동한다"><a href="#registry-이미지를-Pull-하고-container-를-기동한다" class="headerlink" title="registry 이미지를 Pull 하고 container 를 기동한다."></a>registry 이미지를 Pull 하고 container 를 기동한다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry</span><br><span class="line">docker run -dit --name bips-registry -p 5000:5000 -v /data/registry:/var/lib/registry registry:latest</span><br></pre></td></tr></table></figure>
+<h1 id="Private-registry-생성"><a href="#Private-registry-생성" class="headerlink" title="Private registry 생성"></a>Private registry 생성</h1><h2 id="registry-이미지를-Pull-하고-container-를-기동한다"><a href="#registry-이미지를-Pull-하고-container-를-기동한다" class="headerlink" title="registry 이미지를 Pull 하고 container 를 기동한다."></a>registry 이미지를 Pull 하고 container 를 기동한다.</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry</span><br><span class="line">docker run -dit --name bips-registry --restart=always -p 5000:5000 -v /data/registry:/var/lib/registry registry:latest</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><em>-v 플래그를 이용해 레지스트리 저장소를 /data/registry 마운트 시켜 컨테이너를 동작한다. 이는 이미지가 많아질 경우 용량이 큰 디바이스에 직접 설정하여 이미지를 관리할 수 있다.</em></p>
+<ul>
+<li><em>-v 플래그를 이용해 레지스트리 저장소를 /data/registry 마운트 시켜 컨테이너를 동작한다. 이는 이미지가 많아질 경우 용량이 큰 디바이스에 직접 설정하여 이미지를 관리할 수 있다.</em></li>
+<li><em><code>--restart=alyways</code> 인자를 추가하여 도커 데몬 재시작 시 기동할 수 있도록 설정한다.</em></li>
+</ul>
 </blockquote>
 <h1 id="Image-push"><a href="#Image-push" class="headerlink" title="Image push"></a>Image push</h1><h2 id="tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다"><a href="#tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다" class="headerlink" title="tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다."></a>tar 파일로 묶은 이미지를 <code>docker load -i {tar_name}</code> 으로 이미지를 생성하고, 이를 registry 에 push 한다.</h2><ul>
 <li>원래 이미지 : 192.168.17.131:5000/ubuntu_t6:2020303_v2</li>

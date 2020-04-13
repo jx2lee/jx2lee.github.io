@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/2020/03/18/2020-03-18-cloud-docker_registry/</loc>
+        <lastmod>2020-04-13T02:44:32.828Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/2020/04/09/2020-04-09-shell-image_updater/</loc>
         <lastmod>2020-04-11T14:00:51.629Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -42,14 +50,6 @@
     <url>
         <loc>https://jx2lee.github.io/2020/02/20/2020-02-20-cloud-r_hadoop_connection/</loc>
         <lastmod>2020-04-10T02:58:19.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2020/03/18/2020-03-18-cloud-docker_registry/</loc>
-        <lastmod>2020-04-10T02:58:16.676Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
