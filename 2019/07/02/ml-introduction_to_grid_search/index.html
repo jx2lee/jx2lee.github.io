@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Hyperparameter 란? Wiki에 따르면 학습이 시작되기 전 설정된 변수 라고 정의 즉, 학습 이전 initialized variable  학습 parameter는 크게 Model parameter 와 Hyperparameter 로 구분">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Machine Learning] Understanding Hyperparameter">
+<meta property="og:url" content="https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/index.html">
+<meta property="og:site_name" content="Jj블로그">
+<meta property="og:description" content="Hyperparameter 란? Wiki에 따르면 학습이 시작되기 전 설정된 변수 라고 정의 즉, 학습 이전 initialized variable  학습 parameter는 크게 Model parameter 와 Hyperparameter 로 구분">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-01T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.567Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Machine Learning] Understanding Hyperparameter | Jj블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jj블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jj블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Machine Learning] Understanding Hyperparameter
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-02T00:00:00+09:00">2019-07-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/07/02/ml-introduction_to_grid_search/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/07/02/ml-introduction_to_grid_search/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Hyperparameter-란"><a href="#Hyperparameter-란" class="headerlink" title="Hyperparameter 란?"></a>Hyperparameter 란?</h1><ul>
+<li>Wiki에 따르면 <em>학습이 시작되기 전 설정된 변수</em> 라고 정의</li>
+<li>즉, 학습 이전 initialized variable</li>
+</ul>
+<p>학습 parameter는 크게 <strong>Model parameter</strong> 와 <strong>Hyperparameter</strong> 로 구분</p>
+<a id="more"></a>
+
+<h1 id="Model-parameters"><a href="#Model-parameters" class="headerlink" title="Model parameters"></a>Model parameters</h1><p><strong>Model paramters</strong>는 ML model에 의해 학습할 데이터의 속성으로 모델이 학습됨과 동시에 학습하는 parameter를 의미한다. 예로 <strong>Weight</strong>과 <strong>Biases</strong>를 <strong>Model parameter</strong>라 부른다.</p>
+<h1 id="Model-Hyperparameters"><a href="#Model-Hyperparameters" class="headerlink" title="Model Hyperparameters"></a>Model Hyperparameters</h1><p><strong>Model Hyperparameters</strong>는 ML model의 전체 학습 과정을 관리하는 속성이다. Model parameter과는 다르게 <em>학습 도중 변하지 않는</em>것이 특징이다.</p>
+<ul>
+<li>Learning Rate</li>
+<li>Epochs</li>
+<li>Hidden Layers(Units)</li>
+<li>Activation functions</li>
+</ul>
+<p><a href="https://www.slideshare.net/AliceZheng3/evaluating-machine-learning-models-a-beginners-guide" target="_blank" rel="noopener">model_parameter</a></p>
+<h1 id="Hyperparameter가-왜-필요한가"><a href="#Hyperparameter가-왜-필요한가" class="headerlink" title="Hyperparameter가 왜 필요한가?"></a>Hyperparameter가 왜 필요한가?</h1><p><strong>Hyperparamter</strong>는 training algorithm 동작을 직접 제어, 모델 성능에 중요한 영향을 미친다. “적절한 Hyperparameter 선택은 algorithm을 빛나게 만든다” (A good choice of hyperparameters can really make an algorithm shine) 이라는 말도 있다.<br>Hyperparameter가 중요한 이유는 예를 들어 Learning rate이 너무 낮게되면 모델 패턴을 놓칠 수 있고, 높으면 충돌이 발생할 수 있다. 즉 학습이 제대로 이루어지지 않을 수 있는 문제가 발생한다. 이에 적절한 Hyperparameter 선택은 다음과 같은 이점이 있다.</p>
+<ul>
+<li>효율적인 매개 변수 공간</li>
+<li>여러 실험(experiment)들을 손쉬운 관리</li>
+</ul>
+<h1 id="Hyperparameters-최적화-기법-Optimisation-Techniques"><a href="#Hyperparameters-최적화-기법-Optimisation-Techniques" class="headerlink" title="Hyperparameters 최적화 기법 (Optimisation Techniques)"></a>Hyperparameters 최적화 기법 (Optimisation Techniques)</h1><p><strong>ML에서 최적의 Hyperparameter를 찾는 과정</strong>을 <strong>Hyperparameter optimisation</strong>이라 한다. 기법들은 크게 다음과 같다.</p>
+<ul>
+<li>Grid Search</li>
+<li>Random Search</li>
+<li>Bayesian Optimisation</li>
+</ul>
+<blockquote>
+<p><em>20190702 기준으로는 Grid Search 만 다루고 나중에 시간이 된다면 나머지 기법도 정리할 예정이다</em></p>
+</blockquote>
+<h2 id="Grid-Search"><a href="#Grid-Search" class="headerlink" title="Grid Search"></a>Grid Search</h2><p><strong>Grid Search</strong>는 Hyperparameter 를 찾는 가장 전통적인 방법이다. 모든 조합을 고려해 <strong>최적의 set</strong>를 찾아내는 약간 무식한 방법이다. Grid Search 는 보통 2개의 Hyperparamter 조합을 만든다. (본 게시글엔 Learning Rate / Number of Layers 로 되어있다)</p>
+<p>Grid Search는 두 개의 Hyperparameter를 이용해 모든 조합을 만들어 학습하고 <strong>Cross Validation</strong> 기술을 사용해 성능을 측정한다.</p>
+<p><a href="http://jmlr.csail.mit.edu/papers/volume13/bergstra12a/bergstra12a.pdf" target="_blank" rel="noopener">grid search</a></p>
+<p>Grid Search는 사용하기 간편하지만 <strong>curse of dimensionality(차원의 저주)</strong>라는 문제를 안고 있다. Training data의 dimension이 높으면 그만큼 생기는 Hyperparamter 조합도 많아져 <strong>차원의 저주</strong>가 발생한다.</p>
+<hr>
+<p>2019.07.02 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/02/database-connect_to_tibero_using_python/" rel="next" title="[Database] Connect to Tibero using Python">
+      [Database] Connect to Tibero using Python <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hyperparameter-란"><span class="nav-number">1.</span> <span class="nav-text">Hyperparameter 란?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-parameters"><span class="nav-number">2.</span> <span class="nav-text">Model parameters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-Hyperparameters"><span class="nav-number">3.</span> <span class="nav-text">Model Hyperparameters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hyperparameter가-왜-필요한가"><span class="nav-number">4.</span> <span class="nav-text">Hyperparameter가 왜 필요한가?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hyperparameters-최적화-기법-Optimisation-Techniques"><span class="nav-number">5.</span> <span class="nav-text">Hyperparameters 최적화 기법 (Optimisation Techniques)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grid-Search"><span class="nav-number">5.1.</span> <span class="nav-text">Grid Search</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/";
+    this.page.identifier = "2019/07/02/ml-introduction_to_grid_search/";
+    this.page.title = "[Machine Learning] Understanding Hyperparameter";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

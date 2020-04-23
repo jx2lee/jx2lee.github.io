@@ -8,7 +8,23 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/03/18/2020-03-18-cloud-docker_registry/</loc>
+        <loc>https://jx2lee.github.io/2020/04/06/cloud-install_metallb/</loc>
+        <lastmod>2020-04-23T08:18:41.677Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/2020/04/09/shell-image_updater/</loc>
+        <lastmod>2020-04-23T08:18:01.866Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/2020/03/18/cloud-docker_registry/</loc>
         <lastmod>2020-04-13T02:44:32.828Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -16,23 +32,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/04/09/2020-04-09-shell-image_updater/</loc>
-        <lastmod>2020-04-11T14:00:51.629Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2020/04/06/2020-04-06-cloud-install_metallb/</loc>
-        <lastmod>2020-04-10T02:58:29.021Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2020/01/13/2020-01-13-cloud-kubeflow/</loc>
+        <loc>https://jx2lee.github.io/2020/01/13/cloud-introduction_to_kubeflow/</loc>
         <lastmod>2020-04-10T02:58:26.204Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -40,7 +40,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/22/2020-01-22-cloud-k8s_cluster/</loc>
+        <loc>https://jx2lee.github.io/2020/01/22/cloud-install_k8s/</loc>
         <lastmod>2020-04-10T02:58:24.631Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -48,7 +48,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/02/20/2020-02-20-cloud-r_hadoop_connection/</loc>
+        <loc>https://jx2lee.github.io/2020/02/20/cloud-r_hadoop_connection/</loc>
         <lastmod>2020-04-10T02:58:19.324Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -56,7 +56,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/03/30/2020-03-30-cloud-kubeflow_error/</loc>
+        <loc>https://jx2lee.github.io/2020/03/30/cloud-kubeflow_error/</loc>
         <lastmod>2020-04-10T02:58:14.969Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -64,7 +64,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/03/31/2020-03-31-cloud-kubectl_takes_long_time/</loc>
+        <loc>https://jx2lee.github.io/2020/03/31/cloud-kubectl_hang/</loc>
         <lastmod>2020-04-02T09:04:40.977Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -72,7 +72,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/27/2020-01-27-shell-delete_dsstore/</loc>
+        <loc>https://jx2lee.github.io/2020/01/27/shell-delete_ds_store/</loc>
         <lastmod>2020-04-01T14:18:05.613Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -80,7 +80,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/06/2019-09-06-cloud-kubernetes/</loc>
+        <loc>https://jx2lee.github.io/2019/09/06/cloud-introduction_to_kubernetes/</loc>
         <lastmod>2020-03-30T15:06:23.590Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -88,7 +88,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/02/2019-10-02-sql-weather_observation_station_20/</loc>
+        <loc>https://jx2lee.github.io/2019/10/02/hackerrank-weather_observation_station_20/</loc>
         <lastmod>2020-03-30T15:06:23.589Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -96,7 +96,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/18/2019-09-18-python-better_way_19/</loc>
+        <loc>https://jx2lee.github.io/2019/09/18/python-better_way_19/</loc>
         <lastmod>2020-03-30T15:06:23.588Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -104,15 +104,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/23/2019-09-23-python-baekJoon_online_judge_4949/</loc>
-        <lastmod>2020-03-30T15:06:23.588Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/12/16/2019-12-16-sql-moving_average/</loc>
+        <loc>https://jx2lee.github.io/2019/12/16/sql-moving_average/</loc>
         <lastmod>2020-03-30T15:06:23.587Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -120,7 +112,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/06/2019-08-06-python-better_way_14/</loc>
+        <loc>https://jx2lee.github.io/2019/08/06/python-better_way_14/</loc>
         <lastmod>2020-03-30T15:06:23.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -128,7 +120,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/19/2019-09-19-python-better_way_20/</loc>
+        <loc>https://jx2lee.github.io/2019/09/19/python-better_way_20/</loc>
         <lastmod>2020-03-30T15:06:23.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -136,7 +128,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/07/2019-11-07-hadoop-error/</loc>
+        <loc>https://jx2lee.github.io/2019/11/07/hadoop-sqoop_import_error/</loc>
         <lastmod>2020-03-30T15:06:23.585Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -144,7 +136,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/12/13/2019-12-13-hadoop-install_spark/</loc>
+        <loc>https://jx2lee.github.io/2019/12/13/hadoop-install_spark/</loc>
         <lastmod>2020-03-30T15:06:23.584Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -152,7 +144,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/10/2019-10-10-sql-contest_leaderboard/</loc>
+        <loc>https://jx2lee.github.io/2019/10/10/hackerrank-contest_leaderboard/</loc>
         <lastmod>2020-03-30T15:06:23.583Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -160,7 +152,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/18/2019-11-18-hadoop-install_zeppelin_and_connect_rdb%20_hive/</loc>
+        <loc>https://jx2lee.github.io/2019/11/18/hadoop-install_zeppelin/</loc>
         <lastmod>2020-03-30T15:06:23.583Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -168,23 +160,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/01/2019-08-01-python-baekJoon_online_judge_1149/</loc>
-        <lastmod>2020-03-30T15:06:23.582Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/08/05/2019-08-05-python-baekJoon_online_judge_1932/</loc>
-        <lastmod>2020-03-30T15:06:23.582Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/10/10/2019-10-10-sql-sql_project_planning/</loc>
+        <loc>https://jx2lee.github.io/2019/10/10/hackerrank-project_planning/</loc>
         <lastmod>2020-03-30T15:06:23.581Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -192,7 +168,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/15/2019-10-15-sql-print_prime_number/</loc>
+        <loc>https://jx2lee.github.io/2019/10/15/hackerrank-print_prime_number/</loc>
         <lastmod>2020-03-30T15:06:23.580Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -200,7 +176,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/30/2019-10-30-hadoop-sqoop_test/</loc>
+        <loc>https://jx2lee.github.io/2019/10/30/hadoop-sqoop_with_tibero/</loc>
         <lastmod>2020-03-30T15:06:23.579Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -208,7 +184,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/07/2019-11-07-hadoop-sqoop-example/</loc>
+        <loc>https://jx2lee.github.io/2019/11/07/hadoop-sqoop_example/</loc>
         <lastmod>2020-03-30T15:06:23.578Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -216,7 +192,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/26/2019-11-26-python-unlock/</loc>
+        <loc>https://jx2lee.github.io/2019/11/26/programmers-unlock/</loc>
         <lastmod>2020-03-30T15:06:23.578Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -224,7 +200,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/23/2019-10-23-database-olap/</loc>
+        <loc>https://jx2lee.github.io/2019/10/23/hackerrank-olap/</loc>
         <lastmod>2020-03-30T15:06:23.577Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -232,7 +208,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/07/2019-10-07-sql-ollivanders_Inventory/</loc>
+        <loc>https://jx2lee.github.io/2019/10/07/hackerrank-ollivanders_inventory/</loc>
         <lastmod>2020-03-30T15:06:23.576Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -240,7 +216,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/30/2019-10-30-sql-15_days_of_Learning/</loc>
+        <loc>https://jx2lee.github.io/2020/02/07/cloud-deploy_es/</loc>
         <lastmod>2020-03-30T15:06:23.575Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -248,7 +224,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/02/07/2020-02-07-cloud-deploy_es_cluster/</loc>
+        <loc>https://jx2lee.github.io/2019/10/30/hackerrank-15_days_of_learning/</loc>
         <lastmod>2020-03-30T15:06:23.575Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -256,15 +232,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/18/2019-09-18-python-baekJoon_online_judge_12865/</loc>
-        <lastmod>2020-03-30T15:06:23.574Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/08/20/2019-08-20-python-baekJoon_online_judge_10844/</loc>
+        <loc>https://jx2lee.github.io/2019/09/18/python-better_way_18/</loc>
         <lastmod>2020-03-30T15:06:23.573Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -272,15 +240,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/18/2019-09-18-python-better_way_18/</loc>
-        <lastmod>2020-03-30T15:06:23.573Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/09/23/2019-09-23-cloud_docker_install/</loc>
+        <loc>https://jx2lee.github.io/2019/09/23/cloud-install_docker/</loc>
         <lastmod>2020-03-30T15:06:23.572Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -288,15 +248,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/21/2019-08-21-python-baekJoon_online_judge_2156/</loc>
-        <lastmod>2020-03-30T15:06:23.571Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2020/02/04/2020-02-04-cloud-delete_ns_at_terminating_state/</loc>
+        <loc>https://jx2lee.github.io/2020/02/04/cloud-delete_ns_at_terminating_state/</loc>
         <lastmod>2020-03-30T15:06:23.570Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -304,7 +256,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/13/2019-09-13-python-better_way_16/</loc>
+        <loc>https://jx2lee.github.io/2019/09/13/python-better_way_16/</loc>
         <lastmod>2020-03-30T15:06:23.569Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -312,15 +264,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/06/2019-09-06-python-baekJoon_online_judge_2565/</loc>
-        <lastmod>2020-03-30T15:06:23.569Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/11/25/2019-11-25-database-mysql%20user/</loc>
+        <loc>https://jx2lee.github.io/2019/11/25/database-manage_user_in_mysql/</loc>
         <lastmod>2020-03-30T15:06:23.568Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -328,7 +272,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/07/02/2019-07-02-ml-grid_search/</loc>
+        <loc>https://jx2lee.github.io/2020/02/06/cloud-install_rook_ceph/</loc>
         <lastmod>2020-03-30T15:06:23.567Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -336,7 +280,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/02/06/2020-02-06-cloud-install_rook-ceph/</loc>
+        <loc>https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/</loc>
         <lastmod>2020-03-30T15:06:23.567Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -344,7 +288,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/04/2019-09-04-python-baekJoon_online_judge_11053/</loc>
+        <loc>https://jx2lee.github.io/2019/09/25/programmers-network/</loc>
         <lastmod>2020-03-30T15:06:23.565Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -352,15 +296,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/25/2019-09-25-python-network/</loc>
-        <lastmod>2020-03-30T15:06:23.565Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/09/27/2019-09-27-sql-type_of_triangle/</loc>
+        <loc>https://jx2lee.github.io/2019/09/27/hackerrank-type_of_triangle/</loc>
         <lastmod>2020-03-30T15:06:23.564Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -368,7 +304,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/02/2019-08-02-database-connect_to_tibero_using_python/</loc>
+        <loc>https://jx2lee.github.io/2019/08/02/database-connect_to_tibero_using_python/</loc>
         <lastmod>2020-03-30T15:06:23.563Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -376,7 +312,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/27/2019-09-27-sql-occupations/</loc>
+        <loc>https://jx2lee.github.io/2019/09/27/hackerrank-occupations/</loc>
         <lastmod>2020-03-30T15:06:23.563Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -384,7 +320,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/30/2019-10-30-hadoop-sqoop_jdbc_error/</loc>
+        <loc>https://jx2lee.github.io/2019/10/30/hadoop-sqoop_jdbc_error/</loc>
         <lastmod>2020-03-30T15:06:23.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -392,7 +328,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/27/2019-09-27-python-node/</loc>
+        <loc>https://jx2lee.github.io/2020/01/23/cloud-install_kubeflow/</loc>
         <lastmod>2020-03-30T15:06:23.561Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -400,7 +336,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/23/2020-01-23-cloud-install_kubeflow/</loc>
+        <loc>https://jx2lee.github.io/2019/09/27/programmers-node/</loc>
         <lastmod>2020-03-30T15:06:23.561Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -408,15 +344,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/08/2019-08-08-python-baekJoon_online_judge_2579/</loc>
-        <lastmod>2020-03-30T15:06:23.560Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/11/06/2019-11-06-database-install%20mysql/</loc>
+        <loc>https://jx2lee.github.io/2019/11/06/database-install_mysql/</loc>
         <lastmod>2020-03-30T15:06:23.559Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -424,7 +352,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/07/2020-01-07-bi-install_superset/</loc>
+        <loc>https://jx2lee.github.io/2020/01/07/bi-install_superset/</loc>
         <lastmod>2020-03-30T15:06:23.558Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -432,7 +360,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/13/2019-09-13-python-better_way_17/</loc>
+        <loc>https://jx2lee.github.io/2019/09/13/python-better_way_17/</loc>
         <lastmod>2020-03-30T15:06:23.556Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -440,7 +368,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/06/2019-11-06-hadoop-install_hive/</loc>
+        <loc>https://jx2lee.github.io/2019/11/06/hadoop-install_hive/</loc>
         <lastmod>2020-03-30T15:06:23.554Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -448,7 +376,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/24/2019-09-24-python-baekJoon_online_judge_17928/</loc>
+        <loc>https://jx2lee.github.io/2019/09/26/programmers-island/</loc>
         <lastmod>2020-03-30T15:06:23.553Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -456,23 +384,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/26/2019-09-26-python-programmers-island/</loc>
-        <lastmod>2020-03-30T15:06:23.553Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/08/09/2019-08-09-python-baekJoon_online_judge_1463/</loc>
-        <lastmod>2020-03-30T15:06:23.552Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/10/13/2019-10-13-python-sql_practice/</loc>
+        <loc>https://jx2lee.github.io/2019/10/31/python-map_reduce/</loc>
         <lastmod>2020-03-30T15:06:23.551Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -480,15 +392,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/31/2019-10-31-python-mapreduce/</loc>
-        <lastmod>2020-03-30T15:06:23.551Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/10/14/2019-10-14-sql-symmetric_pairs_draw_triangle_1/</loc>
+        <loc>https://jx2lee.github.io/2019/10/14/hackerrank-symmetric_pairs_draw_triangle_1/</loc>
         <lastmod>2020-03-30T15:06:23.550Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -496,7 +400,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/07/2019-10-07-sql-challenges/</loc>
+        <loc>https://jx2lee.github.io/2019/10/07/hackerrank-challenges/</loc>
         <lastmod>2020-03-30T15:06:23.549Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -504,7 +408,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/25/2019-10-25-hadoop-Install_hadoop_using_docker/</loc>
+        <loc>https://jx2lee.github.io/2019/10/25/hadoop-install_hadoop_using_docker/</loc>
         <lastmod>2020-03-30T15:06:23.549Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -512,7 +416,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/22/2019-10-22-hadoop-overview/</loc>
+        <loc>https://jx2lee.github.io/2019/10/22/hadoop-introduction_to_hadoop/</loc>
         <lastmod>2020-03-30T15:06:23.548Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -520,7 +424,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/04/2019-10-04-sql-the_report/</loc>
+        <loc>https://jx2lee.github.io/2019/10/04/hackerrank-the_report/</loc>
         <lastmod>2020-03-30T15:06:23.547Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -528,7 +432,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/08/08/2019-08-08-python-better_way_15/</loc>
+        <loc>https://jx2lee.github.io/2019/11/27/hadoop-tables_to_hdfs_using_sqoop/</loc>
         <lastmod>2020-03-30T15:06:23.546Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -536,7 +440,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/27/2019-11-27-hadoop-rdb_all_tables_to_hdfs/</loc>
+        <loc>https://jx2lee.github.io/2019/08/08/python-better_way_15/</loc>
         <lastmod>2020-03-30T15:06:23.546Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -544,7 +448,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/07/2019-10-07-python-disk_controller/</loc>
+        <loc>https://jx2lee.github.io/2019/10/07/programmers-disk_controller/</loc>
         <lastmod>2020-03-30T15:06:23.545Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -552,15 +456,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/10/2020-01-10-cloud-container_connection_for_elk/</loc>
-        <lastmod>2020-03-30T15:06:23.544Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2020/01/29/2020-01-29-cloud-k8s_cluster_node/</loc>
+        <loc>https://jx2lee.github.io/2020/01/29/cloud-manage_node/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -568,7 +464,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/03/12/2020-03-12-cloud-orphaned_pod_error/</loc>
+        <loc>https://jx2lee.github.io/2020/03/12/cloud_orphaned_pod_error/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -576,15 +472,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/07/29/2019-07-29-python-baekJoon_online_judge_1904/</loc>
-        <lastmod>2020-03-30T15:06:23.542Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/08/19/2019-08-09-etc-interview_Sebastian/</loc>
+        <loc>https://jx2lee.github.io/2019/08/19/etc-sebastian_interview/</loc>
         <lastmod>2020-03-30T15:06:23.541Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -592,15 +480,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/19/2019-09-19-python-baekJoon_online_judge_2293/</loc>
-        <lastmod>2020-03-30T15:06:23.541Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/12/03/2019-12-03-python-truck/</loc>
+        <loc>https://jx2lee.github.io/2019/12/03/programmers-truck/</loc>
         <lastmod>2020-03-30T15:06:23.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -608,23 +488,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/06/2019-09-06-python-baekJoon_online_judge_9251/</loc>
-        <lastmod>2020-03-30T15:06:23.539Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/09/04/2019-09-04-python-baekJoon_online_judge_11054/</loc>
-        <lastmod>2020-03-30T15:06:23.538Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/12/17/2019-12-17-python-large_number/</loc>
+        <loc>https://jx2lee.github.io/2019/12/17/programmers-large_number/</loc>
         <lastmod>2020-03-30T15:06:23.536Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -632,7 +496,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/11/26/2019-11-26-python-compress_char/</loc>
+        <loc>https://jx2lee.github.io/2019/11/26/programmers-compress_char/</loc>
         <lastmod>2020-03-30T15:06:23.535Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -640,7 +504,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/08/2020-01-08-database-install_elastic_using_docker/</loc>
+        <loc>https://jx2lee.github.io/2020/01/08/cloud-install_elasticsearch/</loc>
         <lastmod>2020-03-30T15:06:23.534Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -648,7 +512,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/01/2019-10-01-python-convert_word/</loc>
+        <loc>https://jx2lee.github.io/2019/10/01/programmers-convert_word/</loc>
         <lastmod>2020-03-30T15:06:23.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -656,15 +520,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/20/2019-09-20-python-baekJoon_online_judge_11047/</loc>
-        <lastmod>2020-03-30T15:06:23.532Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/10/01/2019-10-01-python-budgets/</loc>
+        <loc>https://jx2lee.github.io/2019/10/01/programmers-budgets/</loc>
         <lastmod>2020-03-30T15:06:23.530Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -672,23 +528,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/07/30/2019-07-30-python-baekJoon_online_judge_9461/</loc>
-        <lastmod>2020-03-30T15:06:23.529Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/09/04/2019-09-04-python-baekJoon_online_judge_10828/</loc>
-        <lastmod>2020-03-30T15:06:23.529Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/08/09/2019-08-09-etc-how_to_read_research_papers/</loc>
+        <loc>https://jx2lee.github.io/2019/08/09/etc-how_to_read_research/</loc>
         <lastmod>2020-03-30T15:06:23.527Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -696,7 +536,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/10/18/2019-10-18-python-tortoise/</loc>
+        <loc>https://jx2lee.github.io/2019/10/18/programmers-tortoise/</loc>
         <lastmod>2020-03-30T15:06:23.526Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -704,7 +544,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/27/2019-09-27-python-camera/</loc>
+        <loc>https://jx2lee.github.io/2019/09/27/programmers-camera/</loc>
         <lastmod>2020-03-30T15:06:23.525Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -712,15 +552,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/23/2019-09-23-python-baekJoon_online_judge_1541/</loc>
-        <lastmod>2020-03-30T15:06:23.524Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/11/12/2019-11-12-hadoop-install_presto/</loc>
+        <loc>https://jx2lee.github.io/2019/11/12/hadoop-install_presto/</loc>
         <lastmod>2020-03-30T15:06:23.523Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -728,15 +560,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/24/2019-09-24-python-baekJoon_online_judge_1874/</loc>
-        <lastmod>2020-03-30T15:06:23.521Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/2019/10/28/2019-10-28-sql-Interviews/</loc>
+        <loc>https://jx2lee.github.io/2019/10/28/hackerrank-interviews/</loc>
         <lastmod>2020-03-30T15:06:23.520Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -744,7 +568,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2019/09/23/2019-09-23-cloud-docker_image/</loc>
+        <loc>https://jx2lee.github.io/2019/09/23/cloud-docker_image/</loc>
         <lastmod>2020-03-30T15:06:23.519Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Presto를 설치하는 과정을 살펴본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Hadoop] Install Presto">
+<meta property="og:url" content="https://jx2lee.github.io/2019/11/12/hadoop-install_presto/index.html">
+<meta property="og:site_name" content="Jj블로그">
+<meta property="og:description" content="Presto를 설치하는 과정을 살펴본다">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-11T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.523Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/2019/11/12/hadoop-install_presto/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Hadoop] Install Presto | Jj블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Jj블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2019/11/12/hadoop-install_presto/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jj블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Hadoop] Install Presto
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-12T00:00:00+09:00">2019-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/11/12/hadoop-install_presto/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/12/hadoop-install_presto/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><code>Presto</code>를 설치하는 과정을 살펴본다</p>
+<a id="more"></a>
+
+<h1 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h1><h2 id="Add-user-amp-Download"><a href="#Add-user-amp-Download" class="headerlink" title="Add user &amp; Download"></a>Add user &amp; Download</h2><p><code>Presto</code> user를 생성하고 hdclient 그룹에 포함한다. 이후 설치파일을 다운로드한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adduser presto --gid 8630 <span class="comment"># hdclient</span></span><br><span class="line">$ wget https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.228/presto-server-0.228.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="bash-profile"><a href="#bash-profile" class="headerlink" title=".bash_profile"></a>.bash_profile</h2><p><code>.bash_profile</code>에 <code>Hadoop</code> 및 <code>Presto</code> Env를 추가한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hadoop Env</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/app/jdk</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/app/hadoop</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:\</span><br><span class="line"><span class="variable">$HADOOP_HOME</span>/bin:\</span><br><span class="line"><span class="variable">$HADOOP_HOME</span>/sbin:\</span><br><span class="line"><span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> HADOOP_PREFIX=/app/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_COMMON_HOME=<span class="variable">$HADOOP_PREFIX</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_PREFIX</span>/etc/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_HDFS_HOME=<span class="variable">$HADOOP_PREFIX</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_MAPRED_HOME=<span class="variable">$HADOOP_PREFIX</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_YARN_HOME=<span class="variable">$HADOOP_PREFIX</span></span><br><span class="line"><span class="built_in">export</span> YARN_CONF_DIR=<span class="variable">$HADOOP_PREFIX</span>/etc/hadoop</span><br><span class="line"></span><br><span class="line"><span class="comment"># Presto Env</span></span><br><span class="line"><span class="built_in">export</span> PRESTO_HOME=/app/presto</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Configuring-Presto"><a href="#Configuring-Presto" class="headerlink" title="Configuring Presto"></a>Configuring Presto</h1><p>세 개의 설정파일을 <code>$PRESTO_HOME/etc</code> 폴더에 생성한다.</p>
+<h2 id="etc-node-properties"><a href="#etc-node-properties" class="headerlink" title="/etc/node.properties"></a>/etc/node.properties</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node.environment=production</span><br><span class="line">node.id=ffffffff-ffff-ffff-ffff-ffffffffffff</span><br><span class="line">node.data-dir=/app/presto/data</span><br></pre></td></tr></table></figure>
+
+<h2 id="etc-jvm-confing"><a href="#etc-jvm-confing" class="headerlink" title="/etc/jvm.confing"></a>/etc/jvm.confing</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-server</span><br><span class="line">-Xmx16G</span><br><span class="line">-XX:+UseG1GC</span><br><span class="line">-XX:G1HeapRegionSize=32M</span><br><span class="line">-XX:+UseGCOverheadLimit</span><br><span class="line">-XX:+ExplicitGCInvokesConcurrent</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">-XX:+ExitOnOutOfMemoryError</span><br></pre></td></tr></table></figure>
+
+<h2 id="etc-config-properties"><a href="#etc-config-properties" class="headerlink" title="/etc/config.properties"></a>/etc/config.properties</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">coordinator=<span class="literal">true</span></span><br><span class="line">node-scheduler.include-coordinator=<span class="literal">true</span></span><br><span class="line">http-server.http.port=8000</span><br><span class="line">query.max-memory=5GB</span><br><span class="line">query.max-memory-per-node=1GB</span><br><span class="line">query.max-total-memory-per-node=2GB</span><br><span class="line">discovery-server.enabled=<span class="literal">true</span></span><br><span class="line">discovery.uri=http://192.168.xxx.xxx:8000</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>http-server.htt.port</code> : <em>Presto는 내부 및 외부 모든 통신에 HTTP를 사용하며, 내 경우 8000번 포트를 open, 이를 통해 통신</em></li>
+<li><code>discovery.uri</code> : <em>Presto instance는 시작 시 Discovery service에 등록되는 URI로 Presto 구동 서버의 IP와 port (위와 같은 경우는 8000 port) 로 작성</em></li>
+</ul>
+</blockquote>
+<h2 id="etc-catalog-hive-properties"><a href="#etc-catalog-hive-properties" class="headerlink" title="/etc/catalog/hive.properties"></a>/etc/catalog/hive.properties</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">connector.name=hive-hadoop2</span><br><span class="line">hive.metastore.uri=thrift://localhost:9083</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>Hive MetaStore 의 default port는 *</em>9083***</p>
+</blockquote>
+<p>위에 생성한 파일들을 tree로 표현하면 다음과 같다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── catalog</span><br><span class="line">│   └── hive.properties</span><br><span class="line">├── config.properties</span><br><span class="line">├── jvm.config</span><br><span class="line">└── node.properties</span><br><span class="line"></span><br><span class="line">1 directory, 4 files</span><br></pre></td></tr></table></figure>
+
+<h1 id="Start-Presto-Server"><a href="#Start-Presto-Server" class="headerlink" title="Start Presto Server"></a>Start Presto Server</h1><p><code>$PRESTO_HOME/bin</code> 폴더에 <code>launcher</code> 파일을 실행한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ./launcher start</span><br><span class="line">Started as 25072</span><br><span class="line"><span class="comment"># $PRESTO_HOME/data/var/log/launcher.log</span></span><br><span class="line">2019-11-12T14:56:02.306+0900	INFO	main	io.airlift.log.Logging	Logging to stderr</span><br><span class="line">2019-11-12T14:56:02.308+0900	INFO	main	Bootstrap	Loading configuration</span><br><span class="line">2019-11-12T14:56:02.404+0900	INFO	main	Bootstrap	Initializing logging</span><br><span class="line">2019-11-12T14:56:02.447+0900	INFO	main	io.airlift.log.Logging	Logging to /app/presto/data/var/<span class="built_in">log</span>/server.log</span><br><span class="line">2019-11-12T14:56:02.497+0900	INFO	main	io.airlift.log.Logging	Disabling stderr output</span><br></pre></td></tr></table></figure>
+
+<p>Presto CLI 을 <code>wget</code>을 이용해 다운로드 한다. 이후 실행권한을 주고 CLI 를 실행한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/0.228/presto-cli-0.228-executable.jar &amp;&amp; mv presto-cli-0.228-executable.jar presto</span><br><span class="line">$ chmod +x presto</span><br><span class="line">$ ./presto --server 192.168.154.156:8000 --catalog hive --schema project</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>Presto CLI 명령어 arguments</em></p>
+<ul>
+<li><code>server</code> : <em>discovery.uri</em></li>
+<li><code>catalog</code> : <em>Hive MetaStore</em></li>
+<li><code>schema</code> : <em>Hive metaStore</em> 중 <em>project db **</em></li>
+</ul>
+</blockquote>
+<p>테이블을 조회해보자.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">presto:project&gt; show tables;</span><br><span class="line">  Table   </span><br><span class="line"><span class="comment">----------</span></span><br><span class="line"> binvt00t </span><br><span class="line"> bprjt00t </span><br><span class="line"> ccomp00t </span><br><span class="line"> iprsn00t </span><br><span class="line">(4 rows)</span><br><span class="line"></span><br><span class="line">Query 20191112_060524_00002_bgi94, FINISHED, 1 node</span><br><span class="line">Splits: 19 total, 19 done (100.00%)</span><br><span class="line">0:02 [4 rows, 100B] [1 rows/s, 43B/s]</span><br></pre></td></tr></table></figure>
+
+<p><strong>구축 완료!</strong></p>
+<h1 id="Query-속도-비교"><a href="#Query-속도-비교" class="headerlink" title="Query 속도 비교"></a>Query 속도 비교</h1><p>테이블의 row 수를 반환하는 쿼리문을 <code>Presto</code>와 <code>Hive</code>에서 수행해본다.</p>
+<ul>
+<li><code>Presto</code></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">presto:project&gt; select count(*) from bprjt00t;</span><br><span class="line"> _col0 </span><br><span class="line"><span class="comment">-------</span></span><br><span class="line"> 65355 </span><br><span class="line">(1 row)</span><br><span class="line"></span><br><span class="line">Query 20191112_061041_00004_bgi94, FINISHED, 1 node</span><br><span class="line">Splits: 23 total, 23 done (100.00%)</span><br><span class="line">0:04 [65.4K rows, 9.29MB] [15.9K rows/s, 2.26MB/s]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Hive</code></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; select count(*)</span><br><span class="line">    &gt; from bprjt00t;</span><br><span class="line">WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">Query ID = hive_20191112151209_8598d146-fed8-4b55-8a2b-e1ed186a82d0</span><br><span class="line">Total jobs = 1</span><br><span class="line">Launching Job 1 out of 1</span><br><span class="line">Number of reduce tasks determined at compile time: 1</span><br><span class="line">In order to <span class="keyword">change</span> the average <span class="keyword">load</span> <span class="keyword">for</span> a reducer (<span class="keyword">in</span> <span class="keyword">bytes</span>):</span><br><span class="line">  <span class="keyword">set</span> hive.exec.reducers.bytes.per.reducer=&lt;<span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">In</span> <span class="keyword">order</span> <span class="keyword">to</span> <span class="keyword">limit</span> the maximum <span class="built_in">number</span> <span class="keyword">of</span> reducers:</span><br><span class="line">  <span class="keyword">set</span> hive.exec.reducers.max=&lt;<span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">In</span> <span class="keyword">order</span> <span class="keyword">to</span> <span class="keyword">set</span> a <span class="keyword">constant</span> <span class="built_in">number</span> <span class="keyword">of</span> reducers:</span><br><span class="line">  <span class="keyword">set</span> mapreduce.job.reduces=&lt;<span class="built_in">number</span>&gt;</span><br><span class="line"><span class="keyword">Starting</span> Job = job_1567153359966_0111, <span class="keyword">Tracking</span> <span class="keyword">URL</span> = <span class="keyword">http</span>://node5.dat:<span class="number">8088</span>/proxy/application_1567153359966_0111/</span><br><span class="line"><span class="keyword">Kill</span> Command = /app/hadoop/<span class="keyword">bin</span>/hadoop job  -<span class="keyword">kill</span> job_1567153359966_0111</span><br><span class="line">Hadoop job information <span class="keyword">for</span> Stage<span class="number">-1</span>: <span class="built_in">number</span> <span class="keyword">of</span> mappers: <span class="number">2</span>; number of reducers: 1</span><br><span class="line">2019-11-12 15:12:19,615 Stage-1 map = 0%,  reduce = 0%</span><br><span class="line">2019-11-12 15:12:23,860 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.1 sec</span><br><span class="line">2019-11-12 15:12:27,986 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 5.98 sec</span><br><span class="line">MapReduce Total cumulative CPU time: 5 seconds 980 msec</span><br><span class="line">Ended Job = job_1567153359966_0111</span><br><span class="line">MapReduce Jobs Launched: </span><br><span class="line">Stage-Stage-1: Map: 2  Reduce: 1   Cumulative CPU: 5.98 sec   HDFS Read: 9754283 HDFS Write: 105 SUCCESS</span><br><span class="line">Total MapReduce CPU Time Spent: 5 seconds 980 msec</span><br><span class="line">OK</span><br><span class="line">65355</span><br><span class="line">Time taken: 20.718 seconds, Fetched: 1 row(s)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><em>대략 Presto가 Hive 대비 쿼리속도가 *</em>20배 가량 빠르다***</p>
+</blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://prestodb.io/docs/current/index.html" target="_blank" rel="noopener">Presto Documents, https://prestodb.io/docs/current/index.html</a></li>
+<li><a href="https://medium.com/@nil.me/a-single-node-installation-of-presto-and-simple-benchmarks-3271bc738ed1" target="_blank" rel="noopener">A Single-node Installation of Presto and Simple Benchmarks, https://medium.com/@nil.me/a-single-node-installation-of-presto-and-simple-benchmarks-3271bc738ed1</a></li>
+</ol>
+<hr>
+<p>2019.11.12 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/07/hadoop-sqoop_example/" rel="prev" title="[Hadoop] Sqoop을 이용한 Table 조회">
+      <i class="fa fa-chevron-left"></i> [Hadoop] Sqoop을 이용한 Table 조회
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/18/hadoop-install_zeppelin/" rel="next" title="[Hadoop] Install Zeppelin and Connect to RDBMS & Hive">
+      [Hadoop] Install Zeppelin and Connect to RDBMS & Hive <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preliminaries"><span class="nav-number">1.</span> <span class="nav-text">Preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-user-amp-Download"><span class="nav-number">1.1.</span> <span class="nav-text">Add user &amp; Download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash-profile"><span class="nav-number">1.2.</span> <span class="nav-text">.bash_profile</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuring-Presto"><span class="nav-number">2.</span> <span class="nav-text">Configuring Presto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-node-properties"><span class="nav-number">2.1.</span> <span class="nav-text">&#x2F;etc&#x2F;node.properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-jvm-confing"><span class="nav-number">2.2.</span> <span class="nav-text">&#x2F;etc&#x2F;jvm.confing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-config-properties"><span class="nav-number">2.3.</span> <span class="nav-text">&#x2F;etc&#x2F;config.properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-catalog-hive-properties"><span class="nav-number">2.4.</span> <span class="nav-text">&#x2F;etc&#x2F;catalog&#x2F;hive.properties</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Start-Presto-Server"><span class="nav-number">3.</span> <span class="nav-text">Start Presto Server</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Query-속도-비교"><span class="nav-number">4.</span> <span class="nav-text">Query 속도 비교</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/2019/11/12/hadoop-install_presto/";
+    this.page.identifier = "2019/11/12/hadoop-install_presto/";
+    this.page.title = "[Hadoop] Install Presto";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
