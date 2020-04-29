@@ -8,8 +8,8 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/04/28/kubeflow-fairing/</loc>
-        <lastmod>2020-04-28T10:11:06.929Z</lastmod>
+        <loc>https://jx2lee.github.io/2020/04/28/cloud-kubeflow_fairing/</loc>
+        <lastmod>2020-04-29T09:59:09.342Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -472,7 +472,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/01/29/cloud-manage_node/</loc>
+        <loc>https://jx2lee.github.io/2020/03/12/cloud_orphaned_pod_error/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -480,7 +480,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/2020/03/12/cloud_orphaned_pod_error/</loc>
+        <loc>https://jx2lee.github.io/2020/01/29/cloud-manage_node/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
