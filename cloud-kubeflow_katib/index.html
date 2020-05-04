@@ -29,13 +29,14 @@
 <meta property="og:site_name" content="jx2lee 블로그">
 <meta property="og:description" content="Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 Katib 이다.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jx2lee.github.io/image/katib-architecture.png">
 <meta property="og:image" content="https://www.kubeflow.org/docs/images/katib-home.png">
 <meta property="article:published_time" content="2020-05-03T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-04T06:11:34.788Z">
+<meta property="article:modified_time" content="2020-05-04T07:00:40.951Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta property="article:tag" content="Kubeflow">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.kubeflow.org/docs/images/katib-home.png">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/katib-architecture.png">
 
 <link rel="canonical" href="https://jx2lee.github.io/cloud-kubeflow_katib/">
 
@@ -226,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-04 15:11:34" itemprop="dateModified" datetime="2020-05-04T15:11:34+09:00">2020-05-04</time>
+                <time title="Modified: 2020-05-04 16:00:40" itemprop="dateModified" datetime="2020-05-04T16:00:40+09:00">2020-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,7 +281,7 @@
 </li>
 </ul>
 <h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Katib 은 크게 4가지 개념으로 이루어졌다.</p>
-<p><img src="" alt="Katib 구조"></p>
+<p><img src="/image/katib-architecture.png" alt="Katib 구조"></p>
 <ul>
 <li>Experiment : 하나의 실행단위로 Job 개념으로 생각하면 된다. K8s 커스텀 리소스로 Trial 를 실행하는 역할을 하며 Experiment 는 5개 영역으로 나뉜다.<ul>
 <li>Trial Count : 실행 횟수 (병렬)</li>
