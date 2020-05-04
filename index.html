@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/04/28/cloud-kubeflow_fairing/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubeflow_katib/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -202,7 +202,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/28/cloud-kubeflow_fairing/" class="post-title-link" itemprop="url">[Cloud] Kubeflow Fairing 소개 및 예제</a>
+            <a href="/cloud-kubeflow_katib/" class="post-title-link" itemprop="url">[Cloud] Kubeflow Katib 소개</a>
         </h2>
 
         <div class="post-meta">
@@ -212,14 +212,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T00:00:00+09:00">2020-04-28</time>
+              <time title="Created: 2020-05-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-04T00:00:00+09:00">2020-05-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-04-29 18:59:09" itemprop="dateModified" datetime="2020-04-29T18:59:09+09:00">2020-04-29</time>
+                <time title="Modified: 2020-05-04 14:44:47" itemprop="dateModified" datetime="2020-05-04T14:44:47+09:00">2020-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,8 +240,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/04/28/cloud-kubeflow_fairing/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/28/cloud-kubeflow_fairing/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-kubeflow_katib/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubeflow_katib/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -256,10 +256,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 <code>Faring</code> 이다. </p>
+          <p>Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 <code>Katib</code> 이다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/28/cloud-kubeflow_fairing/#more" rel="contents">
+              <a class="btn" href="/cloud-kubeflow_katib/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -283,7 +283,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/04/24/shell-append_alias_to_pod/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubeflow_fairing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -297,7 +297,102 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/24/shell-append_alias_to_pod/" class="post-title-link" itemprop="url">[Shell] k8s Pod 내 alias 적용 스크립트</a>
+            <a href="/cloud-kubeflow_fairing/" class="post-title-link" itemprop="url">[Cloud] Kubeflow Fairing 소개</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T00:00:00+09:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-04 14:44:49" itemprop="dateModified" datetime="2020-05-04T14:44:49+09:00">2020-05-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/cloud-kubeflow_fairing/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubeflow_fairing/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 <code>Faring</code> 이다. </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/cloud-kubeflow_fairing/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/shell-append_alias_to_pod/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/shell-append_alias_to_pod/" class="post-title-link" itemprop="url">[Shell] k8s Pod 내 alias 적용 스크립트</a>
         </h2>
 
         <div class="post-meta">
@@ -335,8 +430,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/04/24/shell-append_alias_to_pod/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/24/shell-append_alias_to_pod/" itemprop="commentCount"></span>
+    <a title="disqus" href="/shell-append_alias_to_pod/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="shell-append_alias_to_pod/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -354,7 +449,7 @@
           <p>사내 클라우드 제품을 이용해 업무를 보던 중, 계속되는 패치 작업으로 매번 생성하는 컨테이너의 alias 가 사라지는 문제가 발생하였다. 이러한 문제를 해결하고자 패치 이후 새로 생성하는 파드를 검색하고 <code>.bashrc</code> 에 alias 를 추가하는 스크립트를 작성하였다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/24/shell-append_alias_to_pod/#more" rel="contents">
+              <a class="btn" href="/shell-append_alias_to_pod/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -378,7 +473,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/04/09/shell-image_updater/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/shell-image_updater/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -392,7 +487,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/09/shell-image_updater/" class="post-title-link" itemprop="url">[Shell] 두 docker registry 간 이미지 최신화</a>
+            <a href="/shell-image_updater/" class="post-title-link" itemprop="url">[Shell] 두 docker registry 간 이미지 최신화</a>
         </h2>
 
         <div class="post-meta">
@@ -430,8 +525,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/04/09/shell-image_updater/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/09/shell-image_updater/" itemprop="commentCount"></span>
+    <a title="disqus" href="/shell-image_updater/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="shell-image_updater/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -449,7 +544,7 @@
           <p>최근들어 이미지 패치가 자주 이루어지면서, 이미지를 일일이 풀(pull)하고 울팀 레지스트리에 푸쉬(push)하는 작업이 지속적으로 발생하였다. 최신화가 이루어지는 레지스트리를 daemon / insecure-registry 에 등록해 사용해도 되지만 스크립트 짜는 연습도 할 겸 이미지 최신화 스크립트를 작성하였고 이를 소개하고자 한다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/09/shell-image_updater/#more" rel="contents">
+              <a class="btn" href="/shell-image_updater/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -473,7 +568,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/04/06/cloud-install_metallb/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-install_metallb/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -487,7 +582,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/06/cloud-install_metallb/" class="post-title-link" itemprop="url">[Cloud] Metallb for Kubernetes 설치</a>
+            <a href="/cloud-install_metallb/" class="post-title-link" itemprop="url">[Cloud] Metallb for Kubernetes 설치</a>
         </h2>
 
         <div class="post-meta">
@@ -525,8 +620,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/04/06/cloud-install_metallb/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/06/cloud-install_metallb/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-install_metallb/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-install_metallb/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -544,7 +639,7 @@
           <p>Kubernetes 에 로드밸런서 생성을 위해 설치한 Metallb 설치 과정을 다뤄본다. 서비스를 특정 IP 로 노출하기 위해 Metallb config 설정과 서비스로 노출하는 단계로 설명한다. </p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/06/cloud-install_metallb/#more" rel="contents">
+              <a class="btn" href="/cloud-install_metallb/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -568,7 +663,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/03/31/cloud-kubectl_hang/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubectl_hang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -582,7 +677,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/31/cloud-kubectl_hang/" class="post-title-link" itemprop="url">[Cloud] kubectl 명령어 수행 시 실행속도 저하 문제</a>
+            <a href="/cloud-kubectl_hang/" class="post-title-link" itemprop="url">[Cloud] kubectl 명령어 수행 시 실행속도 저하 문제</a>
         </h2>
 
         <div class="post-meta">
@@ -620,8 +715,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/03/31/cloud-kubectl_hang/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/31/cloud-kubectl_hang/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-kubectl_hang/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubectl_hang/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -639,7 +734,7 @@
           <p>도커 루트 디렉토리를 변경하던 도중, k8s 클러스터에서 kubectl 명령어가 느려지는 문제가 발생하였다. 원인을 파악하고 이를 해결하는 과정을 다룬다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/31/cloud-kubectl_hang/#more" rel="contents">
+              <a class="btn" href="/cloud-kubectl_hang/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -663,7 +758,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/03/30/cloud-kubeflow_error/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubeflow_error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -677,7 +772,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/30/cloud-kubeflow_error/" class="post-title-link" itemprop="url">[Cloud] Kubeflow 폐쇄망 설치 중 Namespace 생성 화면이 나오지 않는 문제</a>
+            <a href="/cloud-kubeflow_error/" class="post-title-link" itemprop="url">[Cloud] Kubeflow 폐쇄망 설치 중 Namespace 생성 화면이 나오지 않는 문제</a>
         </h2>
 
         <div class="post-meta">
@@ -715,8 +810,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/03/30/cloud-kubeflow_error/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/30/cloud-kubeflow_error/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-kubeflow_error/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubeflow_error/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -734,7 +829,7 @@
           <p>Kubeflow 를 폐쇄 환경에서 설치하던 중 Namespace 생성화면이 나오지 않고 심지어 선택할 수 없는 문제가 발생하였다. 문제의 원인을 파악하고 해결하는 과정을 다룬다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/30/cloud-kubeflow_error/#more" rel="contents">
+              <a class="btn" href="/cloud-kubeflow_error/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -758,7 +853,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/03/18/cloud-docker_registry/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-docker_registry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -772,7 +867,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/18/cloud-docker_registry/" class="post-title-link" itemprop="url">[Cloud] Docker private registry 설정</a>
+            <a href="/cloud-docker_registry/" class="post-title-link" itemprop="url">[Cloud] Docker private registry 설정</a>
         </h2>
 
         <div class="post-meta">
@@ -810,8 +905,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/03/18/cloud-docker_registry/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/18/cloud-docker_registry/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-docker_registry/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-docker_registry/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -834,7 +929,7 @@
 </ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/18/cloud-docker_registry/#more" rel="contents">
+              <a class="btn" href="/cloud-docker_registry/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -858,7 +953,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/03/12/cloud_orphaned_pod_error/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud_orphaned_pod_error/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -872,7 +967,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/12/cloud_orphaned_pod_error/" class="post-title-link" itemprop="url">[Cloud] Orphaned pod found 에러 해결</a>
+            <a href="/cloud_orphaned_pod_error/" class="post-title-link" itemprop="url">[Cloud] Orphaned pod found 에러 해결</a>
         </h2>
 
         <div class="post-meta">
@@ -910,8 +1005,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/03/12/cloud_orphaned_pod_error/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/12/cloud_orphaned_pod_error/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud_orphaned_pod_error/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud_orphaned_pod_error/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -929,7 +1024,7 @@
           <p>본 포스트에서는 kubelet log 에 Orphaned pod found , but volume subpaths are still present on disk 로그가 발생하는 문제를 해결한다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/03/12/cloud_orphaned_pod_error/#more" rel="contents">
+              <a class="btn" href="/cloud_orphaned_pod_error/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -953,7 +1048,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/02/20/cloud-r_hadoop_connection/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-r_hadoop_connection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -967,7 +1062,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/20/cloud-r_hadoop_connection/" class="post-title-link" itemprop="url">[Cloud] R docker 컨테이너에서 Hadoop HDFS 연동</a>
+            <a href="/cloud-r_hadoop_connection/" class="post-title-link" itemprop="url">[Cloud] R docker 컨테이너에서 Hadoop HDFS 연동</a>
         </h2>
 
         <div class="post-meta">
@@ -1005,8 +1100,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/02/20/cloud-r_hadoop_connection/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/20/cloud-r_hadoop_connection/" itemprop="commentCount"></span>
+    <a title="disqus" href="/cloud-r_hadoop_connection/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-r_hadoop_connection/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1024,102 +1119,7 @@
           <p>본 포스트에서는 R Container 에서 Hadoop HDFS 데이터를 연동하는 과정을 다룬다.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/20/cloud-r_hadoop_connection/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/2020/02/07/cloud-deploy_es/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jaejun Lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jx2lee 블로그">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/07/cloud-deploy_es/" class="post-title-link" itemprop="url">[Cloud] Elasticsearch 배포 on K8s</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-07T00:00:00+09:00">2020-02-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2020/02/07/cloud-deploy_es/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/07/cloud-deploy_es/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>toy project를 위해 es를 구축하려던 찰나, 사내에 K8s cluster를 구축하였다. 클라우드 공부 겸 Elasticsearch와 kibana를 K8s에 배포하는 과정을 다룬다</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/07/cloud-deploy_es/#more" rel="contents">
+              <a class="btn" href="/cloud-r_hadoop_connection/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1207,7 +1207,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

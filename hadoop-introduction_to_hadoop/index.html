@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Hadoop 관련 책을 읽으며 개념을 간단히 정리한다.(2019.10.22)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Hadoop] Hadoop Overview">
+<meta property="og:url" content="https://jx2lee.github.io/hadoop-introduction_to_hadoop/index.html">
+<meta property="og:site_name" content="jx2lee 블로그">
+<meta property="og:description" content="Hadoop 관련 책을 읽으며 개념을 간단히 정리한다.(2019.10.22)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jx2lee.github.io/image/hadoop-ecosystem.png">
+<meta property="og:image" content="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/04/apache-hadoop-outputformat-introduction-1024x536-1-1.jpg">
+<meta property="og:image" content="https://miro.medium.com/max/560/1*ncMKJ3Mdg-QKJQ21zavJeQ.png">
+<meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/2616EF345874E63A0C">
+<meta property="og:image" content="https://d2.naver.com/content/images/2015/06/helloworld-246342-1.png">
+<meta property="og:image" content="http://labs.gree.jp/blog/wp-content/uploads/2014/12/presto_arch-600x372.png">
+<meta property="article:published_time" content="2019-10-21T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.548Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/hadoop-ecosystem.png">
+
+<link rel="canonical" href="https://jx2lee.github.io/hadoop-introduction_to_hadoop/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Hadoop] Hadoop Overview | jx2lee 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jx2lee 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/hadoop-introduction_to_hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Hadoop] Hadoop Overview
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-22 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-22T00:00:00+09:00">2019-10-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/hadoop-introduction_to_hadoop/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="hadoop-introduction_to_hadoop/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>Hadoop</strong> 관련 책을 읽으며 개념을 간단히 정리한다.<br><em>(2019.10.22)</em></p>
+<a id="more"></a>
+
+<p>맨날 하둡 공부해야지.. 공부해야지 하다가 <a href="http://www.yes24.com/Product/goods/66277191" target="_blank" rel="noopener"><em>빅데이터를 지탱하는 기술</em></a> 책을 읽으며 정리하고자 한다. 무작정 실습부터 하기 보다는, 기본적인 개념을 익히고 <strong>Hadoop</strong> 환경을 구성할 것이다.</p>
+<blockquote>
+<p><em>우선 내용 전체적으로 도서를 참고해 작성하고 추가적인 부분은 구글 서치를 통해 채워넣을 예정이다.  최대한 책을 기반으로 개념을 정리하는 것을 목표로 한다.</em></p>
+</blockquote>
+<h1 id="Hadoop-이란"><a href="#Hadoop-이란" class="headerlink" title="Hadoop 이란"></a>Hadoop 이란</h1><p>개념을 배우는데 있어서 역사는 크게 중요하지 않다고 생각한다. 책에서는 역사가 기술되어있지만 나는 정의<u><em>(수학과 아니랄까봐)</em></u> 부터 짚어보고자 한다. <code>Hadoop</code>은 단일 소프트웨어가 아닌, <strong>분산 시스템</strong> 을 구성하는 다수의 소프트웨어로 이루어진 <strong>집합체</strong> 이다. <code>Wiki</code>백과에 의하면, <code>대량의 자료를 처리할 수 있는 큰 컴퓨터 클러스터에서 동작하는 분산 응용 프로그램을 지원하는 프레임워크</code>라고 소개한다. 일맥 상통한다.</p>
+<blockquote>
+<p><em>좀 더 자세히 어떠한 언어로 작성되었는지를 표현하였지, 의미는 같다</em></p>
+</blockquote>
+<p>2013년 <code>Hadoop2</code>부터  <code>YARN</code>이라는 <code>리소트관리자</code> 상에서 분산 애플리케이션이 동작하는 구성으로 설계되어, <strong>대규모 분산시스템을 구축하기 위한 플랫폼</strong> 역할을 맡고 있다.</p>
+<p><img src="/image/hadoop-ecosystem.png" alt="그림 - 빅데이터 관련 Apache 프로젝트"></p>
+<p>[그림] - 빅데이터 관련 Apache 프로젝트 (참고 : 빅데이터를 지탱하는 기술)</p>
+<h1 id="Hadoop-기본-구성-요소"><a href="#Hadoop-기본-구성-요소" class="headerlink" title="Hadoop 기본 구성 요소"></a>Hadoop 기본 구성 요소</h1><p>기본 구성 요소로는 <strong>분산 파일 시스템</strong> <em>(distributed file system)<em>인 <code>HDFS(Hadoop Distributed File System)</code>, *</em>리소스 관리자** *(resource manager)</em> 인 <code>YARN(Yet Another Resource Negotiator)</code>, <strong>분산 데이터 처리</strong> <em>(distributed data processing)</em> 기반 <code>MapReduce</code> 3가지다. 이외 구성요소<em>(프로젝트라고 표현하기도 함)</em>는 Hadoop과 독립적으로 개발되어 분산 애플리케이션으로 동작한다.</p>
+<p>즉, 위에서 소개한 프로젝트에서 분산 파일 시스템으로는 <code>HDFS</code>를 사용하고 resource manager로는 <code>Mesos</code>를, 분산 데이터 처리에는 <code>Spark</code>를 사용할 수 있다. 자신에게 맞고 상황에 맞는 프로젝트를 구성하는 것이 Hadoop을 중심으로 하는 데이터 처리의 특징이다.</p>
+<h2 id="분산-파일-시스템-HDFS-과-리소스-관리자-YARN"><a href="#분산-파일-시스템-HDFS-과-리소스-관리자-YARN" class="headerlink" title="분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)"></a>분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)</h2><p>Hadoop에서 처리되는 데이터는 대부분 <code>HDFS</code>에 저장된다. 보통 파일 서버와 비슷한 개념이지만, <code>다수 컴퓨터에 파일을 복사하여 중복성을 높인다</code>는 특징이 있다.</p>
+<blockquote>
+<p>HDFS는 <strong>블록 구조의 file system</strong>이다. 파일을 특정 크기 블록으로 나누어 분산된 서버에 저장한다. 크기는 64MB 에서 Hadoop2 부터는 128M로 증가하였다(<a href="https://yookeun.github.io/java/2015/05/24/hadoop-hdfs/" target="_blank" rel="noopener">참고</a>)</p>
+</blockquote>
+<p>한편, CPU나 메모리 등의 계산 리소스는 resource manager인 <code>YARN</code>에 의해 관리된다. <code>YARN</code>은 CPU 코어와 메모리를 <strong>컨테이너 (Container)</strong> 단위로 관리한다 <em>(여기서 Container는 Docker Container와는 다르다. 어떤 호스트에서 어떤 프로세스를 실행시킬 것인지 결정하는 앱 수준의 기술)</em>. Hadoop에서  분산 앱을 실행하면 <code>YARN</code>이 클러스터 전체의 부하를 보고 비어 있는 호스트부터 컨테이너를 할당한다.</p>
+<blockquote>
+<p>즉, 리소스 관리자인 <code>YARN</code>은 어느 애플리케이션에 얼마만큼의 리소스를 할당할 지 관리함으로써 모든 애플리케이션이 <strong>차질없이 실행되도록 제어</strong> 한다</p>
+</blockquote>
+<h2 id="분산-데이터-처리-MapReduce-및-쿼리-엔진-Hive"><a href="#분산-데이터-처리-MapReduce-및-쿼리-엔진-Hive" class="headerlink" title="분산 데이터 처리 (MapReduce) 및 쿼리 엔진 (Hive)"></a>분산 데이터 처리 (MapReduce) 및 쿼리 엔진 (Hive)</h2><ul>
+<li><code>MapReduce</code><br>YARN 상에서 동작하는 분산 애플리케이션 중 하나로 데이터 처리를 실행하는 데 사용한다. 임의의 java 프로그램을 실행할 수 있기 때문에 <em>비구조화 데이터 (Unstructured Data)</em> 가공에 적합하다. 초기 목적은 대량의 데이터를 <em>Batch*처리하기 위함이었다. 한 번 실행하면 대량의 데이터를 읽을 수 있지만, 작은 프로그램을 *(작은 데이터가 존재하는)</em> 을 실행하면 과한 오버헤드로 몇 초 안에 끝나버리는 쿼리에는 어울리지 않다.</li>
+</ul>
+<p><img src="https://d2h0cx97tjks2p.cloudfront.net/blogs/wp-content/uploads/sites/2/2017/04/apache-hadoop-outputformat-introduction-1024x536-1-1.jpg" alt="MapReduce Process"><br>[그림] - MapReduce Process</p>
+<ul>
+<li><code>쿼리 엔진 (Hive)</code><br>Hive는 SQL 등 쿼리 언어에 의한 데이터 집계가 목적으로 설계된 쿼리 엔진 중 하나이다. 이는 SQL 쿼리를 자동으로 MapReduce 프로그램으로 변환시킨다. 실행 특성 상 MapReduce에 의존하고 있다. </li>
+</ul>
+<blockquote>
+<p>쿼리 엔진 Hive도 결국 MapReduce에 의존하고 있기 때문에, 시간이 오래 걸리는 대량의 데이터를 처리하는 <strong>배치 처리에는 적합</strong>하나, <strong>애드 훅 분석을 위한 쿼리<em>(간단하고 바로바로 볼 수 있는)</em>를 여러 번 수행하는 데 적절하지 않다</strong></p>
+</blockquote>
+<center><img src="https://miro.medium.com/max/560/1*ncMKJ3Mdg-QKJQ21zavJeQ.png"></center>
+
+<p>[그림] - Hive Architecture (<a href="https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7" target="_blank" rel="noopener">https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7</a>)</p>
+<h2 id="Hive-on-Tez"><a href="#Hive-on-Tez" class="headerlink" title="Hive on Tez"></a>Hive on Tez</h2><p>Hive 가속화를 위해 개발된 것으로 MapReduce에서 보인 몇 가지 단점을 해결하고 고속화를 실현하고 있다.</p>
+<blockquote>
+<p>예를 들어, MapReduce의 경우 하나의 stage가 끝날 때 까지 다음의 처리를 진행할 수 없었다. 이에 <code>Tez</code>는 stage 종료를 기다리지 않고 처리가 끝난 데이터를 차례대로 후속 처리로 넘겨 전체 쿼리 시간의 단축을 실현했다.</p>
+</blockquote>
+<p>현재의 Hive는 MapReduce 뿐 아니라 Tez를 사용해도 동작하므로 Hive를 <code>Hive on Tez</code> 와 <code>Hive on MR</code>로 구분한다. <em>(MR은 MapReduce 줄임말)</em></p>
+<p><img src="https://t1.daumcdn.net/cfile/tistory/2616EF345874E63A0C" alt="Hive on MR &amp; Hive on Tez Process"><br>[그림] - Hive on MR &amp; Hive on Tez Process</p>
+<h2 id="대화형-쿼리-엔진-Impala-amp-Presto"><a href="#대화형-쿼리-엔진-Impala-amp-Presto" class="headerlink" title="대화형 쿼리 엔진 (Impala &amp; Presto)"></a>대화형 쿼리 엔진 (Impala &amp; Presto)</h2><p>Hive 고속화가 아닌 대화형 쿼리 실행만을 위한 엔진도 있다. 그 중 <code>Impala</code>와 <code>Presto</code>가 대표적이다. <code>Imapala</code>와 <code>Presto</code>를 간단히 살펴보면 다음과 같다.</p>
+<ul>
+<li><p><strong>Impala</strong></p>
+<p>Impala는 크게 <code>impalad</code>와 <code>impala state store</code> 프로세스로 구성한다.</p>
+<ul>
+<li><code>impalad</code>는 분산 질의 엔진 역할을 담당하는 프로세스로, Hadoop 클러스터 내 데이터노드 위에서 질의에 대한 plan 설계와 질의 처리 작업을 수행한다.</li>
+<li><code>impala state store</code> 는 각 데이터 노드에서 수행되는 <code>impalad</code>에 대한 메타데이터를 유지하는 역할을 담당한다. <code>impalad</code> 프로세스가 클러스터 내에 추가 또는 제거될 때 <code>impala state store</code> 프로세스를 통해 메타데이터가 업데이트된다.</li>
+</ul>
+<blockquote>
+<p><code>impalad</code> : 분산 질의 엔진, <code>impala state store</code> : Impalad의 메타데이터 관리</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://d2.naver.com/content/images/2015/06/helloworld-246342-1.png" alt=""></p>
+<p>[그림] - impala high-level architecture (<a href="http://blog.cloudera.com/blog/2012/10/cloudera-impala-real-time-queries-in-apache-hadoop-for-real/" target="_blank" rel="noopener">원본출처</a>)</p>
+<ul>
+<li><p><strong>Presto</strong></p>
+<p>Presto는 크게 <code>Coordinator</code>와 <code>Worker</code>로 구성된다.</p>
+<ul>
+<li><code>Coordinator</code>는 SQL query 분석, query 계획과 Presto Worker 노드 (worker)를 관리한다. REST API를 사용하여 Worker 및 Client와 통신한다.</li>
+<li><code>Worker</code>는 작업을 실행하고 데이터를 처리한다. Worker가 수행한 결과를 Coordinator를 거쳐 Client에게 전달하며 Coordinator와 마찬가지로 REST API를 사용해 통신한다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://labs.gree.jp/blog/wp-content/uploads/2014/12/presto_arch-600x372.png" alt=""></p>
+<p>[그림] - Presto architecture (<a href="http://labs.gree.jp/blog/2014/12/12838/" target="_blank" rel="noopener">출처</a>)</p>
+<p>이러한 대화형 쿼리 엔진은 Hive 와는 달리 순간 최대 속도를 높이기 위해 모든 오버헤드를 제거하여, 리소스를 최대한 활용하여 쿼리를 실행한다 <em>(이는 Hive의 단점으로 언급한 부분을 해결한다)</em> . 그 결과, 대화형 쿼리 엔진은 MPP DB와 비교해도 손색없는 응답 시간을 얻을 수 있다. </p>
+<blockquote>
+<p>Hadoop에서는 쿼리 엔진을 목적에 따라 구분한다. 대량의 비구조화 데이터를 가공하는 무거운 배치 처리에는 높은 처리량으로 리소스를 활용할 수 있는 <code>Hive</code>를, 구조화 및 완성된 데이터를 대화식으로 집계를 원할 땐 지연이 적은 <code>Impala</code>와 <code>Presto</code>가 적합하다.</p>
+</blockquote>
+<hr>
+<p>2019.10.22 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/programmers-tortoise/" rel="prev" title="[Python] 등굣길">
+      <i class="fa fa-chevron-left"></i> [Python] 등굣길
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/hackerrank-olap/" rel="next" title="[Database] OLAP">
+      [Database] OLAP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-이란"><span class="nav-number">1.</span> <span class="nav-text">Hadoop 이란</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-기본-구성-요소"><span class="nav-number">2.</span> <span class="nav-text">Hadoop 기본 구성 요소</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#분산-파일-시스템-HDFS-과-리소스-관리자-YARN"><span class="nav-number">2.1.</span> <span class="nav-text">분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#분산-데이터-처리-MapReduce-및-쿼리-엔진-Hive"><span class="nav-number">2.2.</span> <span class="nav-text">분산 데이터 처리 (MapReduce) 및 쿼리 엔진 (Hive)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive-on-Tez"><span class="nav-number">2.3.</span> <span class="nav-text">Hive on Tez</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#대화형-쿼리-엔진-Impala-amp-Presto"><span class="nav-number">2.4.</span> <span class="nav-text">대화형 쿼리 엔진 (Impala &amp; Presto)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/hadoop-introduction_to_hadoop/";
+    this.page.identifier = "hadoop-introduction_to_hadoop/";
+    this.page.title = "[Hadoop] Hadoop Overview";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

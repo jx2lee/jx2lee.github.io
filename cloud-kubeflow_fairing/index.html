@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 Faring 이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Cloud] Kubeflow Fairing 소개">
+<meta property="og:url" content="https://jx2lee.github.io/cloud-kubeflow_fairing/index.html">
+<meta property="og:site_name" content="jx2lee 블로그">
+<meta property="og:description" content="Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 Faring 이다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-27T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-04T05:44:49.176Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta property="article:tag" content="Kubeflow">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/cloud-kubeflow_fairing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Cloud] Kubeflow Fairing 소개 | jx2lee 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jx2lee 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubeflow_fairing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Cloud] Kubeflow Fairing 소개
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T00:00:00+09:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-04 14:44:49" itemprop="dateModified" datetime="2020-05-04T14:44:49+09:00">2020-05-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/cloud-kubeflow_fairing/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubeflow_fairing/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 <code>Faring</code> 이다. </p>
+<a id="more"></a>
+
+<h1 id="Fairing"><a href="#Fairing" class="headerlink" title="Fairing"></a>Fairing</h1><p>Kubeflow 환경에서 ML 모델을 손쉽게 학습-배포할 수 있는 Python Package</p>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><ul>
+<li>work flow<ul>
+<li>python 으로 작성한 파일을 도커 이미지로 빌드</li>
+<li>빌드된 이미지를 레지스트리 push</li>
+<li>배포 리소스에 따라 k8s Job, TFJob, KFServing 등으로 변환하여 k8s API 서버 요청</li>
+</ul>
+</li>
+<li>위 work flow 는 <em>preprocessor, builder, deployer</em> 구조로 설계<ul>
+<li><em>preprocessor</em> : Python 파일을 도커 이미지로 빌드할 수 있게 패키지화</li>
+<li><em>builder</em> : 패키지된 파일을 도커 이미지화</li>
+<li><em>deployer</em> : 생성한 이미지 배포</li>
+</ul>
+</li>
+</ul>
+<p>Fairing 은 Kubeflow 설치 후 생성한 노트북 이미지에는 default 로 설정되어 있어 따로 설치를 하지 않아도 테스트가 가능하다.</p>
+<h1 id="Faring-예제"><a href="#Faring-예제" class="headerlink" title="Faring 예제"></a>Faring 예제</h1><p>Fairing 예제는 Kubeflow 노트북 서버에서 진행한다. 앞서 소개했듯이 Fairing 은 K8s 리소스를 이용하기 때문에 docker registry 와 kubeflow 접근 권한이 필요하다. 테스트 결과, private docker registry 에 fairing 이미지를 push/pull 할 때 에러가 발생하였다. 장애 해결이 이루어지지 않아 docker hub 의 공개 레지스트리를 사용할 예정이며, 책 순서에 따라 진행한다.</p>
+<h2 id="fairing-config-ipynb"><a href="#fairing-config-ipynb" class="headerlink" title="fairing_config.ipynb"></a>fairing_config.ipynb</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in Jupyter Notebook</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> kubeflow.fairing <span class="keyword">as</span> fairing</span><br><span class="line"></span><br><span class="line">docker_registry = <span class="string">"jaejunlee"</span></span><br><span class="line"></span><br><span class="line">fairing.config.set_builder(</span><br><span class="line">    <span class="string">'append'</span>,</span><br><span class="line">    base_image=<span class="string">'gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0'</span>,</span><br><span class="line">    image_name=<span class="string">'fairing-test'</span>,</span><br><span class="line">    registry=docker_registry, push=<span class="literal">True</span>)</span><br><span class="line">fairing.config.set_deployer(<span class="string">'job'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">()</span>:</span></span><br><span class="line">    hostname = tf.constant(os.environ[<span class="string">'HOSTNAME'</span>])</span><br><span class="line">    sess = tf.Session()</span><br><span class="line">    print(<span class="string">'Hostname : '</span>, sess.run(hostname).decode(<span class="string">'utf-8'</span>))</span><br><span class="line"></span><br><span class="line">remote_train = fairing.config.fn(train)</span><br><span class="line">remote_train()</span><br></pre></td></tr></table></figure>
+
+<p>위 예제는 HOSTNAME 환경변수를 출력한다. <code>gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0</code> 기본 이미지에 위 출력함수를 입힌 이미지를 생성하여 jaejunlee public registry 에 푸쉬하고 fairing-job 이란 이름의 k8s job 이 k8s 에 실행을 요청한다. 쉽게 말해, 기본 이미지 위에 담아 fairing 이미지를 생성하고 k8s 를 이용해 정의한 함수를 k8s 에서 실행한다. <code>hub.docker.io</code> 에 접속하여 확인하면 해당 프로세스를 실행할 때 마다 이미지를 push 한다. *(set_builder 부분 push=True 로 설정했기 때문이다.)</p>
+<p>코드를 통해 Config 클래스는 preprocessor, builder, deployer 에 대응하는 setter들을 가지고 있다. 각각의 default 값은 다음과 같다.</p>
+<ul>
+<li><em>preprocessor</em> : Notebook 환경은 “notebook”, else “python”</li>
+<li><em>builder</em> : “append”</li>
+<li><em>deploy”</em> : job</li>
+</ul>
+<p>Fairing 구조 3개를 살펴보도록 한다.</p>
+<h1 id="Preprocessor-in-Fairing"><a href="#Preprocessor-in-Fairing" class="headerlink" title="Preprocessor in Fairing"></a>Preprocessor in Fairing</h1><p>preprocessor 는 도커 이미지로 패키지화 할 대상을 설정하는데, 타입은 총 4개이다.</p>
+<ul>
+<li><p><em>python</em> : 파이썬 file 패키지화</p>
+<ul>
+<li><p>도커 이미지 내 app/{파일명}.py 로 cmd 생성</p>
+</li>
+<li><p>example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os, time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"Training..."</span>)</span><br><span class="line">    <span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">    x = tf.constant([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], shape=[<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">    print(x)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">if</span> os.getenv(<span class="string">'FAIRING_RUNTIME'</span>, <span class="literal">None</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:  <span class="comment"># if else 구조를 통해 이미지가 생성되면 FAIRING_RUNTIME 변수가 1 로 변환된다. 즉, 이미지 생성후에는 train() 만 작업</span></span><br><span class="line">        train()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">from</span> kubeflow <span class="keyword">import</span> fairing</span><br><span class="line">        DOCKER_REGISTRY = <span class="string">'jaejunlee'</span></span><br><span class="line">        file_name = os.path.basename(__file__)</span><br><span class="line">        print(<span class="string">"Executing &#123;&#125; remotely."</span>.format(file_name))</span><br><span class="line">        fairing.config.set_preprocessor(<span class="string">'python'</span>, executable=file_name, input_files=[file_name])</span><br><span class="line">        fairing.config.set_builder(</span><br><span class="line">            <span class="string">'append'</span>, base_image=<span class="string">'gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0'</span>,</span><br><span class="line">            registry=DOCKER_REGISTRY, push=<span class="literal">True</span>)</span><br><span class="line">        fairing.config.run()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x fairing_preprocessor_python.py</span><br><span class="line">$ ./fairing_preprocessor_python.py</span><br><span class="line">[I 200428 09:36:11 config:134] Using preprocessor: &lt;kubeflow.fairing.preprocessors.base.BasePreProcessor object at 0x7f8b2fc1e278&gt;</span><br><span class="line">[I 200428 09:36:11 config:136] Using builder: &lt;kubeflow.fairing.builders.append.append.AppendBuilder object at 0x7f8b2fc1e2b0&gt;</span><br><span class="line">[I 200428 09:36:11 config:138] Using deployer: &lt;kubeflow.fairing.deployers.job.job.Job object at 0x7f8b2fc1e9b0&gt;</span><br><span class="line">[W 200428 09:36:11 append:50] Building image using Append builder...</span><br><span class="line">[I 200428 09:36:11 base:107] Creating docker context: /tmp/fairing_context_jvkk0mqm</span><br><span class="line">[I 200428 09:36:11 docker_creds_:234] Loading Docker credentials <span class="keyword">for</span> repository <span class="string">'gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0'</span></span><br><span class="line">[W 200428 09:36:13 append:54] Image successfully built <span class="keyword">in</span> 1.9876068960002158s.</span><br><span class="line">[W 200428 09:36:13 append:94] Pushing image jaejunlee/fairing-job:13B00B9B...</span><br><span class="line">[I 200428 09:36:13 docker_creds_:234] Loading Docker credentials <span class="keyword">for</span> repository <span class="string">'jaejunlee/fairing-job:13B00B9B'</span></span><br><span class="line">[W 200428 09:36:15 append:81] Uploading jaejunlee/fairing-job:13B00B9B</span><br><span class="line">[I 200428 09:36:16 docker_session_:280] Layer sha256:823f4685c03b26a545ca41dcdca1e782ad5e52cf85bac03113edaa6aebdca1b3 exists, skipping</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">sha256:19f71f3a178549ee1bacd534f061e4b465d85c3378ecddb4dc716f1283aff2a8 pushed.</span><br><span class="line">[I 200428 09:36:22 docker_session_:334] Finished upload of: jaejunlee/fairing-job:13B00B9B</span><br><span class="line">[W 200428 09:36:22 append:99] Pushed image jaejunlee/fairing-job:13B00B9B <span class="keyword">in</span> 9.045510983996792s.</span><br><span class="line">[W 200428 09:36:22 job:101] The job fairing-job-gm8hb launched.</span><br><span class="line">[W 200428 09:36:22 manager:296] Waiting <span class="keyword">for</span> fairing-job-gm8hb-87z5h to start...</span><br><span class="line">[W 200428 09:36:22 manager:296] Waiting <span class="keyword">for</span> fairing-job-gm8hb-87z5h to start...</span><br><span class="line">[W 200428 09:36:22 manager:296] Waiting <span class="keyword">for</span> fairing-job-gm8hb-87z5h to start...</span><br><span class="line">[W 200428 09:36:23 manager:296] Waiting <span class="keyword">for</span> fairing-job-gm8hb-87z5h to start...</span><br><span class="line">[I 200428 09:36:29 manager:302] Pod started running True</span><br><span class="line">Training...</span><br><span class="line">Tensor(<span class="string">"Const:0"</span>, shape=(2, 3), dtype=int32)</span><br><span class="line">[W 200428 09:36:31 job:173] Cleaning up job fairing-job-gm8hb...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><em>notebook</em> : jupyter notebook 내용을 파이썬 file 로 변환하여 파이썬 file 을 패키지화</p>
+<ul>
+<li><p>example</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># jupyter notebook</span><br><span class="line"># fairing_preprocessor_notebook.ipynb</span><br><span class="line"></span><br><span class="line">import os, time</span><br><span class="line"></span><br><span class="line">def train():</span><br><span class="line">    print(&quot;Training...&quot;)</span><br><span class="line">    import tensorflow as tf</span><br><span class="line">    x &#x3D; tf.constant([1,2,3,4,5,6], shape&#x3D;[2,3])</span><br><span class="line">    print(x)</span><br><span class="line">    time.sleep(1)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    train()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># fairing_preprocessor_notebook.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> kubeflow <span class="keyword">import</span> fairing</span><br><span class="line"></span><br><span class="line">DOCKER_REGISTRY = <span class="string">'jaejunlee'</span></span><br><span class="line">file_name = os.path.basename(__file__)</span><br><span class="line">print(<span class="string">"Executing &#123;&#125; remotely."</span>.format(file_name))</span><br><span class="line">fairing.config.set_preprocessor(<span class="string">'notebook'</span>, notebook_file=<span class="string">'fairing_preprocessor_notebook.ipynb'</span>)</span><br><span class="line">fairing.config.set_builder(</span><br><span class="line">    <span class="string">'append'</span>, base_image=<span class="string">'gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0'</span>,</span><br><span class="line">    registry=DOCKER_REGISTRY, push=<span class="literal">True</span>)</span><br><span class="line">fairing.config.run()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x fairing_preprocessor_notebook.py</span><br><span class="line">$ ./fairing_preprocessor_notebook.py</span><br><span class="line">[I 200428 09:44:27 config:134] Using preprocessor: &lt;kubeflow.fairing.preprocessors.converted_notebook.ConvertNotebookPreprocessor object at 0x7fd480eb0908&gt;</span><br><span class="line">[I 200428 09:44:27 config:136] Using builder: &lt;kubeflow.fairing.builders.append.append.AppendBuilder object at 0x7fd480eb0860&gt;</span><br><span class="line">[I 200428 09:44:27 config:138] Using deployer: &lt;kubeflow.fairing.deployers.job.job.Job object at 0x7fd4809d6240&gt;</span><br><span class="line">[W 200428 09:44:27 append:50] Building image using Append builder...</span><br><span class="line">[I 200428 09:44:27 base:107] Creating docker context: /tmp/fairing_context_b254bkb_</span><br><span class="line">[I 200428 09:44:27 converted_notebook:127] Converting fairing_preprocessor_notebook.ipynb to fairing_preprocessor_notebook.py</span><br><span class="line">[I 200428 09:44:27 docker_creds_:234] Loading Docker credentials <span class="keyword">for</span> repository <span class="string">'gcr.io/kubeflow-images-public/tensorflow-1.14.0-notebook-cpu:v0.7.0'</span></span><br><span class="line">[W 200428 09:44:29 append:54] Image successfully built <span class="keyword">in</span> 1.9862057870050194s.</span><br><span class="line">[W 200428 09:44:29 append:94] Pushing image jaejunlee/fairing-job:7FCC2CF6...</span><br><span class="line">[I 200428 09:44:29 docker_creds_:234] Loading Docker credentials <span class="keyword">for</span> repository <span class="string">'jaejunlee/fairing-job:7FCC2CF6'</span></span><br><span class="line">[W 200428 09:44:31 append:81] Uploading jaejunlee/fairing-job:7FCC2CF6</span><br><span class="line">[I 200428 09:44:31 docker_session_:280] Layer </span><br><span class="line">sha256:380fe9d3ba2fe8c69d05cc9038b72aa9ec669cd0d51b0e61f312edb13586d5a8 pushed.</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">[I 200428 09:44:38 docker_session_:334] Finished upload of: jaejunlee/fairing-job:7FCC2CF6</span><br><span class="line">[W 200428 09:44:38 append:99] Pushed image jaejunlee/fairing-job:7FCC2CF6 <span class="keyword">in</span> 9.018262255005538s.</span><br><span class="line">[W 200428 09:44:38 job:101] The job fairing-job-bbpjs launched.</span><br><span class="line">[W 200428 09:44:38 manager:296] Waiting <span class="keyword">for</span> fairing-job-bbpjs-5jq22 to start...</span><br><span class="line">[W 200428 09:44:38 manager:296] Waiting <span class="keyword">for</span> fairing-job-bbpjs-5jq22 to start...</span><br><span class="line">[W 200428 09:44:38 manager:296] Waiting <span class="keyword">for</span> fairing-job-bbpjs-5jq22 to start...</span><br><span class="line">[W 200428 09:44:39 manager:296] Waiting <span class="keyword">for</span> fairing-job-bbpjs-5jq22 to start...</span><br><span class="line">[I 200428 09:44:44 manager:302] Pod started running True</span><br><span class="line">Training...</span><br><span class="line">Tensor(<span class="string">"Const:0"</span>, shape=(2, 3), dtype=int32)</span><br><span class="line">[W 200428 09:44:47 job:173] Cleaning up job fairing-job-bbpjs...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><em>full_notebook</em> : jupyter notebook 패키지화 하는데, 수행 후 결과를 다시 노트북 파일로 생성</p>
+</li>
+<li><p><em>function</em> : 단일 함수 패키지화</p>
+</li>
+</ul>
+<h1 id="Builder-in-Fairing"><a href="#Builder-in-Fairing" class="headerlink" title="Builder in Fairing"></a>Builder in Fairing</h1><p>Builder 는 preprocessor 가 생성한 패키지를 도커 이미지화 한다.</p>
+<ul>
+<li><p>빌드 타입</p>
+<ul>
+<li>append : docker client 를 사용하지 않고 파이선 라이브러리를 이용해 이미지를 빌드하는 방식<ul>
+<li>self-signed 로 인증된 레지스트리는 사용 불가</li>
+<li><code>.local</code> 로 설정한 주소는 허용 가능 (kubeflow 용 레지스트리 구축시)</li>
+<li>로그인이 필요한 레지스트리, 즉 docker hub 를 이용하려면 노트북 컨테이너 내 <code>.docker/config.json</code> 파일을 수정해야한다. 수정하는 방법은, 도커 서버에서 docker loging 을 통해 생성한 <code>config.json</code> 파일을 노트북 컨테이너 <code>~/.docker/config.json</code> 으로 복사한다.<ul>
+<li>cluster : 구글 컨테이너 툴인 Kaniko 를 이용해 이미지를 빌드하는 방식</li>
+<li>docker : 도커 클라이언트를 이용해 이미지를 빌드하는 방식</li>
+</ul>
+</li>
+<li>해당 환경이 도커 레지스트리에 접근할 수 있는 권한이 존재해야함</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>format</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_REGISTRY=<span class="string">'&#123;이미지를 push/pull 주소&#125;'</span></span><br><span class="line">fairing.config.set_builder(</span><br><span class="line">    <span class="string">'&#123;build type&#125;'</span>,</span><br><span class="line">    base_image=<span class="string">'&#123;python 을 실행한 기본 이미지 명&#125;:&#123;태그&#125;'</span>,</span><br><span class="line">    registry=DOCKER_REGISTRY,</span><br><span class="line">    push=True)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="Deployer-in-Fairing"><a href="#Deployer-in-Fairing" class="headerlink" title="Deployer in Fairing"></a>Deployer in Fairing</h1><p>Deployer 는 builder 로 생성한 이미지를 배포한다.</p>
+<ul>
+<li><p>format</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fairing.config.set_deployer(<span class="string">'job'</span>,</span><br><span class="line">                       namespace=?,</span><br><span class="line">                       pod_spec_mutators=?                         </span><br><span class="line">                       )</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>배포형태 : job, tfjob, pytorchjob, serving, kfserving, gcpjob, gcpserving등</li>
+<li>namespace : 배포가 실행할 namespace</li>
+<li>pod_spec_mutators : 배포 pod 의 spec 정의</li>
+</ul>
+</li>
+</ul>
+<p>이렇게 각각 정의한 Preprocessor, Builder, Deployer 를 통해 <code>Config.run</code> 으로 Fairing 을 실행한다. 실행 순서는 설명한 흐름대로 preprocessor 로 패키지화 할 대상을 선택하고, Builder 로 이미지를 생성하며 Deployer 로 배포한다.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=332046194&gclid=CjwKCAjwqJ_1BRBZEiwAv73uwCjVo3_lnw6A88qkbJmo2pBfMRE2p047vy7Cg4VhMsimg_dqSpxewBoCKwsQAvD_BwE" target="_blank" rel="noopener">쿠버네티스에서 머신러닝이 처음이라면! 쿠브플로우!</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubeflow/" rel="tag"># Kubeflow</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/shell-append_alias_to_pod/" rel="prev" title="[Shell] k8s Pod 내 alias 적용 스크립트">
+      <i class="fa fa-chevron-left"></i> [Shell] k8s Pod 내 alias 적용 스크립트
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/cloud-kubeflow_katib/" rel="next" title="[Cloud] Kubeflow Katib 소개">
+      [Cloud] Kubeflow Katib 소개 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fairing"><span class="nav-number">1.</span> <span class="nav-text">Fairing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">2.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faring-예제"><span class="nav-number">3.</span> <span class="nav-text">Faring 예제</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fairing-config-ipynb"><span class="nav-number">3.1.</span> <span class="nav-text">fairing_config.ipynb</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Preprocessor-in-Fairing"><span class="nav-number">4.</span> <span class="nav-text">Preprocessor in Fairing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Builder-in-Fairing"><span class="nav-number">5.</span> <span class="nav-text">Builder in Fairing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deployer-in-Fairing"><span class="nav-number">6.</span> <span class="nav-text">Deployer in Fairing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/cloud-kubeflow_fairing/";
+    this.page.identifier = "cloud-kubeflow_fairing/";
+    this.page.title = "[Cloud] Kubeflow Fairing 소개";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

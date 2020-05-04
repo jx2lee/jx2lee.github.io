@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Sebastian Ruder 의 인터뷰를 정리하였다  세바스찬 루더 github : (https:&#x2F;&#x2F;github.com&#x2F;sebastianruder) blog   : (http:&#x2F;&#x2F;ruder.io&#x2F;#open) 핫한 NLP 연구자 AYLIEN에서 리서치 사이언티스트로 일하며 현재 PhD 학생">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Etc] Sebastian Ruder Interview">
+<meta property="og:url" content="https://jx2lee.github.io/etc-sebastian_interview/index.html">
+<meta property="og:site_name" content="jx2lee 블로그">
+<meta property="og:description" content="Sebastian Ruder 의 인터뷰를 정리하였다  세바스찬 루더 github : (https:&#x2F;&#x2F;github.com&#x2F;sebastianruder) blog   : (http:&#x2F;&#x2F;ruder.io&#x2F;#open) 핫한 NLP 연구자 AYLIEN에서 리서치 사이언티스트로 일하며 현재 PhD 학생">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-08-18T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T15:06:23.541Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta property="article:tag" content="Review">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/etc-sebastian_interview/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Etc] Sebastian Ruder Interview | jx2lee 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jx2lee 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/etc-sebastian_interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Etc] Sebastian Ruder Interview
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-19 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-19T00:00:00+09:00">2019-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Etc/" itemprop="url" rel="index"><span itemprop="name">Etc</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/etc-sebastian_interview/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="etc-sebastian_interview/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Sebastian Ruder 의 인터뷰를 정리하였다</p>
+<ul>
+<li>세바스찬 루더<ul>
+<li>github : (<a href="https://github.com/sebastianruder" target="_blank" rel="noopener">https://github.com/sebastianruder</a>)</li>
+<li>blog   : (<a href="http://ruder.io/#open" target="_blank" rel="noopener">http://ruder.io/#open</a>)</li>
+<li>핫한 NLP 연구자</li>
+<li>AYLIEN에서 리서치 사이언티스트로 일하며 현재 PhD 학생<a id="more"></a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="QnA"><a href="#QnA" class="headerlink" title="QnA"></a>QnA</h1><h2 id="NLP-초심자들에게-조언을-해줄-수-있겠는가"><a href="#NLP-초심자들에게-조언을-해줄-수-있겠는가" class="headerlink" title="NLP 초심자들에게 조언을 해줄 수 있겠는가?"></a>NLP 초심자들에게 조언을 해줄 수 있겠는가?</h2><p>NLP-progress(<a href="http://nlpprogress.com/" target="_blank" rel="noopener">http://nlpprogress.com/</a>) 같은 곳에서 <strong>관심이 가는 분야</strong>를 찾아라. 만일 당신이 리서치에 관심이 있다면, 다른 사람이 하지 않은 <strong>특정한 세부 주제</strong>를 찾아보도록 노력하라. 예를 들어 감정 분석이라면 영화 리뷰 분석을 하지 말고 대화를 분석하라. 요약이라면 뉴스 기사를 요약하지 말고 의학 저널을 요약하라. 그 분야와 관련된 논문들을 읽고, 가장 첨단의 기술이 어떠한 지를 이해하라. 당신이 직접 돌려볼 수 있는 <strong>오픈 소스 구현이 있는 분야이면 더 좋다.</strong></p>
+<p>어떻게 이러한 작업이 돌아가는지를 잘 알게 되었을 때, <strong>연구를 위해서 그 논문에서 당신을 놀라게한 점이 있었는지를 잘 생각해보아라.</strong> 그 모델이 어떠한 오류를 저질렀는 지를 이해하려 노력하고, 어떻게 하면 이를 줄여볼 수 있을지 생각하라. 어떠한 모델이 특정한 종류의 정보를 잘 잡아 내는 지를 측정하는 <strong>오류 절제 평가를 해보거나 합성 모델을 사용</strong>해보면 좋다.</p>
+<p>만일 당신이 그 문제를 더 도전적으로, 혹은 현실적으로 해결해볼 수 있는 아이디어가 있다면, <strong>데이터 셋을 만들고 현존하는 모델에 적용</strong>해보라. 그리고 다시 그 <strong>데이터 셋을 당신의 언어로 만들어보라. 그리고 그 모델이 역시 잘 작동하는 지를 확인</strong>하라.</p>
+<h2 id="흔히-NLP-분야가-컴퓨터-비전에-비해-뒤쳐졌다고들-한다-현재의-상황에-대해서-어떻게-생각하는가-NLP-현업자로-뛰어들기에-좋은-시기인가"><a href="#흔히-NLP-분야가-컴퓨터-비전에-비해-뒤쳐졌다고들-한다-현재의-상황에-대해서-어떻게-생각하는가-NLP-현업자로-뛰어들기에-좋은-시기인가" class="headerlink" title="흔히 NLP 분야가 컴퓨터 비전에 비해 뒤쳐졌다고들 한다. 현재의 상황에 대해서 어떻게 생각하는가? NLP 현업자로 뛰어들기에 좋은 시기인가?"></a>흔히 NLP 분야가 컴퓨터 비전에 비해 뒤쳐졌다고들 한다. 현재의 상황에 대해서 어떻게 생각하는가? NLP 현업자로 뛰어들기에 좋은 시기인가?</h2><p>나는 지금이 NLP에 뛰어들기 좋은 시기라 생각한다. 수 년전과 비교하면 성숙기에 접어들었다고 본다. 단순히 워드 임베딩이나 기존에 나온 모델들을 사용하는 것에 제한되지 않고, <strong>다양한 부품들로 당신만의 모델을 만들 수 있는 것</strong>이다. 이를 테면 다른 신경망 층들, 사전 학습된 표현들, 부가적인 로스의 사용 등이 있다. 또한 POS 태깅, 감정 분석 등 고전적인 문제들이 거의 해결되고 있다는 커뮤니티의 반응도 있다. 그러므로 우리는 더 어려운 문제들에서 발전을 이루어야만 한다. 이를테면 <strong>“진짜” 자연어를 이해하고 생성해내는 일반화된 모델</strong>이 있다.</p>
+<p>이러한 문제들을 풀기 위해선 나는 새로운 사람들의 관점과 아이디어들이 필요하다고 생각한다. 덧붙여 우리는 이제 분류나 문장 라벨링 등의 작업을 꽤 높은 정확도로 수행하는 모델들을 학습할 수 있으니, 이러한 모델들을 다른 언어에 적용해 볼 수 있는 기회가 많이 있다. 만일 당신이 또 다른 언어의 사용자라면, 당신은 다른 사람들이 모델 학습과 평가에 사용할 수 있는 <strong>데이터 셋을 만드는 것</strong> 만으로도 큰 변화를 만들어 낼 수 있을 것이다.</p>
+<h2 id="DL-ML-분야에서-많은-job-들이-석박사나-연구-경험을-요구한다-머신-러닝을-커리어-패스로-고려하는-독자들을-위해서-연구-경험이-반드시-필요하다고-생각하는가"><a href="#DL-ML-분야에서-많은-job-들이-석박사나-연구-경험을-요구한다-머신-러닝을-커리어-패스로-고려하는-독자들을-위해서-연구-경험이-반드시-필요하다고-생각하는가" class="headerlink" title="DL/ML 분야에서 많은 job 들이 석박사나 연구 경험을 요구한다. 머신 러닝을 커리어 패스로 고려하는 독자들을 위해서, 연구 경험이 반드시 필요하다고 생각하는가?"></a>DL/ML 분야에서 많은 job 들이 석박사나 연구 경험을 요구한다. 머신 러닝을 커리어 패스로 고려하는 독자들을 위해서, 연구 경험이 반드시 필요하다고 생각하는가?</h2><p>나는 리서치 경험이 당신이 특정 모델에 대해서 잘 알고 있는지, 창의적인지, 새로운 해결방안을 생각해 낼 수 있을 만큼 혁신적인지를 측정하는 좋은 지표라고 생각한다. 그러나 이러한 스킬들을 익히기 위해서 <strong>PhD나 리서치 펠로우십을 취득할 필요는 없다.</strong> 능동적으로 움직이고, 흥미있는 분야에 대해서 배우고 문제를 해결하고, 모델을 개선하고, 당신의 경험을 글로 쓰는 것은 이러한 스킬들을 키우고 증명하는 좋은 방법이다. 현재의 ML 환경에서 당신은 완전히 새로운 문제를 풀도록 요구되어지지 않는다. <strong>ML이나 데이터 사이언스 대회에 참여하는 것도 비슷하게 당신이 ML 모델을 어떻게 실용적으로 적용하는지를 증명하는데 도움</strong>이 된다.</p>
+<h2 id="리서치-분야의-폭발적인-성장을-놓고-봤을-때-가장-첨단의-기술들에-대해서-어떻게-따라갈-수-있는가"><a href="#리서치-분야의-폭발적인-성장을-놓고-봤을-때-가장-첨단의-기술들에-대해서-어떻게-따라갈-수-있는가" class="headerlink" title="리서치 분야의 폭발적인 성장을 놓고 봤을 때, 가장 첨단의 기술들에 대해서 어떻게 따라갈 수 있는가?"></a>리서치 분야의 폭발적인 성장을 놓고 봤을 때, 가장 첨단의 기술들에 대해서 어떻게 따라갈 수 있는가?</h2><p>나는 매일 arXiv의 업데이트를 확인한다. 관련 논문들을 내 읽기 목록에 추가한 뒤에 한번에 읽는다. 제프 딘은 최근 Deep Learning Indaba에서 <strong>열 개 논문의 abstract를 읽는 것이 한 개 논문을 깊이 있게 읽는 것 보다 낫다고 한다.</strong> 왜냐면 언제든 되돌아가서 특정 논문을 깊이 있게 읽는 것은 가능하기 때문이다.”고 말했다. 그의 말에 동의하며, <strong>최대한 넓게 읽어라.</strong> 그래서 당신이 목록화 할 수 있고 나중에 영감을 받을 수 있도록 하라. 좋은 문서 관리 시스템을 갖는 것도 핵심이다. 나는 Mendeley를 사용해왔다. 최근에는 Arxiv Sanity Preserver(<a href="http://www.arxiv-sanity.com/recommend" target="_blank" rel="noopener">http://www.arxiv-sanity.com/recommend</a>) 를 사용한다.</p>
+<h2 id="어떻게-시작하게-되었는가-특히-왜-딥-러닝과-NLP에-관심을-갖게-되었는가"><a href="#어떻게-시작하게-되었는가-특히-왜-딥-러닝과-NLP에-관심을-갖게-되었는가" class="headerlink" title="어떻게 시작하게 되었는가? 특히 왜 딥 러닝과 NLP에 관심을 갖게 되었는가?"></a>어떻게 시작하게 되었는가? 특히 왜 딥 러닝과 NLP에 관심을 갖게 되었는가?</h2><p>고등학생 때부터 언어와 수학에 관심이 있었고, 여러 대회에 참가했었다. 내 학업을 위해서 나는 수학의 논리와 언어의 창의성을 결합하고 싶었다. 그러나 그런 분야가 존재하는 지 몰랐다. 그 떄 전산 언어학이라는, 컴퓨터 과학과 언어학이 적절하게 교차하는 분야를 접하게 되었다. 그래서 독일 대학에서 전산 언어학 학사를 땄다. 학부생 시절에 머신 러닝을 접하게 되었고, 인턴쉽과 온라인 강의들을 통해 최대한 지식을 습득했다. word2vec에 대해 들은건 학부를 마친 2015년이었다. PhD를 시작하면서 딥 러닝에 대해 알게 되었고, 이 분야에 더욱 흥미를 가지게 되었다.</p>
+<h2 id="산업과-리서치-중에서-리서치를-택한-이유가-있는가"><a href="#산업과-리서치-중에서-리서치를-택한-이유가-있는가" class="headerlink" title="산업과 리서치 중에서 리서치를 택한 이유가 있는가?"></a>산업과 리서치 중에서 리서치를 택한 이유가 있는가?</h2><p>졸업 이후에 스타트업에서 산업 경험을 쌓고자 했다. PhD는 내가 항상 꿈꾸던 것이었지만, 그 당시에는 심각하게 생각하지 않았다. 듀블린의 NLP 스타트업 Aylien에서 일하면서 그들은 나에게 고용이 보장된 PhD 프로그램을 소개해 주었고, 나에게 잘 들어맞는다고 생각했다. 회사에서 일하면서 동시에 연구를 하는 것은 매우 힘들었지만, 결국 나에게 돌아오는 것은 많았다. 가장 중요하게도, 내 회사와 잘 맞았다.</p>
+<h2 id="지금까지-연구자로-3년간-일해왔다-이-기간동안-당신의-최애-프로젝트는-무엇이었는가"><a href="#지금까지-연구자로-3년간-일해왔다-이-기간동안-당신의-최애-프로젝트는-무엇이었는가" class="headerlink" title="지금까지 연구자로 3년간 일해왔다. 이 기간동안 당신의 최애 프로젝트는 무엇이었는가?"></a>지금까지 연구자로 3년간 일해왔다. 이 기간동안 당신의 최애 프로젝트는 무엇이었는가?</h2><p>배움의 관점에서는 <strong>잘 알지 못하는 분야에 뛰어드는 것</strong>과 <strong>논문들을 읽는 것</strong>, 그리고 <strong>훌륭한 사람들과 협업</strong>하는 것이다. 이러한 맥락에서 코펜하겐 대학에서 진행했던 multi-task learning 프로젝트가 굉장히 자극이 되는 경험이었다.<br>영향력의 관점에서는 fastai, 제레미 (fast ai 창립자)와 협업하면서 그들이 어떻게 우리의 언어 모델을 유용하게 사용하는지를 본 것이다.</p>
+<h2 id="당신은-매우-훌륭한-블로그를-관리했다-기술적인-글들을-효과적으로-쓸-수-있는-팁들이-있는가"><a href="#당신은-매우-훌륭한-블로그를-관리했다-기술적인-글들을-효과적으로-쓸-수-있는-팁들이-있는가" class="headerlink" title="당신은 매우 훌륭한 블로그를 관리했다. 기술적인 글들을 효과적으로 쓸 수 있는 팁들이 있는가?"></a>당신은 매우 훌륭한 블로그를 관리했다. 기술적인 글들을 효과적으로 쓸 수 있는 팁들이 있는가?</h2><p>나는 내 자신이 특정한 주제에 대해서 더 잘 이해하기 위해서 블로그를 쓸 때 아주 좋았던 경험이 있다. 만일 당신이 어떤 주제에 대하여 많은 리서치를 하거나 직관을 얻고 싶다면, <strong>포스트를 작성하는 것을 고려</strong>해보아라. 그리고 이것은 훗날 누군가의 학습을 더욱 빠르게 도와줄 것이다. 연구 논문에서는 지면이 부족하여 충분히 글로써 설명해내지 못하는 측면들이 있다. 블로그 포스팅은 기술들을 더 접근하기 쉽게 설명하는 아주 좋은 방법이다.</p>
+<p><strong>블로그의 좋은 점은 완벽하지 않아도 좋다</strong>는 점이다. 당신은 이를 커뮤니케이션 능력을 향상시키기 위해 사용해도 좋고, 당신의 아이디어에 대한 피드백을 얻기 위해 사용해도 좋다. 글을 쓰는 관점에서는, 가장 중요한 것은 명확하기 위해 노력해야한다는 것이다. <strong>애매 모호하지 않고 데이터가 보여주는 것에 대해서만 써라.</strong> 만일 의심스럽다면 명확하게 no라고 말하라.</p>
+<p>당신의 초고에 대해서도 당신의 친구들이나 동료들의 피드백을 들어라. <em>100% 완벽하게 만들려고 애쓰지 말아라.</em> 그러나 <strong>만족할 만한 수준까지는 끌어올려야한다.</strong> 공개 버튼을 누를 때 걱정이되는 것은 당연한 것이니 도망치지 말라. 무언가를 퍼블리싱 한다는 것은 장기적인 관점에서 분명 가치가 있다.<br></p>
+<h2 id="딥-러닝이-어려운-분야라는-생각에-시작하기-망설이는-초보자들을-위해-해주고-싶은-말은"><a href="#딥-러닝이-어려운-분야라는-생각에-시작하기-망설이는-초보자들을-위해-해주고-싶은-말은" class="headerlink" title="딥 러닝이 어려운 분야라는 생각에 시작하기 망설이는 초보자들을 위해 해주고 싶은 말은?"></a>딥 러닝이 어려운 분야라는 생각에 시작하기 망설이는 초보자들을 위해 해주고 싶은 말은?</h2><p>아무도 당신에게 넌 할 수 없어라고 말할 수 없다. 온라인 수업들을 듣고 이해하라. 기본적인 지식들에 익숙해지면 시간이 될 때마다 <strong>영감을 위해 논문</strong>들을 읽어라. <strong>흥미로운 분야를 선택</strong>하고, <strong>라이브러리를 선택하고 진행</strong>해보라. 당신이 의미있는 문제를 풀기 위해서는 반드시 거대한 컴퓨터가 있어야 된다는 생각을 버려라. 특히 NLP 분야에서는 <em>라벨링 된 예시의 수가 적은 문제</em>들이 많이 있다. 당신이 하고 있고 배우고 있는 것에 대해서 써라.</p>
+<p><em>비슷한 관심사가 있는 사람들을 만나라.</em> 커뮤니티에 참여하고, 특히 fast ai는 좀 쩐다. 트위터를 하라. 트위터는 훌륭한 ML 커뮤니티이다. 당신은 탑 연구자들로부터 이메일보다 빨리 답장을 받을 수도 있다. 멘토를 찾으라. 만일 누군가에게 조언을 구하기 위해 이메일을 쓴다면, 그들이 바쁘다는 것을 고려하라. 존중하고 다른 이들을 도와라. 칭찬을 많이 하고, 비평할 때는 조심스럽게 하라.</p>
+<h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1><hr>
+<p>2019.08.09 made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Review/" rel="tag"># Review</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/etc-how_to_read_research/" rel="prev" title="[Etc] How to Read Research Papers">
+      <i class="fa fa-chevron-left"></i> [Etc] How to Read Research Papers
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/cloud-introduction_to_kubernetes/" rel="next" title="[Cloud] Kubernetes 개념 및 아키텍쳐">
+      [Cloud] Kubernetes 개념 및 아키텍쳐 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#QnA"><span class="nav-number">1.</span> <span class="nav-text">QnA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP-초심자들에게-조언을-해줄-수-있겠는가"><span class="nav-number">1.1.</span> <span class="nav-text">NLP 초심자들에게 조언을 해줄 수 있겠는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#흔히-NLP-분야가-컴퓨터-비전에-비해-뒤쳐졌다고들-한다-현재의-상황에-대해서-어떻게-생각하는가-NLP-현업자로-뛰어들기에-좋은-시기인가"><span class="nav-number">1.2.</span> <span class="nav-text">흔히 NLP 분야가 컴퓨터 비전에 비해 뒤쳐졌다고들 한다. 현재의 상황에 대해서 어떻게 생각하는가? NLP 현업자로 뛰어들기에 좋은 시기인가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DL-ML-분야에서-많은-job-들이-석박사나-연구-경험을-요구한다-머신-러닝을-커리어-패스로-고려하는-독자들을-위해서-연구-경험이-반드시-필요하다고-생각하는가"><span class="nav-number">1.3.</span> <span class="nav-text">DL&#x2F;ML 분야에서 많은 job 들이 석박사나 연구 경험을 요구한다. 머신 러닝을 커리어 패스로 고려하는 독자들을 위해서, 연구 경험이 반드시 필요하다고 생각하는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#리서치-분야의-폭발적인-성장을-놓고-봤을-때-가장-첨단의-기술들에-대해서-어떻게-따라갈-수-있는가"><span class="nav-number">1.4.</span> <span class="nav-text">리서치 분야의 폭발적인 성장을 놓고 봤을 때, 가장 첨단의 기술들에 대해서 어떻게 따라갈 수 있는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#어떻게-시작하게-되었는가-특히-왜-딥-러닝과-NLP에-관심을-갖게-되었는가"><span class="nav-number">1.5.</span> <span class="nav-text">어떻게 시작하게 되었는가? 특히 왜 딥 러닝과 NLP에 관심을 갖게 되었는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#산업과-리서치-중에서-리서치를-택한-이유가-있는가"><span class="nav-number">1.6.</span> <span class="nav-text">산업과 리서치 중에서 리서치를 택한 이유가 있는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#지금까지-연구자로-3년간-일해왔다-이-기간동안-당신의-최애-프로젝트는-무엇이었는가"><span class="nav-number">1.7.</span> <span class="nav-text">지금까지 연구자로 3년간 일해왔다. 이 기간동안 당신의 최애 프로젝트는 무엇이었는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#당신은-매우-훌륭한-블로그를-관리했다-기술적인-글들을-효과적으로-쓸-수-있는-팁들이-있는가"><span class="nav-number">1.8.</span> <span class="nav-text">당신은 매우 훌륭한 블로그를 관리했다. 기술적인 글들을 효과적으로 쓸 수 있는 팁들이 있는가?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#딥-러닝이-어려운-분야라는-생각에-시작하기-망설이는-초보자들을-위해-해주고-싶은-말은"><span class="nav-number">1.9.</span> <span class="nav-text">딥 러닝이 어려운 분야라는 생각에 시작하기 망설이는 초보자들을 위해 해주고 싶은 말은?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#END"><span class="nav-number">2.</span> <span class="nav-text">END</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/etc-sebastian_interview/";
+    this.page.identifier = "etc-sebastian_interview/";
+    this.page.title = "[Etc] Sebastian Ruder Interview";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

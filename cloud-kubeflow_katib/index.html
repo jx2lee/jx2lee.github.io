@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 Katib 이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Cloud] Kubeflow Katib 소개">
+<meta property="og:url" content="https://jx2lee.github.io/cloud-kubeflow_katib/index.html">
+<meta property="og:site_name" content="jx2lee 블로그">
+<meta property="og:description" content="Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 Katib 이다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.kubeflow.org/docs/images/katib-home.png">
+<meta property="article:published_time" content="2020-05-03T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-04T05:44:47.640Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta property="article:tag" content="Kubeflow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.kubeflow.org/docs/images/katib-home.png">
+
+<link rel="canonical" href="https://jx2lee.github.io/cloud-kubeflow_katib/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Cloud] Kubeflow Katib 소개 | jx2lee 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jx2lee 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubeflow_katib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Cloud] Kubeflow Katib 소개
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-04T00:00:00+09:00">2020-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-04 14:44:47" itemprop="dateModified" datetime="2020-05-04T14:44:47+09:00">2020-05-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/cloud-kubeflow_katib/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubeflow_katib/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Kubeflow 책을 공부하며 내용을 정리하고자 한다. 이번 파트는 <code>Katib</code> 이다.</p>
+<a id="more"></a>
+
+<h1 id="Katib"><a href="#Katib" class="headerlink" title="Katib"></a>Katib</h1><p>Kubeflow 설치 시 자동으로 설치하는 컴포넌트로, 하이퍼파라미터 최적화와 뉴럴 아키텍처 탐색(NAS)으로 구성한다. 하이퍼파라미터 최적화와 뉴럴 아키텍처 탐색(NAS)에 대한 개념은 이번 글에서 다루지 않는다.</p>
+<ul>
+<li>하이퍼파라미터 참고<ul>
+<li><a href="https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/">https://jx2lee.github.io/2019/07/02/ml-introduction_to_grid_search/</a></li>
+<li><a href="https://medium.com/@jorgesleonel/hyperparameters-in-machine-deep-learning-ca69ad10b981" target="_blank" rel="noopener">Hyperparameters in Machine /Deep Learning</a></li>
+</ul>
+</li>
+<li>뉴럴 아키텍쳐 탐색(NAS)<ul>
+<li><a href="http://research.sualab.com/review/2018/09/28/nasnet-review.html" target="_blank" rel="noopener">AutoML을 이용한 Architecture Search 소개 및 NASNet 논문 리뷰</a></li>
+<li><a href="http://www.secmem.org/blog/2019/07/19/Network-Architecture-Search/" target="_blank" rel="noopener">Network Architecture Search - Samsung Software Membership</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><p>Katib 은 크게 4가지 개념으로 이루어졌다.</p>
+<p><img src="" alt="Katib 구조"></p>
+<ul>
+<li>Experiment : 하나의 실행단위로 Job 개념으로 생각하면 된다. K8s 커스텀 리소스로 Trial 를 실행하는 역할을 하며 Experiment 는 5개 영역으로 나뉜다.<ul>
+<li>Trial Count : 실행 횟수 (병렬)</li>
+<li>Trial Template : Trial 파드 템플릿</li>
+<li>Objective : 목표 수치 (최곳값 또는 최솟값 설정)</li>
+<li>Search Parameter : 탐색하고자 하는 파라미터 값의 range</li>
+<li>Search Algorithm : 탐색 알고리즘</li>
+</ul>
+</li>
+<li>Trial : 최적화 과정의 반복 단위. Experiment의 Trial Count 값 만큼 Trial을 생성하고 순차적으로 실행. 하나의 Trial 에서 하나의 worker job을 실행, Trial 도 K8s 커스텀 리소스</li>
+<li>Suggestion : Search Algorithm 으로 생성한 하이퍼파라미터 값의 모음. 하나의 Experiment 에서 하나의 Suggestion 을 생성</li>
+<li>Worker job : 파라미터와 Suggestion 값을 이용해 Trial, 각각의 값을 평가하고 계사하는 프로세스. 실제로 학습을 수행하며 K8s Job 과 TFJob, PyTorch 을 사용</li>
+</ul>
+<h2 id="Experiment-example"><a href="#Experiment-example" class="headerlink" title="Experiment example"></a>Experiment example</h2><p>MNIST 예제 템플릿을 함께 보며 위에서 설명한 구조와 비교하며 살펴본다.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">"kubeflow.org/v1alpha3"</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Experiment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kubeflow</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">controller-tools.k8s.io:</span> <span class="string">"1.0"</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">handson-experiment-1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">parallelTrialCount:</span> <span class="number">5</span>							<span class="comment"># 병렬로 실행할 Trial 수로, 리소스 허용한도까지 동시에 5개 Trial 을 실행한다.</span></span><br><span class="line">  <span class="attr">maxTrialCount:</span> <span class="number">30</span> 							<span class="comment"># 최대로 실행할 Trial 수로 총 30개. parallelTrialCount 가 5 이므로 병렬로 5개 Trial 을 실행하고 6번 반복</span></span><br><span class="line">  <span class="attr">maxFailedTrialCount:</span> <span class="number">3</span> 						<span class="comment"># 실패 한도 수로 Trial 이 3번 실패하면 Experiment 를 중지한다. </span></span><br><span class="line">  <span class="attr">objective:</span> 									<span class="comment"># 수집 대상의 메트릭 설정 단계 </span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">maximize</span>								<span class="comment"># 최댓값 또는 최솟값 설정 (본 예제는 maximize, 최댓값)</span></span><br><span class="line">    <span class="attr">goal:</span> <span class="number">0.99</span>									<span class="comment"># 목표 수치 설정</span></span><br><span class="line">    <span class="attr">objectiveMetricName:</span> <span class="string">Validation-accuracy</span>	<span class="comment"># 수집할 메트릭 name, validation-accuracy 로 설정</span></span><br><span class="line">    <span class="attr">additionalMetricNames:</span>						<span class="comment"># 이외 수집할 메트릭을 정의 (accuracy, loss, validation-loss 3개를 추가 수집할 예정)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">accuracy</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">loss</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">Validation-loss</span></span><br><span class="line">  <span class="attr">algorithm:</span>									<span class="comment"># Search Algorithm 설정 (그리드, 랜덤, 하이퍼밴드, 베이지안최적화 선택 가능)</span></span><br><span class="line">    <span class="attr">algorithmName:</span> <span class="string">random</span></span><br><span class="line">  <span class="attr">trialTemplate:</span>								<span class="comment"># Trial 템플릿 정의</span></span><br><span class="line">    <span class="attr">goTemplate:</span></span><br><span class="line">        <span class="attr">rawTemplate:</span> <span class="string">|-</span></span><br><span class="line">          <span class="attr">apiVersion:</span> <span class="string">batch/v1</span></span><br><span class="line">          <span class="attr">kind:</span> <span class="string">Job</span></span><br><span class="line">          <span class="attr">metadata:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">&#123;&#123;.Trial&#125;&#125;</span></span><br><span class="line">            <span class="attr">namespace:</span> <span class="string">&#123;&#123;.NameSpace&#125;&#125;</span></span><br><span class="line">          <span class="attr">spec:</span></span><br><span class="line">            <span class="attr">template:</span></span><br><span class="line">              <span class="attr">spec:</span></span><br><span class="line">                <span class="attr">containers:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&#123;&#123;.Trial&#125;&#125;</span></span><br><span class="line">                  <span class="attr">image:</span> <span class="string">brightfly/katib-job:handson</span></span><br><span class="line">                  <span class="attr">command:</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="string">"python"</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="string">"/app/katib_keras_mnist.py"</span></span><br><span class="line">                  <span class="string">&#123;&#123;-</span> <span class="string">with</span> <span class="string">.HyperParameters&#125;&#125;</span>	<span class="comment"># 설정 파라미터의 iteration 구문. .Name=.Value 형태로 메트릭 수집</span></span><br><span class="line">                  <span class="string">&#123;&#123;-</span> <span class="string">range</span> <span class="string">.&#125;&#125;</span></span><br><span class="line">                  <span class="bullet">-</span> <span class="string">"<span class="template-variable">&#123;&#123;.Name&#125;&#125;</span>=<span class="template-variable">&#123;&#123;.Value&#125;&#125;</span>"</span></span><br><span class="line">                  <span class="string">&#123;&#123;-</span> <span class="string">end&#125;&#125;</span></span><br><span class="line">                  <span class="string">&#123;&#123;-</span> <span class="string">end&#125;&#125;</span></span><br><span class="line">                <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br><span class="line">  <span class="attr">parameters:</span>									<span class="comment"># 하이퍼파라미터 입력값으로 learning rate 와 dropout 설정</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">--learning_rate</span></span><br><span class="line">      <span class="attr">parameterType:</span> <span class="string">double</span></span><br><span class="line">      <span class="attr">feasibleSpace:</span>							<span class="comment"># 각 하이퍼파라미터의 range 설정</span></span><br><span class="line">        <span class="attr">min:</span> <span class="string">"0.01"</span></span><br><span class="line">        <span class="attr">max:</span> <span class="string">"0.03"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">--dropout_rate</span></span><br><span class="line">      <span class="attr">parameterType:</span> <span class="string">double</span></span><br><span class="line">      <span class="attr">feasibleSpace:</span></span><br><span class="line">        <span class="attr">min:</span> <span class="string">"0.1"</span></span><br><span class="line">        <span class="attr">max:</span> <span class="string">"0.9"</span></span><br></pre></td></tr></table></figure>
+
+<p>본 템플릿으로 Experiment 를 실행하면 <code>python /app/katib_keras_mnist.py -learning_rate=0.012--dropout_rate=0.381</code> 와 같이 실행한다.</p>
+<h1 id="Katib-Component"><a href="#Katib-Component" class="headerlink" title="Katib Component"></a>Katib Component</h1><p>Katib 을 구성하는 컴포넌트로는 총 4개가 존재한다. 각 컴포넌트는 kubectl 로 조회 가능하며 K8s의 Deployment 로 관리한다.</p>
+<ul>
+<li>katib-manager : GRPC API server</li>
+<li>katib-db : Katib 의 백엔드 저장소, mysql</li>
+<li>katib-ui : Katib UI</li>
+<li>katib-controller : katib CRD의 컨트롤러</li>
+</ul>
+<h1 id="Katib-UI"><a href="#Katib-UI" class="headerlink" title="Katib UI"></a>Katib UI</h1><p>Web UI를 제공하는데 크게 Hyperparameter Tuning 과 NAS 2개 메뉴가 존재한다. Hyperparameter Tuning 에서는 직접 YAML 을 작성하거나 마우스와 키보드로 값을 추가할 수 있는 페이지를 제공한다.</p>
+<p><img src="https://www.kubeflow.org/docs/images/katib-home.png" alt="Katib UI"></p>
+<h1 id="Katib-Command-line-interface"><a href="#Katib-Command-line-interface" class="headerlink" title="Katib Command-line interface"></a>Katib Command-line interface</h1><p>UI 외에 커맨드라인 인터페이스를 제공하는데, kfctl 또는 kubectl 을 이용해 Experiment 을 실행할 수 있다. 단, Experiment 리소스 권한이 존재해야한다.</p>
+<p><code>kubectl apply -f mnist_experiment_random.yaml</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master my-kubeflow]<span class="comment"># kubectl get pod -n kubeflow</span></span><br><span class="line">NAME                                                           READY   STATUS             RESTARTS   AGE</span><br><span class="line">admission-webhook-bootstrap-stateful-set-0                     1/1     Running            1          26d</span><br><span class="line">admission-webhook-deployment-68c6dd4cc5-sb6hq                  1/1     Running            0          6d23h</span><br><span class="line">application-controller-stateful-set-0                          1/1     Running            1          26d</span><br><span class="line">argo-ui-78bf45b698-r5zhr                                       1/1     Running            0          26d</span><br><span class="line">centraldashboard-6957f8bcbc-6nktd                              1/1     Running            1          26d</span><br><span class="line">handson-experiment-1-random-57698b477b-dzmwm                   1/1     Running            0          98s</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=332046194&gclid=CjwKCAjwqJ_1BRBZEiwAv73uwCjVo3_lnw6A88qkbJmo2pBfMRE2p047vy7Cg4VhMsimg_dqSpxewBoCKwsQAvD_BwE" target="_blank" rel="noopener">쿠버네티스에서 머신러닝이 처음이라면! 쿠브플로우!</a></li>
+<li><a href="https://www.kubeflow.org" target="_blank" rel="noopener">Kubeflow.org</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubeflow/" rel="tag"># Kubeflow</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/cloud-kubeflow_fairing/" rel="prev" title="[Cloud] Kubeflow Fairing 소개">
+      <i class="fa fa-chevron-left"></i> [Cloud] Kubeflow Fairing 소개
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Katib"><span class="nav-number">1.</span> <span class="nav-text">Katib</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">2.</span> <span class="nav-text">Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Experiment-example"><span class="nav-number">2.1.</span> <span class="nav-text">Experiment example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Katib-Component"><span class="nav-number">3.</span> <span class="nav-text">Katib Component</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Katib-UI"><span class="nav-number">4.</span> <span class="nav-text">Katib UI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Katib-Command-line-interface"><span class="nav-number">5.</span> <span class="nav-text">Katib Command-line interface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/cloud-kubeflow_katib/";
+    this.page.identifier = "cloud-kubeflow_katib/";
+    this.page.title = "[Cloud] Kubeflow Katib 소개";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
