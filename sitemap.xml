@@ -9,7 +9,17 @@
 
     <sitemap>
         <loc>https://jx2lee.github.io/page-sitemap.xml</loc>
-        <lastmod>2020-04-23T09:15:35.336Z</lastmod>
+        <lastmod>2020-05-07T11:34:24.990Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://jx2lee.github.io/category-sitemap.xml</loc>
+        <lastmod>2020-05-07T08:31:47.888Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://jx2lee.github.io/tag-sitemap.xml</loc>
+        <lastmod>2020-05-07T08:31:47.888Z</lastmod>
     </sitemap>
 
 </sitemapindex>
