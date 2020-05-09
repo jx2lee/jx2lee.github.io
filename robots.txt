@@ -1,1 +1,3 @@
 User-agent: *
+Allow: /
+Sitemap: https://jx2lee.github.io/sitemap.xml
