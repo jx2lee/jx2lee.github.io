@@ -30,7 +30,7 @@
 <meta property="og:description" content="Spark를 설치하는 과정을 다룬다. binary를 다운받아 풀고 config를 수정하면 쉽게 설치하고 실행할 수 있다. 이 포스트에는 standalone 모드로 spark를 실행한다">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-12T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.584Z">
+<meta property="article:modified_time" content="2020-05-15T05:25:12.601Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2020-05-15 14:25:12" itemprop="dateModified" datetime="2020-05-15T14:25:12+09:00">2020-05-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
 
 <p>Spark 유저를 생성하고 Spark Home 디렉토리에 다운받은 binary를 풀어준다.</p>
 <h1 id="Set-config"><a href="#Set-config" class="headerlink" title="Set config"></a>Set config</h1><h2 id="bash-profile"><a href="#bash-profile" class="headerlink" title="~/.bash_profile"></a>~/.bash_profile</h2><p>JAVA, HADOOP 환경변수를 설정하고 SPARK 환경변수를 새로 작성하고 update 한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#JAVA ENV</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/app/java/jdk1.8.0_181</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#SPARK ENV</span></span><br><span class="line">SPARK_HOME=/app/spark</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$SPARK_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#HADOOP ENV</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/app/hadoop</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#JAVA ENV</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/app/java/jdk1.8.0_181</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">#SPARK ENV</span></span><br><span class="line">SPARK_HOME=/app/spark</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$SPARK_HOME</span>/bin</span><br><span class="line"></span><br><span class="line"><span class="comment">#HADOOP ENV</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/app/hadoop</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin</span><br></pre></td></tr></table></figure>
 
 <h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><p><code>$SPARK_HOME/bin</code> 폴더에 <code>pypark</code>를 실행한다.</p>
 <blockquote>
@@ -291,10 +291,10 @@
 <p><em>sc.textFile로 경로를 무시하게되면 자동으로 hdfs 경로를 읽어들인다. 만약에 로컬 파일을 읽고 싶다면, <code>file://[file path]/[file name]</code>으로 작성하면 로컬 파일을 읽어들인다.</em></p>
 </blockquote>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://spark.apache.org/docs/latest/index.html" target="_blank" rel="noopener">Spark Documents, https://spark.apache.org/docs/latest/index.html</a></li>
+<li><a href="https://spark.apache.org/docs/latest/index.html" target="_blank" rel="noopener">Spark Documents</a></li>
 </ul>
 <hr>
-<p>2019.12.13 made by <em>jaejun.lee</em></p>
+<p>made by <em>jaejun.lee</em></p>
 
     </div>
 

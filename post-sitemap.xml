@@ -8,8 +8,56 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/hadoop-introduction_to_hadoop/</loc>
+        <lastmod>2020-05-15T05:29:45.181Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/hadoop-install_spark/</loc>
+        <lastmod>2020-05-15T05:25:12.601Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/hadoop-install_presto/</loc>
+        <lastmod>2020-05-15T05:24:08.746Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/hadoop-install_hive/</loc>
+        <lastmod>2020-05-15T05:23:03.960Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/hadoop-install_hadoop_using_docker/</loc>
+        <lastmod>2020-05-15T05:22:11.687Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/database-install_mysql/</loc>
+        <lastmod>2020-05-15T05:21:06.069Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/hadoop-client/</loc>
-        <lastmod>2020-05-15T05:11:07.371Z</lastmod>
+        <lastmod>2020-05-15T05:19:31.316Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -186,14 +234,6 @@
     <url>
         <loc>https://jx2lee.github.io/hadoop-sqoop_import_error/</loc>
         <lastmod>2020-03-30T15:06:23.585Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/hadoop-install_spark/</loc>
-        <lastmod>2020-03-30T15:06:23.584Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -392,14 +432,6 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/database-install_mysql/</loc>
-        <lastmod>2020-03-30T15:06:23.559Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://jx2lee.github.io/bi-install_superset/</loc>
         <lastmod>2020-03-30T15:06:23.558Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -410,14 +442,6 @@
     <url>
         <loc>https://jx2lee.github.io/python-better_way_17/</loc>
         <lastmod>2020-03-30T15:06:23.556Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/hadoop-install_hive/</loc>
-        <lastmod>2020-03-30T15:06:23.554Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -456,22 +480,6 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/hadoop-install_hadoop_using_docker/</loc>
-        <lastmod>2020-03-30T15:06:23.549Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/hadoop-introduction_to_hadoop/</loc>
-        <lastmod>2020-03-30T15:06:23.548Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://jx2lee.github.io/hackerrank-the_report/</loc>
         <lastmod>2020-03-30T15:06:23.547Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -504,7 +512,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
+        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -512,7 +520,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
+        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -586,14 +594,6 @@
     <url>
         <loc>https://jx2lee.github.io/programmers-camera/</loc>
         <lastmod>2020-03-30T15:06:23.525Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/hadoop-install_presto/</loc>
-        <lastmod>2020-03-30T15:06:23.523Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
