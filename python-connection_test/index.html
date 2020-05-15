@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Python 을 이용한 Hadoop 및 Database 연동 테스트를 진행하였다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python] Jupyter Notebook 을 이용한 Hadoop 및 Database 연동">
+<meta property="og:url" content="https://jx2lee.github.io/python-connection_test/index.html">
+<meta property="og:site_name" content="jx2lee 블로그">
+<meta property="og:description" content="Python 을 이용한 Hadoop 및 Database 연동 테스트를 진행하였다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-05-14T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-15T02:44:44.696Z">
+<meta property="article:author" content="Jaejun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/python-connection_test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Python] Jupyter Notebook 을 이용한 Hadoop 및 Database 연동 | jx2lee 블로그</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="jx2lee 블로그" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">jx2lee 블로그</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>posts</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/python-connection_test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jaejun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jx2lee 블로그">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Python] Jupyter Notebook 을 이용한 Hadoop 및 Database 연동
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-15 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-15T00:00:00+09:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 11:44:44" itemprop="dateModified" datetime="2020-05-15T11:44:44+09:00">2020-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/python-connection_test/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="python-connection_test/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Python 을 이용한 Hadoop 및 Database 연동 테스트를 진행하였다.  </p>
+<a id="more"></a>
+
+<p><strong>환경구성</strong>:  </p>
+<ul>
+<li>Hadoop Cluster <em>(CDH 6.3.2)</em><ul>
+<li>cdh1: 192.168.179.181</li>
+<li>cdh2: 192.168.179.182</li>
+<li>cdh3: 192.168.179.183 <em>(master)</em></li>
+</ul>
+</li>
+<li>Jupyter Notebook<ul>
+<li>docker custom image <em>(python version: 3.7)</em></li>
+<li>kubernetes deployment 배포<ul>
+<li><code>namespace</code>: nps</li>
+</ul>
+</li>
+<li>컨테이너 환경 : Ubuntu 18.04.4 LTS</li>
+</ul>
+</li>
+</ul>
+<p><strong>Contents</strong>:  </p>
+<ul>
+<li><a href="#hdfs">HDFS</a></li>
+<li><a href="#hive">Hive</a></li>
+<li><a href="#hbase">HBase</a></li>
+<li><a href="#impala">Impala</a></li>
+<li><a href="#spark">Spark</a></li>
+<li><a href="#sybase">Sybase</a></li>
+<li><a href="#oracle">Oracle</a></li>
+</ul>
+<h1 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS "></a>HDFS <a name="hdfs"></a></h1><h2 id="설치-패키지"><a href="#설치-패키지" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>hdfs<ul>
+<li>Requirement already satisfied: docopt in /opt/conda/lib/python3.8/site-packages (from hdfs) (0.6.2)</li>
+<li>Requirement already satisfied: six&gt;=1.9.0 in /opt/conda/lib/python3.8/site-packages (from hdfs) (1.14.0)</li>
+<li>Requirement already satisfied: requests&gt;=2.7.0 in /opt/conda/lib/python3.8/site-packages (from hdfs) (2.23.0)</li>
+<li>Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /opt/conda/lib/python3.8/site-packages (from   - requests&gt;=2.7.0-&gt;hdfs) (1.25.9)</li>
+<li>Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.7.0-&gt;hdfs) (3.0.4)</li>
+<li>Requirement already satisfied: idna&lt;3,&gt;=2.5 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.7.0-&gt;hdfs) (2.9)</li>
+<li>Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/conda/lib/python3.8/site-packages (from requests&gt;=2.7.0-&gt;hdfs) (2020.4.5.1)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> hdfs <span class="keyword">import</span> InsecureClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connection</span></span><br><span class="line"></span><br><span class="line">client_hdfs = InsecureClient(<span class="string">'http://192.168.179.183:9870'</span>, user=<span class="string">'hdfs'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create</span></span><br><span class="line"></span><br><span class="line">create_df = pd.DataFrame([<span class="number">1000</span>, <span class="number">2000</span>, <span class="number">3000</span>, <span class="number">4000</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> client_hdfs.write(<span class="string">'/tmp/t2.csv'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> writer:</span><br><span class="line">    create_df.to_csv(writer)</span><br><span class="line"></span><br><span class="line">print(client_hdfs.list(<span class="string">'/tmp'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">## Read</span></span><br><span class="line"></span><br><span class="line">client_hdfs.list(<span class="string">'/tmp'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> client_hdfs.read(<span class="string">'/tmp/test.csv'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> reader:</span><br><span class="line">    df = pd.read_csv(reader)</span><br><span class="line">    print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Update</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> client_hdfs.read(<span class="string">'/tmp/t2.csv'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> reader:</span><br><span class="line">    df = pd.read_csv(reader)</span><br><span class="line">df.loc[<span class="number">4</span>] = [<span class="number">4</span>,<span class="number">5000</span>]</span><br><span class="line">client_hdfs.delete(<span class="string">'/tmp/t2.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> client_hdfs.write(<span class="string">'/tmp/t2.csv'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> writer:</span><br><span class="line">    df.to_csv(writer)</span><br><span class="line">    print(df)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Delete</span></span><br><span class="line"></span><br><span class="line">client_hdfs.delete(<span class="string">'/tmp/t2.csv'</span>)</span><br><span class="line"><span class="string">'t2.csv'</span> <span class="keyword">in</span> client_hdfs.list(<span class="string">'/tmp'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://pypi.org/project/hdfs/" target="_blank" rel="noopener">https://pypi.org/project/hdfs/</a></li>
+<li><a href="https://hdfscli.readthedocs.io/en/latest/api.html" target="_blank" rel="noopener">https://hdfscli.readthedocs.io/en/latest/api.html</a></li>
+</ul>
+<h1 id="Hive"><a href="#Hive" class="headerlink" title="Hive "></a>Hive <a name="hive"></a></h1><h2 id="설치-패키지-1"><a href="#설치-패키지-1" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<li>libsasl2-dev</li>
+<li>libsasl2-modules</li>
+</ul>
+<h3 id="Python-1"><a href="#Python-1" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>pyhive<ul>
+<li>Requirement already satisfied: future in /opt/conda/lib/python3.8/site-packages (from pyhive) (0.18.2)</li>
+<li>Requirement already satisfied: python-dateutil in /opt/conda/lib/python3.8/site-packages (from pyhive) (2.8.1)</li>
+<li>Requirement already satisfied: six&gt;=1.5 in /opt/conda/lib/python3.8/site-packages (from python-dateutil-&gt;pyhive) (1.14.0)</li>
+</ul>
+</li>
+<li>thrift</li>
+<li>sasl</li>
+<li>thrift_sasl<ul>
+<li>Requirement already satisfied: thrift&gt;=0.10.0 in /opt/conda/lib/python3.8/site-packages (from thrift_sasl) (0.13.0)</li>
+<li>Requirement already satisfied: sasl&gt;=0.2.1 in /opt/conda/lib/python3.8/site-packages (from thrift_sasl) (0.2.1)</li>
+<li>Requirement already satisfied: six&gt;=1.13.0 in /opt/conda/lib/python3.8/site-packages (from thrift_sasl) (1.14.0)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pyhive.hive <span class="keyword">as</span> hive</span><br><span class="line">conn = hive.Connection(host=<span class="string">'cdh3'</span>, port=<span class="number">10000</span>, username=<span class="string">'root'</span>, password=<span class="string">'tmaxtmax'</span>, database=<span class="string">'default'</span>, auth=<span class="string">'CUSTOM'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create</span></span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line">sql = <span class="string">"CREATE TABLE `default`.`create_test` (  `field_1` bigint ,  `field_2` string ,  `field_3` string ,  `field_4` string ,  `field_5` string ,  `field_6` bigint ,  `field_7` string ,  `field_8` double ,  `field_9` string ,  `field_10` string ) ROW FORMAT   DELIMITED    FIELDS TERMINATED BY '|'    COLLECTION ITEMS TERMINATED BY ''    MAP KEYS TERMINATED BY ''  STORED AS TextFile"</span></span><br><span class="line">cur.execute(sql)</span><br><span class="line"></span><br><span class="line">cur = conn.cursor()</span><br><span class="line">cur.execute(<span class="string">'select * from create_test'</span>)</span><br><span class="line">res = cur.fetchall()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read</span></span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">'select count(*) from create_test'</span>)</span><br><span class="line">res = cur.fetchall()</span><br><span class="line"></span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Update</span></span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">'alter table create_test rename to create_test_rev'</span>)</span><br><span class="line">cur.execute(<span class="string">'describe create_test_rev'</span>)</span><br><span class="line">res = cur.fetchall()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Delete</span></span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">'drop table create_test_rev'</span>)</span><br><span class="line">cur.execute(<span class="string">'show tables'</span>)</span><br><span class="line">res = cur.fetchall()</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref-1"><a href="#Ref-1" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://sungwookkang.com/m/1367" target="_blank" rel="noopener">https://sungwookkang.com/m/1367</a></li>
+</ul>
+<h1 id="HBase"><a href="#HBase" class="headerlink" title="HBase "></a>HBase <a name="hbase"></a></h1><ul>
+<li>Hbase 서버 내 Thrift 가 동작하고 있어야함<ul>
+<li>클러스터 내 아무 노드에서 <code>$ hbase thrift &amp;</code> 명령어로 thrift 실행<ul>
+<li>backgroud 구동</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="설치-패키지-2"><a href="#설치-패키지-2" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-2"><a href="#Linux-2" class="headerlink" title="Linux"></a>Linux</h3><h3 id="Python-2"><a href="#Python-2" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>happybase<ul>
+<li>Requirement already satisfied: six in /opt/conda/lib/python3.8/site-packages (from happybase) (1.14.0)</li>
+<li>Requirement already satisfied: thriftpy2&gt;=0.4 in /opt/conda/lib/python3.8/site-packages (from happybase) (0.4.11)</li>
+<li>Requirement already satisfied: ply&lt;4.0,&gt;=3.4 in /opt/conda/lib/python3.8/site-packages (from thriftpy2&gt;=0.4-&gt;happybase) (3.11)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> happybase</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connection</span></span><br><span class="line"></span><br><span class="line">conn = happybase.Connection(<span class="string">'192.168.179.183'</span>, <span class="number">9090</span>, autoconnect=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create </span></span><br><span class="line"></span><br><span class="line">conn.create_table(<span class="string">'test'</span>,&#123;<span class="string">'cf'</span>:&#123;&#125;&#125;)</span><br><span class="line">conn.tables()</span><br><span class="line"></span><br><span class="line"><span class="comment">## Read</span></span><br><span class="line"></span><br><span class="line">tbl = conn.table(<span class="string">'test'</span>)</span><br><span class="line"><span class="keyword">for</span> key, data <span class="keyword">in</span> tbl.scan():</span><br><span class="line">    print(key, data)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Update</span></span><br><span class="line"></span><br><span class="line">table = conn.table(<span class="string">'test'</span>)</span><br><span class="line">table.put(<span class="string">'row-key'</span>,&#123;<span class="string">'cf:col1'</span>:<span class="string">'value1'</span>,<span class="string">'cf:col2'</span>:<span class="string">'value2'</span>&#125;)</span><br><span class="line">row = dict(table.row(<span class="string">'row-key'</span>))</span><br><span class="line"></span><br><span class="line">print(row)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Delete</span></span><br><span class="line"></span><br><span class="line">conn.delete_table(<span class="string">'test'</span>, disable=<span class="literal">True</span>)</span><br><span class="line">conn.tables()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref-2"><a href="#Ref-2" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://creatorw.tistory.com/entry/Hbase%EC%99%80-python-%EC%97%B0%EA%B2%B0-%ED%95%98%EA%B8%B0%EA%B8%B0" target="_blank" rel="noopener">https://creatorw.tistory.com/entry/Hbase%EC%99%80-python-%EC%97%B0%EA%B2%B0-%ED%95%98%EA%B8%B0%EA%B8%B0</a></li>
+</ul>
+<h1 id="Impala"><a href="#Impala" class="headerlink" title="Impala "></a>Impala <a name="impala"></a></h1><ul>
+<li>connection 시 host 는 마스터로 작성하니 connection 이 되지 않음<ul>
+<li>마스터 외 노드 ip로 host 설정 필요</li>
+</ul>
+</li>
+</ul>
+<h2 id="설치-패키지-3"><a href="#설치-패키지-3" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-3"><a href="#Linux-3" class="headerlink" title="Linux"></a>Linux</h3><h3 id="Python-3"><a href="#Python-3" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>impyla==0.15a1 *(꼭 0.15a1 버젼 설치 필요)<ul>
+<li>Requirement already satisfied: six in /opt/conda/lib/python3.8/site-packages (from impyla==0.15a1) (1.14.0)</li>
+<li>Requirement already satisfied: bitarray in /opt/conda/lib/python3.8/site-packages (from impyla==0.15a1) (1.2.1)</li>
+<li>Requirement already satisfied: thrift&gt;=0.9.3 in /opt/conda/lib/python3.8/site-packages (from impyla==0.15a1) (0.13.0)</li>
+<li>Requirement already satisfied: thriftpy2==0.4.0; python_version &gt;= “3.0” in /opt/conda/lib/python3.8/site-packages (from impyla==0.15a1) (  - 0.4.0)</li>
+<li>Requirement already satisfied: ply&lt;4.0,&gt;=3.4 in /opt/conda/lib/python3.8/site-packages (from thriftpy2==0.4.0; python_version &gt;=   - “3.0”-&gt;impyla==0.15a1) (3.11)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> impala.dbapi <span class="keyword">import</span> connect</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connection</span></span><br><span class="line"></span><br><span class="line">conn = connect(host=<span class="string">'192.168.179.181'</span>, port=<span class="number">21050</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line">cursor.get_databases()</span><br><span class="line"></span><br><span class="line">drop = <span class="string">"DROP TABLE IF EXISTS default.tab;"</span></span><br><span class="line"></span><br><span class="line">create = <span class="string">"""</span></span><br><span class="line"><span class="string">CREATE EXTERNAL TABLE default.tab</span></span><br><span class="line"><span class="string">(</span></span><br><span class="line"><span class="string">id INT,</span></span><br><span class="line"><span class="string">col_1 BOOLEAN,</span></span><br><span class="line"><span class="string">col_2 DOUBLE,</span></span><br><span class="line"><span class="string">col_3 TIMESTAMP</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"><span class="string">ROW FORMAT DELIMITED FIELDS TERMINATED BY ','</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Create</span></span><br><span class="line"></span><br><span class="line">cursor.execute(create)</span><br><span class="line">cursor.execute(<span class="string">'select count(*) from default.tab'</span>)</span><br><span class="line">res = cursor.fetchall()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Read</span></span><br><span class="line"></span><br><span class="line">cursor.execute(<span class="string">'select * from tab'</span>)</span><br><span class="line">res = cursor.fetchall()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Update</span></span><br><span class="line"></span><br><span class="line">cursor.execute(<span class="string">'alter table default.tab rename to default.tab_rev'</span>)</span><br><span class="line">cursor.execute(<span class="string">'describe default.tab_rev'</span>)</span><br><span class="line">res = cursor.fetchall()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Delete</span></span><br><span class="line"></span><br><span class="line">cursor.execute(<span class="string">'drop table default.tab_rev'</span>)</span><br><span class="line">cursor.execute(<span class="string">'show tables'</span>)</span><br><span class="line">res = cursor.fetchall()</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref-3"><a href="#Ref-3" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://euriion.com/?p=411856" target="_blank" rel="noopener">https://euriion.com/?p=411856</a></li>
+<li><a href="https://m.blog.naver.com/PostView.nhn?blogId=hancury&logNo=220755129588&proxyReferer=https:%2F%2Fwww.google.com%2F" target="_blank" rel="noopener">https://m.blog.naver.com/PostView.nhn?blogId=hancury&amp;logNo=220755129588&amp;proxyReferer=https:%2F%2Fwww.google.com%2F</a></li>
+</ul>
+<h1 id="Spark"><a href="#Spark" class="headerlink" title="Spark "></a>Spark <a name="spark"></a></h1><ul>
+<li>python 3.8 패키지 미지원 <em>(pyspark)</em><ul>
+<li><code>python 3.7</code> 환경에서만 진행</li>
+</ul>
+</li>
+<li>컨테이너 내 <code>hadoop client</code> 및 <code>spark</code> 설치 필요<ul>
+<li>hadoop: <code>$ wget https://archive.apache.org/dist/hadoop/core/hadoop-3.0.0/hadoop-3.0.0.tar.gz</code><ul>
+<li>cdh 클라이언트 구성파일 중 core-site.xml, hdfs-site.xml, yarn-site.xml 을 <code>$HADOOP_HOME/etc/hadoop</code> 으로 copy&amp;paste</li>
+</ul>
+</li>
+<li>spark: <a href="https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz" target="_blank" rel="noopener">spark-2.4.0-bin-hadoop2.7.tgz</a></li>
+</ul>
+</li>
+<li><code>.bashrc</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64</span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/home/jovyan/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_CMD=/home/jovyan/hadoop/bin/hadoop</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=/home/jovyan/hadoop/etc/hadoop</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$HADOOP_CMD</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SPARK_HOME=/home/jovyan/spark</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$SPARK_HOME</span>/bin</span><br></pre></td></tr></table></figure></li>
+<li>CDH spark 구성<ul>
+<li>master: yarn</li>
+<li>deploy mode: client</li>
+</ul>
+</li>
+</ul>
+<h2 id="설치-패키지-4"><a href="#설치-패키지-4" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-4"><a href="#Linux-4" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<li>default-jdk</li>
+</ul>
+<h3 id="Python-4"><a href="#Python-4" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>pyspark<ul>
+<li>Requirement already satisfied: py4j==0.10.7 in /opt/conda/lib/python3.8/site-packages (from pyspark) (0.10.7)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ref-4"><a href="#Ref-4" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://www.sicara.ai/blog/2017-05-02-get-started-pyspark-jupyter-notebook-3-minutes" target="_blank" rel="noopener">https://www.sicara.ai/blog/2017-05-02-get-started-pyspark-jupyter-notebook-3-minutes</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/spark_ipython.html" target="_blank" rel="noopener">https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/spark_ipython.html</a></li>
+<li><a href="https://github.com/mike-wendt/cloudera-jupyter-notebook-spark" target="_blank" rel="noopener">https://github.com/mike-wendt/cloudera-jupyter-notebook-spark</a></li>
+</ul>
+<blockquote>
+<p>위와 같은 환경에서 Spark 연동은 사실 어렵다. 왜냐하면 CDH 내 Yarn 에서 컨테이너 호스트명을 인식하지 못하는 문제가 발생하기 때문이다. 이는 CDH Yarn config 를 수정해서, 컨테이너 호스트명을 바라볼 수 있게끔 변경하면 yarn-client 모드로 연동이 가능하다. 아니면 <code>Livy</code> 라는 패키지를 CDH 클러스터에 설치하여 API 로 연동하는 방법이 존재한다. <em>(구글링 추천)</em></p>
+</blockquote>
+<h1 id="Sybase"><a href="#Sybase" class="headerlink" title="Sybase "></a>Sybase <a name="sybase"></a></h1><ul>
+<li>jar file<ul>
+<li>jconn3.jar <em>(jdk 버젼별로 상이할 수 있으므로 jconn4.jar 준비 필요)</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="설치-패키지-5"><a href="#설치-패키지-5" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-5"><a href="#Linux-5" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<li>default-jdk</li>
+</ul>
+<h3 id="Python-5"><a href="#Python-5" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>jpype1==0.6.3</li>
+<li>Jaydebeapi</li>
+</ul>
+<h2 id="Code-4"><a href="#Code-4" class="headerlink" title="Code"></a>Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jpype</span><br><span class="line"><span class="keyword">import</span> jaydebeapi</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connection</span></span><br><span class="line"></span><br><span class="line">conn = jaydebeapi.connect(<span class="string">'com.sybase.jdbc3.jdbc.SybDriver'</span>, <span class="string">'jdbc:sybase:Tds:192.168.179.169:2638'</span>, &#123;<span class="string">'user'</span>: <span class="string">'DBA'</span>, <span class="string">'password'</span>: <span class="string">'sql'</span>&#125;</span><br><span class="line">                          ,[<span class="string">'/home/jovyan/jconn3.jar'</span>])</span><br><span class="line">c1 = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'create table aa(a int)'</span>)</span><br><span class="line">c1.execute(<span class="string">'select * from aa'</span>)</span><br><span class="line">print(c1.fetchall())</span><br><span class="line"></span><br><span class="line"><span class="comment">## Read</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'select * from aa'</span>)</span><br><span class="line">print(c1.fetchall())</span><br><span class="line"></span><br><span class="line"><span class="comment">## Update</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'insert into aa (a) values (1000)'</span>)</span><br><span class="line">c1.execute(<span class="string">'select * from aa'</span>)</span><br><span class="line">print(c1.fetchall())</span><br><span class="line"></span><br><span class="line"><span class="comment">## Delete</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'drop table aa'</span>)</span><br><span class="line">c1.execute(<span class="string">'select * from aa'</span>)</span><br><span class="line">print(c1.fetchall())</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref-5"><a href="#Ref-5" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://stackoverflow.com/questions/3319788/what-is-the-best-way-to-connect-to-a-sybase-database-from-python" target="_blank" rel="noopener">https://stackoverflow.com/questions/3319788/what-is-the-best-way-to-connect-to-a-sybase-database-from-python</a></li>
+</ul>
+<h1 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle "></a>Oracle <a name="oracle"></a></h1><ul>
+<li>jar file<ul>
+<li>ojdbc6.jar</li>
+</ul>
+</li>
+</ul>
+<h2 id="설치-패키지-6"><a href="#설치-패키지-6" class="headerlink" title="설치 패키지"></a>설치 패키지</h2><h3 id="Linux-6"><a href="#Linux-6" class="headerlink" title="Linux"></a>Linux</h3><ul>
+<li>default-jdk</li>
+</ul>
+<h3 id="Python-6"><a href="#Python-6" class="headerlink" title="Python"></a>Python</h3><ul>
+<li>jpype1==0.6.3</li>
+<li>Jaydebeapi</li>
+</ul>
+<h2 id="Code-5"><a href="#Code-5" class="headerlink" title="Code"></a>Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jpype</span><br><span class="line"><span class="keyword">import</span> jaydebeapi</span><br><span class="line"></span><br><span class="line"><span class="comment"># Connection</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#jpype.startJVM(jpype.getDefaultJVMPath(), classpath='/home/jovyan/ojdbc6.jar', convertStrings=True)</span></span><br><span class="line">conn = jaydebeapi.connect(<span class="string">'oracle.jdbc.driver.OracleDriver'</span>, <span class="string">'jdbc:oracle:thin:scott/tiger@192.168.179.167:1521:ORCL1'</span>, jars=<span class="string">'/home/jovyan/ojdbc6.jar'</span>)</span><br><span class="line"></span><br><span class="line">c1 = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'create table bb(a number)'</span>)</span><br><span class="line">c1.execute(<span class="string">'select * from bb'</span>)</span><br><span class="line">res = c1.fetchone()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Read</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'select * from emp'</span>)</span><br><span class="line">res = c1.fetchone()</span><br><span class="line">print(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Update</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'insert into bb values (1000)'</span>)</span><br><span class="line">c1.execute(<span class="string">'select * from bb'</span>)</span><br><span class="line">print(c1.fetchall())</span><br><span class="line"></span><br><span class="line"><span class="comment">## Delete</span></span><br><span class="line"></span><br><span class="line">c1.execute(<span class="string">'drop table scott.bb'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ref-6"><a href="#Ref-6" class="headerlink" title="Ref"></a>Ref</h2><ul>
+<li><a href="https://m.blog.naver.com/PostView.nhn?blogId=axzswq&logNo=221533592504&proxyReferer=https:%2F%2Fwww.google.com%2F" target="_blank" rel="noopener">https://m.blog.naver.com/PostView.nhn?blogId=axzswq&amp;logNo=221533592504&amp;proxyReferer=https:%2F%2Fwww.google.com%2F</a></li>
+<li><a href="http://blog.naver.com/PostView.nhn?blogId=delfood&logNo=221666021769&categoryNo=33&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=search" target="_blank" rel="noopener">http://blog.naver.com/PostView.nhn?blogId=delfood&amp;logNo=221666021769&amp;categoryNo=33&amp;parentCategoryNo=0&amp;viewDate=&amp;currentPage=1&amp;postListTopCurrentPage=1&amp;from=search</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/cloud-kubeflow_katib/" rel="prev" title="[Cloud] Kubeflow Katib 소개">
+      <i class="fa fa-chevron-left"></i> [Cloud] Kubeflow Katib 소개
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HDFS"><span class="nav-number">1.</span> <span class="nav-text">HDFS </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지"><span class="nav-number">1.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">1.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">1.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">1.3.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive"><span class="nav-number">2.</span> <span class="nav-text">Hive </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-1"><span class="nav-number">2.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-1"><span class="nav-number">2.2.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase"><span class="nav-number">3.</span> <span class="nav-text">HBase </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-2"><span class="nav-number">3.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-2"><span class="nav-number">3.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-2"><span class="nav-number">3.3.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Impala"><span class="nav-number">4.</span> <span class="nav-text">Impala </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-3"><span class="nav-number">4.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-3"><span class="nav-number">4.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-3"><span class="nav-number">4.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-3"><span class="nav-number">4.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-3"><span class="nav-number">4.3.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark"><span class="nav-number">5.</span> <span class="nav-text">Spark </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-4"><span class="nav-number">5.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-4"><span class="nav-number">5.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-4"><span class="nav-number">5.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-4"><span class="nav-number">5.2.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sybase"><span class="nav-number">6.</span> <span class="nav-text">Sybase </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-5"><span class="nav-number">6.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-5"><span class="nav-number">6.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-5"><span class="nav-number">6.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-4"><span class="nav-number">6.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-5"><span class="nav-number">6.3.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle"><span class="nav-number">7.</span> <span class="nav-text">Oracle </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#설치-패키지-6"><span class="nav-number">7.1.</span> <span class="nav-text">설치 패키지</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-6"><span class="nav-number">7.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-6"><span class="nav-number">7.1.2.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-5"><span class="nav-number">7.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref-6"><span class="nav-number">7.3.</span> <span class="nav-text">Ref</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jaejun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">75</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jaejun Lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/python-connection_test/";
+    this.page.identifier = "python-connection_test/";
+    this.page.title = "[Python] Jupyter Notebook 을 이용한 Hadoop 및 Database 연동";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
