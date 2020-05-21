@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/tags/Kubernetes/</loc>
+        <lastmod>2020-05-19T07:38:59.248Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/tags/Spark/</loc>
         <lastmod>2020-05-15T05:25:12.601Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,13 +26,6 @@
     <url>
         <loc>https://jx2lee.github.io/tags/Docker/</loc>
         <lastmod>2020-05-10T06:33:39.067Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/tags/Kubernetes/</loc>
-        <lastmod>2020-05-10T06:19:04.426Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/cloud-kubeflow_error/</loc>
+        <lastmod>2020-05-19T07:38:59.248Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/hadoop-introduction_to_hadoop/</loc>
         <lastmod>2020-05-15T05:29:45.181Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -154,14 +162,6 @@
     <url>
         <loc>https://jx2lee.github.io/cloud-r_hadoop_connection/</loc>
         <lastmod>2020-04-10T02:58:19.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/cloud-kubeflow_error/</loc>
-        <lastmod>2020-04-10T02:58:14.969Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -512,7 +512,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
+        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -520,7 +520,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
+        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
