@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/cloud-mount_failed/</loc>
+        <lastmod>2020-06-09T14:13:12.085Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/cloud-install_k8s/</loc>
         <lastmod>2020-06-04T06:56:56.649Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -224,7 +232,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/python-better_way_14/</loc>
+        <loc>https://jx2lee.github.io/python-better_way_20/</loc>
         <lastmod>2020-03-30T15:06:23.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -232,7 +240,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/python-better_way_20/</loc>
+        <loc>https://jx2lee.github.io/python-better_way_14/</loc>
         <lastmod>2020-03-30T15:06:23.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
