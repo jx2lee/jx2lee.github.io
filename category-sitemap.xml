@@ -8,8 +8,15 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/categories/Etc/</loc>
+        <lastmod>2020-06-11T05:21:04.006Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/categories/Cloud/</loc>
-        <lastmod>2020-06-09T14:13:12.085Z</lastmod>
+        <lastmod>2020-06-09T14:16:05.482Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -59,13 +66,6 @@
     <url>
         <loc>https://jx2lee.github.io/categories/BI/</loc>
         <lastmod>2020-03-30T15:06:23.558Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Etc/</loc>
-        <lastmod>2020-03-30T15:06:23.541Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
