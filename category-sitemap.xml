@@ -8,15 +8,22 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/categories/Etc/</loc>
-        <lastmod>2020-06-14T06:07:38.224Z</lastmod>
+        <loc>https://jx2lee.github.io/categories/TroubleShoot/</loc>
+        <lastmod>2020-06-16T02:14:49.039Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://jx2lee.github.io/categories/Cloud/</loc>
-        <lastmod>2020-06-09T14:16:05.482Z</lastmod>
+        <lastmod>2020-06-16T00:51:03.450Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Etc/</loc>
+        <lastmod>2020-06-14T06:07:38.224Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

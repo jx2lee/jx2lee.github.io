@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/troubleshoot-add_controlplane_node/</loc>
+        <lastmod>2020-06-16T02:14:49.039Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/cloud-install_k8s/</loc>
+        <lastmod>2020-06-16T00:51:03.450Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/etc-devops_interview_questions/</loc>
         <lastmod>2020-06-14T06:07:38.224Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -18,14 +34,6 @@
     <url>
         <loc>https://jx2lee.github.io/cloud-mount_failed/</loc>
         <lastmod>2020-06-09T14:16:05.482Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/cloud-install_k8s/</loc>
-        <lastmod>2020-06-04T06:56:56.649Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -536,7 +544,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
+        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -544,7 +552,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud_orphaned_pod_error/</loc>
+        <loc>https://jx2lee.github.io/cloud-manage_node/</loc>
         <lastmod>2020-03-30T15:06:23.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
