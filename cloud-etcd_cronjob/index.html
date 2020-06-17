@@ -30,7 +30,7 @@
 <meta property="og:description" content="최근 Control Plane 노드 복구 때문에 Etcd 백업에 대한 중요성을 깨달았다. 매 특정 시간 스냅샷을 찍어내는 CronJob 을 배포하는 과정을 다룬다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-16T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-06-17T02:59:06.245Z">
+<meta property="article:modified_time" content="2020-06-17T03:06:24.533Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -285,6 +285,9 @@
 <h2 id="script-실행으로-node-name-과-private-registry-주소로-yaml-변경"><a href="#script-실행으로-node-name-과-private-registry-주소로-yaml-변경" class="headerlink" title="script 실행으로 node name 과 private registry 주소로 yaml 변경"></a>script 실행으로 node name 과 private registry 주소로 yaml 변경</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./setup.sh 192.168.179.185:5000 k8s-master</span><br></pre></td></tr></table></figure>
 <h1 id="kubectl-apply-f-etcd-snapshot-yaml"><a href="#kubectl-apply-f-etcd-snapshot-yaml" class="headerlink" title="kubectl apply -f etcd_snapshot.yaml"></a><code>kubectl apply -f etcd_snapshot.yaml</code></h1><h1 id="배포-확인"><a href="#배포-확인" class="headerlink" title="배포 확인"></a>배포 확인</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get cronjob -n kube-system</span><br><span class="line">NAME          SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE</span><br><span class="line">etcd-backup   0 6 * * *   False     0        &lt;none&gt;          14m</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p><em>사용한 소스코드는 <a href="https://github.com/jx2lee/etcd-cronjob" target="_blank" rel="noopener">https://github.com/jx2lee/etcd-cronjob</a> 에서 확인 가능하다.</em></p>
+</blockquote>
 <h1 id="Refernce"><a href="#Refernce" class="headerlink" title="Refernce"></a>Refernce</h1><ul>
 <li><a href="https://labs.consol.de/kubernetes/2018/05/25/kubeadm-backup.html" target="_blank" rel="noopener">https://labs.consol.de/kubernetes/2018/05/25/kubeadm-backup.html</a></li>
 </ul>
