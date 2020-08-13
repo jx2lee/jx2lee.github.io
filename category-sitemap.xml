@@ -8,6 +8,13 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/categories/Python/</loc>
+        <lastmod>2020-08-13T02:47:07.742Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/categories/SQL/</loc>
         <lastmod>2020-08-04T04:58:14.240Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -31,13 +38,6 @@
     <url>
         <loc>https://jx2lee.github.io/categories/Etc/</loc>
         <lastmod>2020-06-19T07:48:31.292Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Python/</loc>
-        <lastmod>2020-05-28T15:41:54.225Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
