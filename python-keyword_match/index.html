@@ -30,7 +30,7 @@
 <meta property="og:description" content="프로젝트 시범 과제 중 하나인 “게시판 및 회원가입 여부 판단”을 위해 파이썬으로 모듈을 하나 작성했다. 알고리즘 자체는 정말 단순한데, 해당 게시판과 회원가입 여부에 대한 키워드를 통해 있는지 없는지만 확인하여 판단한다. 모듈 작성 배경과 간단한 테스트를 수행한다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-19T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-20T09:12:11.308Z">
+<meta property="article:modified_time" content="2020-08-20T13:23:19.605Z">
 <meta property="article:author" content="Jaejun Lee">
 <meta name="twitter:card" content="summary">
 
@@ -261,7 +261,7 @@
         <p>프로젝트 시범 과제 중 하나인 “게시판 및 회원가입 여부 판단”을 위해 파이썬으로 모듈을 하나 작성했다. 알고리즘 자체는 정말 단순한데, 해당 <code>게시판과 회원가입</code> 여부에 대한 키워드를 통해 있는지 없는지만 확인하여 판단한다. 모듈 작성 배경과 간단한 테스트를 수행한다.</p>
 <a id="more"></a>
 
-<p><strong>Contents:</strong><br><a href="#background">모듈 작생 배경</a><br><a href="#howto">어떻게 작성할까?</a><br><a href="#test">테스트 결과는요?</a><br><a href="#review">어땠어요?</a></p>
+<p><strong>Contents:</strong><br><a href="#background">모듈 작생 배경</a><br><a href="#howto">어떻게 작성할까?</a><br><a href="#test">테스트 결과는요?</a><br><a href="#review">어땠나요?</a></p>
 <h1 id="모듈-작성-배경"><a href="#모듈-작성-배경" class="headerlink" title=" 모듈 작성 배경"></a><a name="background"></a> 모듈 작성 배경</h1><p>원래 <code>키워드 매칭</code> 관련 시범과제는 주 사업자 영역인 크롤러에서 수행하기로 하였지만, 빅데이터 플랫폼을 구축하면서 <code>빅데이터 플랫폼 안에서 수행해야 그림이 이쁘지 않을까?</code> 라는 의견이 나와 우리쪽에서 수행하기로 결정하였다. 관련하여 연구소에 문의했지만, 키워드 포함 여부에 대한 연구는 이루어지지 않아 우리 팀에서 맡아 진행하기로 협의하였다.  </p>
 <p>구글링을 통해서 많은 키워드 매칭 자료를 찾았지만, <code>시범과제</code> 성격이 크기 때문에 거창한 알고리즘을 쓰지 않기로 하였다. 단순 해당 여부에 대한 키워드를 받아 이 키워드가 있는지? 없는지? 만 판단하는 쪽으로 시범과제를 수행하기로 했다.  </p>
 <p>우리는 총 2개 DB table 에서 데이터를 받기로 했다. <code>첫 번째</code> 는 <em>URL / URL 내 텍스트 / timestamp</em> 칼럼으로 이루어진 테이블이다. <code>두 번째</code> 는 <em>keyword type / keyword value (type: 해당 프로젝트에서는 <code>회원가입</code> 과 <code>게시판</code>)</em> 으로 이루어진 테이블이다. 위 테이블 데이터는 우리 제품 python API 를 이용해 dataframe 으로 가져올 수 있는 상황이다.  </p>
