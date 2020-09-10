@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/database-daily_batch_process/</loc>
+        <lastmod>2020-09-10T11:55:47.320Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/cloud-export_rook_ceph_dashboard/</loc>
-        <lastmod>2020-09-03T12:38:20.600Z</lastmod>
+        <lastmod>2020-09-03T12:38:39.589Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
