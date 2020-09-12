@@ -30,7 +30,7 @@
 <meta property="og:description" content="프로젝트 시범과제 중 [데이터 마트 구축]을 수행하면서 고객요건에 맞는 테이블을 생성하고 갱신하는 프로세스를 경험하였다. 별 어려운 내용은 없지만 내 머릿속에 저장히기 위해 글로 남겨놓는다. (도움을 주신 갓정희님께 감사의 인사를)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-09T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-12T03:28:40.765Z">
+<meta property="article:modified_time" content="2020-09-12T03:36:45.289Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Tibero">
 <meta name="twitter:card" content="summary">
@@ -274,7 +274,7 @@
 </ul>
 </li>
 <li>Source Table 에서 수정이 발생하면 이에 대한 Target Source 처리가 필요하다. 즉, 이전 날짜의 데이터에 대한 수정이 발생하면 Target Source 에 대한 반영이 필요하다.<ul>
-<li>이는 주 또는 월 단위 DEL_FLAG 변수를 활용해 삭제 또는 추가 여부를 확인하는 <code>배치 작업</code> 으로 반영할 수 있다. 단, Update period 는 협의가 필요한 상황!</li>
+<li>이는 주 또는 월 단위 DEL_FLAG 변수를 활용해 삭제 또는 추가 여부를 확인하는 <strong>배치 작업</strong> 으로 반영할 수 있다. 단, Update period 는 협의가 필요한 상황!</li>
 <li><code>HABITAUL_PRACTICE_TEMP</code> 테이블을 생성하여 마감 처리를 진행할 것이다.</li>
 </ul>
 </li>
@@ -285,7 +285,7 @@
 <ul>
 <li>PK: SEQ</li>
 <li>INDEX: DOMAIN_LINK, TFD_DATE, DEL_FLAG</li>
-<li>TEMP 테이블과 원본 테이블의 차이점은 <code>DEL_FLAG</code> 칼럼의 여부이다.</li>
+<li>TEMP 테이블과 원본 테이블의 차이점은 <strong>DEL_FLAG</strong> 칼럼의 여부이다.</li>
 </ul>
 <h1 id="주-단위-데이터-마감"><a href="#주-단위-데이터-마감" class="headerlink" title=" 주 단위 데이터 마감"></a><a name="update"></a> 주 단위 데이터 마감</h1><p>운영진에서 수정된 데이터를 반영하기 위해 주 단위 데이터를 마감할 것이다. 아래와 같은 순서로 진행하는데, 이는 실시간 수정 반영이 어려워(구조상) 고객와 협의하여 진행하였다. <em>(마감 주기, 즉 Update 반영을 한 주 전까지만 반영)</em></p>
 <h2 id="1-현재-기준-이-전-데이터-조회-후-저장"><a href="#1-현재-기준-이-전-데이터-조회-후-저장" class="headerlink" title="1) 현재 기준 이 전 데이터 조회 후 저장"></a>1) 현재 기준 이 전 데이터 조회 후 저장</h2><p><em>데이터 주 단위 갱신 마감을 위한 조회 Query</em>는 다음과 같다.</p>
