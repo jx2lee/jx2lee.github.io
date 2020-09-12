@@ -9,7 +9,7 @@
 
     <url>
         <loc>https://jx2lee.github.io/database-daily_batch_process/</loc>
-        <lastmod>2020-09-12T02:36:14.525Z</lastmod>
+        <lastmod>2020-09-12T02:43:50.815Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -432,7 +432,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/cloud-install_rook_ceph/</loc>
+        <loc>https://jx2lee.github.io/ml-introduction_to_grid_search/</loc>
         <lastmod>2020-03-30T15:06:23.567Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -440,7 +440,7 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/ml-introduction_to_grid_search/</loc>
+        <loc>https://jx2lee.github.io/cloud-install_rook_ceph/</loc>
         <lastmod>2020-03-30T15:06:23.567Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
