@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://jx2lee.github.io/database-daily_batch_process/</loc>
-        <lastmod>2020-09-12T03:37:08.241Z</lastmod>
+        <lastmod>2020-09-19T01:02:33.864Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/bi-install_superset/</loc>
+        <lastmod>2020-09-14T14:02:47.615Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -498,14 +506,6 @@
     <url>
         <loc>https://jx2lee.github.io/programmers-node/</loc>
         <lastmod>2020-03-30T15:06:23.561Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/bi-install_superset/</loc>
-        <lastmod>2020-03-30T15:06:23.558Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
