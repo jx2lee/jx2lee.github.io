@@ -30,7 +30,7 @@
 <meta property="og:description" content="프로젝트 시범과제 중 [데이터 마트 구축]을 수행하면서 고객요건에 맞는 테이블을 생성하고 갱신하는 프로세스를 경험하였다. 별 어려운 내용은 없지만 내 머릿속에 저장히기 위해 글로 남겨놓는다. (도움을 주신 갓정희님께 감사의 인사를)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-09T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-19T01:02:33.864Z">
+<meta property="article:modified_time" content="2020-09-26T13:42:14.603Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Tibero">
 <meta name="twitter:card" content="summary">
@@ -256,12 +256,18 @@
       
         <p>프로젝트 시범과제 중 <strong>[데이터 마트 구축]</strong>을 수행하면서 고객요건에 맞는 테이블을 생성하고 갱신하는 프로세스를 경험하였다. 별 어려운 내용은 없지만 내 머릿속에 저장히기 위해 글로 남겨놓는다. <em>(도움을 주신 갓정희님께 감사의 인사를)</em></p>
 <a id="more"></a>
-<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong><br><a href="#createuser">유저 생성</a><br><a href="#createtable">TARGET 테이블 생성</a><br><a href="#update">주 단위 데이터 마감</a><br><a href="#reference">Reference</a>  </p>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong></p>
+<ol>
+<li><a href="#createuser">유저 생성</a>  </li>
+<li><a href="#createtable">TARGET 테이블 생성</a>  </li>
+<li><a href="#update">주 단위 데이터 마감</a>  </li>
+<li><a href="#reference">Reference</a>  </li>
+</ol>
 <h1 id="유저-생성"><a href="#유저-생성" class="headerlink" title=" 유저 생성"></a><a name="createuser"></a> 유저 생성</h1><p>해당 테이블을 관리하는 계정을 생성하였다.</p>
 <ul>
-<li><code>user/pw</code>: mart_20/<strong>***</strong></li>
-<li><code>role</code>: connect, resource</li>
-<li>User create 문<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">--Create "MART_20" User</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> MART_20 <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'*******'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CONNECT</span>, <span class="keyword">RESOURCE</span> <span class="keyword">TO</span> MART_20;</span><br></pre></td></tr></table></figure>
+<li>user/pw: mart_20/<strong>***</strong></li>
+<li>role: connect, resource</li>
+<li>User create query<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">--Create "MART_20" User</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> MART_20 <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'*******'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CONNECT</span>, <span class="keyword">RESOURCE</span> <span class="keyword">TO</span> MART_20;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -341,7 +347,10 @@
     <a href="/cloud-export_rook_ceph_dashboard/" rel="prev" title="[Rook Ceph] Rook ceph dashboard 사용하기">
       <i class="fa fa-chevron-left"></i> [Rook Ceph] Rook ceph dashboard 사용하기
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/cloud-kubernetes_chapter_01/" rel="next" title="[Cloud] Kubernetes 란, chapter 1">
+      [Cloud] Kubernetes 란, chapter 1 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -420,7 +429,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

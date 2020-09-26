@@ -277,7 +277,7 @@ hr {
   margin: 40px 0;
 }
 blockquote {
-  border-left: 4px solid $grey-lighter;
+  border-left: 10px solid #666;
   color: var(--blockquote-color);
   margin: 0;
   padding: 0 15px;
@@ -635,22 +635,22 @@ pre .javascript .function {
   padding: 0 2px;
 }
 .post-body .label.default {
-  background: #f0f0f0;
+  background: #ececec;
 }
 .post-body .label.primary {
-  background: #efe6f7;
+  background: #ebe1f5;
 }
 .post-body .label.info {
-  background: #e5f2f8;
+  background: #dfeff6;
 }
 .post-body .label.success {
-  background: #e7f4e9;
+  background: #e2f2e4;
 }
 .post-body .label.warning {
-  background: #fcf6e1;
+  background: #fcf4dc;
 }
 .post-body .label.danger {
-  background: #fae8eb;
+  background: #f9e3e6;
 }
 .post-body .tabs {
   margin-bottom: 20px;
@@ -1214,7 +1214,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ed0dd1;
+  background: #2a4e6b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;

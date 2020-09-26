@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 배경을 시작으로 특징까지 살펴본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Cloud] Kubernetes 란, chapter 1">
+<meta property="og:url" content="https://jx2lee.github.io/cloud-kubernetes_chapter_01/index.html">
+<meta property="og:site_name" content="머릿속에 안남으니 기록하자:">
+<meta property="og:description" content="신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 배경을 시작으로 특징까지 살펴본다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg">
+<meta property="og:image" content="https://miro.medium.com/max/1050/0*kbXK4udgYykDHfgh.png">
+<meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/990BE94D5AFEF4A20F">
+<meta property="og:image" content="https://www.percona.com/community-blog/wp-content/uploads/2019/07/kubernetes-growth.jpg">
+<meta property="article:published_time" content="2020-10-23T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-26T13:39:15.492Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg">
+
+<link rel="canonical" href="https://jx2lee.github.io/cloud-kubernetes_chapter_01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Cloud] Kubernetes 란, chapter 1 | 머릿속에 안남으니 기록하자:</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="머릿속에 안남으니 기록하자:" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">머릿속에 안남으니 기록하자:</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jaejun-lee-3287b0137/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubernetes_chapter_01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="머릿속에 안남으니 기록하자:">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Cloud] Kubernetes 란, chapter 1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-24 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-24T00:00:00+09:00">2020-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/cloud-kubernetes_chapter_01/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubernetes_chapter_01/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 배경을 시작으로 특징까지 살펴본다.</p>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">배경</a></li>
+<li><a href="#subject02">그럼 왜 Kubernetes 가 떴을까?</a></li>
+<li><a href="#subject03">Kubernetes ?</a></li>
+<li><a href="#subject04">Kubernetes 특징</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="배경"><a href="#배경" class="headerlink" title=" 배경"></a><a name="subject01"></a> 배경</h1><p><img src="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg" alt="kubernetes.io"></p>
+<center><U>[그림] 배포 환경의 변화</U></center>
+
+<p>컨테이너 기반의 환경은 서비스 배포에 장점이 있고 마이크로 서비스 아키텍쳐(MSA)에 부합한 듯 싶지만, 가상 머신으로도 충분히 패키징이 가능하고 로컬의 개발환경을 동기화 시키는 일은 vagrant 로도 충분하였다.</p>
+<blockquote>
+<ul>
+<li>MSA: 소프트웨어 개발 기법 중 하나로 전체 어플리케이션을 특정 목적을 가진 어플리케이션 단위로 나눈 것, 단위 어플리케이션 간 약한 결합도와 강한 응집도를 목표로 한다.</li>
+<li>vargrant: 간소화한 VM 관리 서비스로 가상 머신과 로컬간의 동기화 서비스도 제공한다.</li>
+</ul>
+</blockquote>
+<p>그리고 결정적으로 컨테이너를 운용하기 위한 관리 환경이 성숙하지 않았다. Mesos DC/OS, Docker Swarm, Kubernetes 등 다양한 환경이 나오기는 하였지만 기능적으로 부족하며 어떤 플랫폼이 대세라고 정해지지 않았다.</p>
+<blockquote>
+<ul>
+<li>Mesos DC/OS: Apache Mesos 분산 시스템 커널을 기반으로하는 오픈 소스, <a href="http://www.kb-sys.co.kr/file/KBSYS_DCOS.pdf" target="_blank" rel="noopener">참고자료</a></li>
+<li>Docker Swarm: 도커가 공식적으로 개발한 Container Orchestration </li>
+</ul>
+</blockquote>
+<p>그럼에도 컨테이너 환경으로 바뀐 이유가 무엇일까? 두 꼭지로 살펴보면 다음과 같다.</p>
+<p><strong>MSA의 발전:</strong><br>MSA(Micro Service Architecture)가 단순 개념에서 발전하기 시작하며 이를 구현하기 위한 다양한 인프라 플랫폼들이 등장하기 시작했다.</p>
+<p><img src="https://miro.medium.com/max/1050/0*kbXK4udgYykDHfgh.png" alt="Micro Service Architecture 예시"></p>
+<center><U>[그림] Micro Service Architecture 예시- 전체 애플리케이션을 특정 단위 애플리케이션으로 분리한 모습을 확인할 수 있다.</U></center>
+
+<p>또한, 서비스 크기가 작아지며 CPU 1~2 Core 로도 운영할 수 있는 서비스들이 등장하면서 이를 VM 환경에서 서비스 하기엔 리소스 낭비가 심해졌다.</p>
+<blockquote>
+<ul>
+<li>VM 환경을 위해서 필요한 이미지 크기가 크고, 다양한 서비스를 VM으로 관리 배포하기에는 속도 등에서 효율적이지 못하다.</li>
+</ul>
+</blockquote>
+<p><strong>솔루션 발전 및 DevOps 안착:</strong><br>서비스 배포 방식도 VM 혹은 컨테이너 단위로 배포하는 피닉스 서버 패턴이 등장하였고 이를 구현하기 위한 Spinnaker와 같은 솔루션이 등장하였다. 또한, 지능형 라우팅과 분산 트렌젝션 로그 추적을 하는 기능들이 Envoy 라는 솔루션으로 나오고 이를 중앙 통제하기 위한 Istio.io 와 같은 Service Mesh 솔루션 까지 주목을 받기 시작하였다.</p>
+<blockquote>
+<ul>
+<li>Phoenix Server Patern: SW 테스트를 위해 변경한 설정을 현 서버에 적용하는 것이 아닌 OS설치부터 SW 설치-설정 변경까지 다시 &gt; 반복하는 패턴을 의미한다.</li>
+<li>Envoy: 대형 MSA의 단일 Application과 Service를 위해 설계된 고성능 분산 c++프록시</li>
+<li>Istio.io: Envoy proxy를 사용하며 이를 컨트롤 해주는 Control Plane의 오픈소스 솔루션, <a href="https://gruuuuu.github.io/cloud/service-mesh-istio/#" target="_blank" rel="noopener">참고자료</a></li>
+</ul>
+</blockquote>
+<p>DevOps 개념도 나온지 오래되었지만, 운영을 DevOps라는 이름으로 바꾼 것일뿐 실제적인 변화가 없는 팀들이 많았다고 한다. 또는 DevOps라는 이름 아래 개발팀이 개발과 운영 역할을 병행해서 하는 사례가 오히려 많았다.</p>
+<p>이런 DevOps의 개념도 근래 들어 개발팀이 개발과 시스템에 대한 배포/운영을 담당한다면, DevOps 팀은 개발팀이 이를 편리하게 사용할 수 있게끔 플랫폼과 자동화를 하는데 목표를 두는 역할로 구분지어졌다.</p>
+<h1 id="그럼-왜-Kubernetes-가-떴을까"><a href="#그럼-왜-Kubernetes-가-떴을까" class="headerlink" title=" 그럼 왜 Kubernetes 가 떴을까?"></a><a name="subject02"></a> 그럼 왜 Kubernetes 가 떴을까?</h1><p>컨테이너 운용 환경은 오픈소스에 의해 표준없이 혼돈상태였는데, 2017년 말을 기점으로 Kubernetes가 de-facto 표준으로 자리잡았다. 아래 트랜드 그래프를 보면 알 수 있듯 kubernetes의 트랜드가 지속적으로 올라가서 가장 높은 것을 확인할 수 있다. 추가로 github repo star 통계에 대해서도 2015 년을 기점으로 크게 증가하여 2018년 말에는 엄청 큰 차이를 보이고 있다.</p>
+<p><img src="https://t1.daumcdn.net/cfile/tistory/990BE94D5AFEF4A20F" alt="Container Trends"></p>
+<center><U>[그림] Container Orchestration Trends</U></center>  
+
+<p><img src="https://www.percona.com/community-blog/wp-content/uploads/2019/07/kubernetes-growth.jpg" alt="Container solution Trend about github repo start"></p>
+<center><U>[그림] github repo star for Container Orchestration</U></center>
+
+<h1 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title=" Kubernetes ?"></a><a name="subject03"></a> Kubernetes ?</h1><ul>
+<li>컨테이너 운영환경 중 가장 널리 사용되는 솔루션이다. <em>(약어로 k8s, 8의 의미는 k와 s사이 알파벳 갯수)</em></li>
+<li>구글의 내부 컨테이너 서비스를 Borg라고 하는데 이 구조를 오픈소스화 한 것이다.</li>
+<li>GO 언어로 구현하였다. <em><a href="https://golang.org" target="_blank" rel="noopener">golang</a></em></li>
+<li>벤더나 플랫폼에 종속되지 않기 때문에 <strong>Public Cloud</strong> <em>(Google, Amazone, MS Azure)</em> 와 <strong>Private CLoud 및 베어메탈 환경</strong> <em>(가상화 환경을 사용하지 않는 일반 서버 하드웨어, like 깡통)</em> 에서 구축 가능<ul>
+<li>이러한 이유로 Hybrid Cloud 환경 가능 <em>(Private + Public)</em></li>
+</ul>
+</li>
+<li>다양한 Container Runtime 제공<ul>
+<li>Docker 또한 Container Runitme 으로 사용가능하지만, CRI-O 가 현재 Kubernetes 를 위한 표준 Container Runtime 으로 자리잡고 있다.</li>
+<li>관련 자료<ul>
+<li><a href="http://www.opennaru.com/kubernetes/cri-o/" target="_blank" rel="noopener">http://www.opennaru.com/kubernetes/cri-o/</a></li>
+<li><a href="https://www.samsungsds.com/global/ko/support/insights/docker.html" target="_blank" rel="noopener">https://www.samsungsds.com/global/ko/support/insights/docker.html</a></li>
+<li><a href="https://bcho.tistory.com/1353" target="_blank" rel="noopener">https://bcho.tistory.com/1353</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Kubernetes-특징"><a href="#Kubernetes-특징" class="headerlink" title=" Kubernetes 특징"></a><a name="subject04"></a> Kubernetes 특징</h1><ul>
+<li>상태관리 : 상태를 선언하고 선언한 상태를 계속해서 유지한다. 노드가 죽거나 Container 응답이 없을 경우, 자동으로 새로운 Container 를 실행하거나 자동으로 특정 상태에 도달하지 못한 Conatiner 를 중지하는 등 <strong>선언한 상태를 계속해서 유지</strong>한다.</li>
+<li>스케줄링 : 어떤 노드에 Container 를 실행할지 고민하지 않아도 Kubernetes 조건에 맞는 노드를 찾아서 Conatiner 를 배치한다. <em>(특정 노드에 실행하게 조건 설정도 가능하다)</em></li>
+<li>클러스터 : 가상 네트워크를 통해 통신하기 때문에 하나의 서버처럼 관리할 수 있다.</li>
+<li>서비스 디스커버리 : 서로 다른 서비스를 쉽게 찾고 통신할 수 있습니다.</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a href="https://bcho.tistory.com/1255" target="_blank" rel="noopener">쿠버네티스 #1 - 소개</a></li>
+<li><a href="https://ooeunz.tistory.com/84" target="_blank" rel="noopener">[Kubernetes] 쿠버네티스의 등장 배경</a></li>
+<li><a href="https://medium.com/@shaul1991/%EC%B4%88%EB%B3%B4%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%BC%EC%A7%80-%EB%8C%80%EC%84%B8-msa-%EB%84%88-%EB%AD%90%EB%8B%88-efba5cfafdeb" target="_blank" rel="noopener">[초보개발자 일지] 대세 MSA? 너 뭐니?</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/database-daily_batch_process/" rel="prev" title="[Database] 일 단위 적재 프로세스 훑어보기">
+      <i class="fa fa-chevron-left"></i> [Database] 일 단위 적재 프로세스 훑어보기
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#배경"><span class="nav-number">1.</span> <span class="nav-text"> 배경</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#그럼-왜-Kubernetes-가-떴을까"><span class="nav-number">2.</span> <span class="nav-text"> 그럼 왜 Kubernetes 가 떴을까?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes"><span class="nav-number">3.</span> <span class="nav-text"> Kubernetes ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-특징"><span class="nav-number">4.</span> <span class="nav-text"> Kubernetes 특징</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JaeJun Lee</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/cloud-kubernetes_chapter_01/";
+    this.page.identifier = "cloud-kubernetes_chapter_01/";
+    this.page.title = "[Cloud] Kubernetes 란, chapter 1";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
