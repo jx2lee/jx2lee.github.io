@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 Kubernetes 아키텍쳐를 간략히 소개한다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Cloud] Kubernetes 아키텍처에 대해">
+<meta property="og:url" content="https://jx2lee.github.io/cloud-kubernetes_chapter_02.md/index.html">
+<meta property="og:site_name" content="머릿속에 안남으니 기록하자:">
+<meta property="og:description" content="신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 Kubernetes 아키텍쳐를 간략히 소개한다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://v1-17.docs.kubernetes.io/images/docs/components-of-kubernetes.png">
+<meta property="og:image" content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%253A%252F%252Fblog.kakaocdn.net%252Fdn%252Fp1EBb%252FbtqFzG1OW7a%252FjeUxSY32E5zpaBEE3mEB1k%252Fimg.png">
+<meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/9997504A5B1D3F0F05">
+<meta property="og:image" content="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%253A%252F%252Fblog.kakaocdn.net%252Fdn%252FmVW7g%252FbtqFNFa7u1E%252FRTURWaMRdcLNpDzxj3GAwk%252Fimg.png">
+<meta property="og:image" content="https://blog.kakaocdn.net/dn/VxcCs/btqEsYpkShG/bmYxdIKPS6ELBe1asDwFT0/img.png">
+<meta property="og:image" content="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%252C376&ssl=1">
+<meta property="article:published_time" content="2020-10-27T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-28T13:59:33.663Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://v1-17.docs.kubernetes.io/images/docs/components-of-kubernetes.png">
+
+<link rel="canonical" href="https://jx2lee.github.io/cloud-kubernetes_chapter_02.md/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Cloud] Kubernetes 아키텍처에 대해 | 머릿속에 안남으니 기록하자:</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="머릿속에 안남으니 기록하자:" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">머릿속에 안남으니 기록하자:</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jaejun-lee-3287b0137/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/cloud-kubernetes_chapter_02.md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="머릿속에 안남으니 기록하자:">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Cloud] Kubernetes 아키텍처에 대해
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-28 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-28T00:00:00+09:00">2020-10-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/cloud-kubernetes_chapter_02.md/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="cloud-kubernetes_chapter_02.md/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>신입 직원 교육자료를 위해 작성한 Kubernetes 소개 자료이다. 많은 블로그를 참고하여 작성하였고, 이번 장에는 Kubernetes 아키텍쳐를 간략히 소개한다.</p>
+<a id="more"></a>
+
+<p><strong>Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">Architecture</a></li>
+<li><a href="#subject02">Control Plane (Master)</a><ul>
+<li><a href="#subject03">특징 및 기능</a></li>
+<li><a href="#subject04">Component in Control Plane Node</a></li>
+</ul>
+</li>
+<li><a href="#subject05">Worker Node</a><ul>
+<li><a href="#subject06">특징 및 기능</a></li>
+<li><a href="#subject07">Component in Worker Node</a></li>
+</ul>
+</li>
+<li><a href="#subject08">Object</a><ul>
+<li><a href="#subject09">Basic Object</a></li>
+<li><a href="#subject10">Controller</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title=" Architecture"></a><a name="subject01"></a> Architecture</h1><p><img src="https://v1-17.docs.kubernetes.io/images/docs/components-of-kubernetes.png" alt="kubernetes Architecture ver1.17"></p>
+<center><U>[그림] kubernetes architecture ver1.17</U></center>
+
+<p>클러스터를 관리하는 <strong>Controlplane</strong> 와 컨테이너가 배포되는 머신 <em>(가상머신이거나 실제 서버)</em> 인 <strong>Worker Node</strong>로 구성한다. Control Plane <em>(한글 번역 시 Master 라고 나와있는데 Control Plane == Master 라고 생각하면 된다.)</em> 과 Worker Node 를 확인하고 Kubernetes 내에서의 Object 를 살펴본다.</p>
+<h2 id="Control-Plane-Master"><a href="#Control-Plane-Master" class="headerlink" title=" Control Plane (Master)"></a><a name="subject02"></a> Control Plane <em>(Master)</em></h2><h3 id="특징-및-기능"><a href="#특징-및-기능" class="headerlink" title=" 특징 및 기능"></a><a name="subject03"></a> 특징 및 기능</h3><ul>
+<li>관리자만 접속하여 보안 설정이 필요하다.</li>
+<li>Conrol Plane Node 다운이 발생하면 클러스터 관리에 장애가 생기므로 보통 3대로 구성하여 클러스터를 구성한다.<ul>
+<li>홀수대로 구성하는 이유는 컨테이너 배포에 대한 voting 를 수월하게 하기 위함이라고 한다.</li>
+</ul>
+</li>
+<li>소규모 환경에서는 Control Plane 과 Worker Node 를 분리하지 않고 같은 서버에 구성한다. 즉, Control Plane 이면서 동시에 컨테이너를 띄운다고 생각하면 된다.</li>
+</ul>
+<h3 id="Component-in-Control-Plane-Node"><a href="#Component-in-Control-Plane-Node" class="headerlink" title=" Component in Control Plane Node"></a><a name="subject04"></a> Component in Control Plane Node</h3><p><U>API server</U>:  </p>
+<ul>
+<li>모든 컴포넌트 간 통신의 메카이다.</li>
+<li>kubectl 요청 및 내부 모듈의 요청을 처리한다. kubectl 명령어는 Control Plane 에서만 가능하다. <em>(물론 설치는 모든 노드에서 수행한다.)</em></li>
+<li>권한 체크를 통해 요청을 허용하거나 거부한다.</li>
+<li>Etcd 를 기반으로 필요한 데이터를 조회한다.</li>
+<li>RESTful API 제공한다.</li>
+</ul>
+<p><U>Etcd</U>:  </p>
+<ul>
+<li>분산형 key/value 오픈소스 Storage.</li>
+<li>Kubernetes cluster의 DB 역할을 하는 서버로 설정값이나 cluster 상태를 저장한다.</li>
+<li>Etcd 백업을 통해 클러스터 상태 복구가 가능하다. <em>(ex. 오늘 컨트롤 플레인이 사망했다. 이를 복구할 수 있는 방법은 백업한 Etcd 스냅샷을 기반으로 클러스터에 조인할 수 있다.)</em></li>
+</ul>
+<p><U>kube-scheduler</U>:  </p>
+<ul>
+<li>할당이 필요한 Pod를 여러 조건(source, label)에 따라 적절한 노드에 할당하는 역할을 한다. </li>
+</ul>
+<p><U>kube-controller-manager</U>:  </p>
+<ul>
+<li>Kubernetes 의 Basic object (Pod, ReplicaSet, Deployment 등) 상태들을 관리한다. </li>
+</ul>
+<p><U>cloud-controller-manager</U>:  </p>
+<ul>
+<li>오픈 클라우드 서비스와 연결하여 관리하는 controller manger 라고 생각하면 된다.</li>
+<li>AWS, GCE, Azure 등의 클라우드 특화</li>
+</ul>
+<blockquote>
+<p>이번 자료를 준비하면서 안 사실은 api-server, etcd, kube-scheduler, kube-controller-manager 요놈이 container 단위로 실행하여 관리하는 줄 알았는데 막상 보니 아니었다. <code>ps -ef |grep {each_component}</code> 를 수행하면 다음과 같다.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~<span class="comment"># ps -ef|grep -E "kube-apiserver|etcd|kube-controller-manager|kube-scheduler"</span></span><br><span class="line">root      3368  3311  1 Aug31 ?        10:17:51 kube-apiserver --advertise-address=192.&gt; 168.179.185 --allow-privileged=<span class="literal">true</span> --authorization-mode=Node,RBAC ...</span><br><span class="line">root      3584  3554  1 Aug31 ?        05:58:22 etcd --advertise-client-urls=https://192.&gt; 168.179.173:2379 --cert-file=/etc/kubernetes/pki/etcd/server.crt ...</span><br><span class="line">root      3677  3636  0 Aug31 ?        00:20:07 kube-controller-manager &gt; --allocate-node-cidrs=<span class="literal">true</span> --authentication-kubeconfig=/etc/kubernetes/&gt; controller-manager.conf ... </span><br><span class="line">root      3678  3626  0 Aug31 ?        00:38:15 kube-scheduler --<span class="built_in">bind</span>-address=127.0.0.1 &gt; --kubeconfig=/etc/kubernetes/scheduler.conf --leader-elect=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Worker-Node"><a href="#Worker-Node" class="headerlink" title=" Worker Node"></a><a name="subject05"></a> Worker Node</h2><h3 id="특징-및-기능-1"><a href="#특징-및-기능-1" class="headerlink" title=" 특징 및 기능"></a><a name="subject06"></a> 특징 및 기능</h3><ul>
+<li>Pod를 생성하고 네트워크와 볼륨을 설정합니다. kubelet 이라는 kubernetes Agent 를 통해 “어떤 조건을 만족하는 Pod 를 띄워!” 라는 임무를 받는다.</li>
+<li>실제 컨테이너를 생성하는 서버이다. 노예라고 생각하면 편하다.</li>
+<li>각 서버에 라벨을 붙여 사용목적에 따라 나눌 수 있다. 예를들어, GPU 노드로만 사용하여 이 리소스를 사용하는 서비스만 배포하고자 하면 yaml 작성 시 관련 label 을 설정한다. </li>
+</ul>
+<h3 id="Component-in-Worker-Node"><a href="#Component-in-Worker-Node" class="headerlink" title=" Component in Worker Node"></a><a name="subject07"></a> Component in Worker Node</h3><p><U>kubelet</U>:  </p>
+<ul>
+<li>클러스터 내 모든 노드로 배포되는 Agent 이다. Control Plane 에도 배포하지만 Control Plane 에 작성하면 너무 없어보일까 Worker Node 에 작성하였다.</li>
+<li>노드에 할당한 Pod 생명주기를 관리하다.</li>
+<li>Pod 안 컨테이너 상태를 체크하고 주기적으로 Master에 전달한다.</li>
+<li>Control Plane 의 API서버와 통신을 하고 임무를 받게되면 노드가 수행해야 할 임무를 수행한다.</li>
+</ul>
+<p><U>kube-proxy</U>:  </p>
+<ul>
+<li>kubelet이 pod를 관리한다면 kube-proxy는 Pod로 연결되는 네트워크를 관리한다. <em>(네트워크 트래픽 분산)</em></li>
+</ul>
+<h2 id="Object"><a href="#Object" class="headerlink" title=" Object"></a><a name="subject08"></a> Object</h2><p>Kubernets는 상태를 관리하기 위한 대상을 Object라 칭하며 크게 Basic Object(기본 오브젝트)와 Controller(컨트롤러)로 구분한다. </p>
+<h3 id="Basic-Object"><a href="#Basic-Object" class="headerlink" title=" Basic Object"></a><a name="subject09"></a> Basic Object</h3><p>Basic Object 는 Namespace, Pod, Service, Volume 4가지가 존재한다.</p>
+<p><U>Namespace</U>:  </p>
+<ul>
+<li>Kubernetes cluster 내 논리적인 구분 단위이다. Pod, Service 등을 namespace 별로 생성하고 관리할 수 있으며, user 권한 역시 namespace 별 부여<del>(고구려)</del>할 수 있다.</li>
+<li>예를 들어 서비스 테스트를 위해 세 개의 namepsace 를 생성하여 각각 테스트가 가능하다. 대신, 논리적으로 분리했기 때문에 두 namepsace 간 파드의 통신이 가능하다. 따라서 높은 수준의 분리를 원하면 클러스터 자체를 분리하는 것을 권장한다.</li>
+<li>namespace 내 object 명은 유일해야하지만 전체 namespace 내 object 명은 유일하지 않아도 된다. 예를 들어, A namespace 내 Pod 이름을 test 로 배포하면 B namespace 내 Pod 이름을 test 로 배포할 수 있다.</li>
+<li>예시: kubernetes cluster 내 namespace 리스트를 확인한다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~<span class="comment"># kubectl get namespace</span></span><br><span class="line"></span><br><span class="line">NAME               STATUS   AGE</span><br><span class="line">anonymous          Active   23d</span><br><span class="line">default            Active   191d</span><br><span class="line">hyperdata          Active   170d</span><br><span class="line">istio-system       Active   23d</span><br><span class="line">kfserving-system   Active   23d</span><br><span class="line">knative-serving    Active   23d</span><br><span class="line">kube-node-lease    Active   191d</span><br><span class="line">kube-public        Active   191d</span><br><span class="line">kube-system        Active   191d</span><br><span class="line">kubeflow           Active   23d</span><br><span class="line">metallb-system     Active   171d</span><br><span class="line">nps                Active   191d</span><br><span class="line">rook-ceph          Active   24d</span><br><span class="line">tibero             Active   7d23h</span><br></pre></td></tr></table></figure>
+
+<p><U>Pod</U>:  </p>
+<ul>
+<li>Kubernetes의 최소 실행 단위이다.</li>
+<li>Kubernetes는 컨테이너를 개별적으로 배포하는 것이 아니라 Pod 단위로 배포한다. 즉, 여러 개 컨테이너가 하나의 Pod 로 배포할 수도 있고 하나의 컨테이너를 하나의 Pod 로 배포할 수 있다. <em>(후자의 경우 Pod concept 과 맞지 않아 지양해야 할 부분이다)</em></li>
+<li>Pod 내 네트워크 환경(IP, Port)과 디스크(Volume) 공유한다.<blockquote>
+<p>A Container(Port 8080)와 B Container(Port 7001)가 하나의 Pod로 배포되었을때, localhost:{각 포트}를 통해 두 컨테이너 간 통신이 가능하다.</p>
+</blockquote>
+</li>
+<li>디스크를 공유하고 있기 때문에 다른 두 성격의 컨테이너를 배포할 때 타 컨테이너의 파일을 읽을 수 있다.</li>
+<li>YAML / JSON 형식으로 선언(config)하는데, 주로 선언할 때는 YAML 을 주로 사용한다.</li>
+</ul>
+<p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fp1EBb%2FbtqFzG1OW7a%2FjeUxSY32E5zpaBEE3mEB1k%2Fimg.png" alt="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fp1EBb%2FbtqFzG1OW7a%2FjeUxSY32E5zpaBEE3mEB1k%2Fimg.png"></p>
+<p><U>Service</U>:  </p>
+<ul>
+<li>Pod 는 Controller 에 의해 관리되는데, 만약 노드 내 장애가 발생하여 다른 노드에 Pod 를 재 배포하게되면 Pod 의 IP가 변경된다. 이렇게 Pod IP가 변경되는 것을 방지하고자 IP를 특정하기 위해 사용하는 것이 Service다.</li>
+<li>label 과 label selector 를 이용하여 같은 서비스로 묶을 파드를 정의할 수 있고, 같은 서비스로 묶이면 고정 주소를 이용해 묶인 파드간 통신을 원활히 할 수 있다.</li>
+<li>Service Type<ul>
+<li>ClusterIP: kubernetes cluster 내에서만 사용가능한 IP로 외부에서는 접근이 불가하다.</li>
+<li>NodePort: cluster 내 모든 노드의 지정된 포트를 할당하는 방식이다. 예를 들어, A 노드에 떠있는 a 파드로 접근하고 싶을 때 a 파드를 NodePort 서비스로 묶어주면 B 노드 IP:Port 로 접근할 수 있다.</li>
+<li>LoadBalancer: NodePort 의 확장으로 서비스 IP, 등 외부로 노출하고자 하는 특정 IP 를 이용하여 외부에서 특정 IP를 통해 접근할 수 있는 Service Type 이다.</li>
+<li>ExternalName: 외부 서비스를 Kubernetes 내부에 호출하고자 할 때 사용하는 Service Type 이다. <em>(사용을 안해봤다..)</em></li>
+</ul>
+</li>
+</ul>
+<p><U>Volume</U>  </p>
+<ul>
+<li>Container 재시작에 상관없이 파일을 영구적으로 저장해야하는 스토리지이다. Pod 내 Container 들은 해당 디스크를 공유하여 사용할 수 있다.</li>
+<li>종류:<ul>
+<li>emptyDir: Pod 와 함께 생성하고 사라지는 임시 볼륨이다.</li>
+<li>hostPath: 해당 노드의 디스크 경로를 Pod 에 마운트하여 사용하는 방식이다. 해당 노드 디스크 경로가 존재하지는 꼭 확인이 필요하다.</li>
+</ul>
+</li>
+<li>Kubernetes 에서는 emptyDir, hostPath 이외에 PV(PersistentVolumne) 와 PVC(PersistentVolumnClaim) 라는 추상화한 개념을 사용하고 있다. Pod 와 별도의 생명주기를 가지고 있어 해당 볼륨을 물고 있는 Pod 가 죽더라도 PV 또는 PVC 를 지우지 않는 한 데이터는 소멸하지 않는다. 쉽게 말해 노트북 디스크를 효율적으로 사용하기 위해 외장 하드를 이용한다고 생각하자. <ul>
+<li>PV: 클러스터 내에서 자원으로 다뤄지는 볼륨 자체를 의미한다. 하나의 저장소로 생각하자.</li>
+<li>PVC: 사용자가 PV에 요청하는 것입니다. 얼만큼, 읽고쓰기가 가능한 지 spec 을 정의하여 배포하면 그에 맞는 PV가 생성된다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://t1.daumcdn.net/cfile/tistory/9997504A5B1D3F0F05" alt="https://t1.daumcdn.net/cfile/tistory/9997504A5B1D3F0F05"></p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title=" Controller"></a><a name="subject10"></a> Controller</h3><ul>
+<li>Controller 는 다중 Pod 를 생성하고 관리하는 역할로 클러스터 내에서 replication handling, rollout 등의 기능을 제공한다. 예를 들어, 클러스터 내 한 Node 가 다운되었을 경우 Controller 는 다른 노드에 해당 파드를 배포(스케쥴링) 함으로써 관리한다. 굉장히 많은 Controller 가 있는데 그 중에서 ReplicaSet, Deployment, DaemonSet 을 살펴본다.</li>
+</ul>
+<p><U>ReplicaSet</U>  </p>
+<ul>
+<li>Pod 를 복제하여 생성하고 이를 지속적으로 유지하는 Controller 이다. 실행하고자 하는 Pod 의 가용성을 보장하기 위해 원하는 갯수만큼 설정하여 배포하면, 그 갯수만큼 Pod 가 실행되게끔 관리하는 Controller 이다.</li>
+<li>직접적으로 사용하기 보단 Deployment 등 다른 오브젝트에 의해 사용되는 경우가 많다.</li>
+<li>예시: nginx 이미지를 기반으로 하는 컨테이너 <em>(이 예시는 1 container == 1 pod)</em> 를 spec.replicas value 만큼 유지하세요.</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-replicaset</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">test-replicaset</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">test-replicaset</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test-replicaset</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">test-replicaset</span></span><br></pre></td></tr></table></figure>
+
+<p><U>Deployment</U>  </p>
+<ul>
+<li>Kubernetes 에서 상태가 없는(stateless) 앱을 배포할 때 가장 기본적인 컨트롤러, 이전 버젼에서는 ReplicaSet 이 담당했지만 이제는 Deployment 가 담당한다.</li>
+<li>Pod 개수를 유지하는 것 뿐 아니라 무중단 배포를 위한 방식 <em>(blue/green deployment, canary deployment, rolling deployment)</em> 을 제공한다. ReplicaSet 과 비교하면 Pod 개수 유지는 같지만 추가적으로 무중단 배포 방식을 설정할 수 있다.</li>
+<li>deployment 배포 시 업데이트 방식을 설정할 수 있다. <em>(조대협님 블로그에 따르면 가장 많이 사용하는 배포 방식이며, 따로 설정하지 않으면 rolling 배포를 수행한다. <a href="https://bcho.tistory.com/1266" target="_blank" rel="noopener">참고</a>)</em></li>
+</ul>
+<blockquote>
+<p>무중단 배포방식: <a href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/" target="_blank" rel="noopener">참고자료</a></p>
+</blockquote>
+<p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmVW7g%2FbtqFNFa7u1E%2FRTURWaMRdcLNpDzxj3GAwk%2Fimg.png" alt="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmVW7g%2FbtqFNFa7u1E%2FRTURWaMRdcLNpDzxj3GAwk%2Fimg.png"></p>
+<p><U>DaemonSet</U>  </p>
+<ul>
+<li>클러스터 전체에 Pod를 띄워주는 Controller 이다. Daemonset 을 배포하면 항상 그 Pod 가 전체 노드에 배포한다.</li>
+<li>새롭게 노드가 추가되었을때 자동으로 Pod 를 배포한다.</li>
+<li>반대로 노드가 클러스터에서 빠졌을 때 그 노드에 있던 포드는 그대로 사라지고 다른 곳으로 옮겨가서 배포하진 않는다.<ul>
+<li>이러한 특징 때문에 보통 로그수집기를 실행하거나 모니터링용 데몬등 클러스터 전체에 항상 실행시켜 두어야 할 때 사용한다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blog.kakaocdn.net/dn/VxcCs/btqEsYpkShG/bmYxdIKPS6ELBe1asDwFT0/img.png" alt="https://blog.kakaocdn.net/dn/VxcCs/btqEsYpkShG/bmYxdIKPS6ELBe1asDwFT0/img.png"></p>
+<p><U>StatefulSet</U>  </p>
+<ul>
+<li>앞서 살펴본 Controller 와 달리 상태를 가지고 있는 Pod 들을 관리하는 Controller 로, 볼륨을 사용해 특정 데이터를 기록해두고 Pod 가 재시작 해도 유지할 수 있다.</li>
+<li>여러 Pod 를 배포할 때 순서를 지정하여 순서대로 배포할 수 있다.</li>
+<li>Pod 이름을 연속성 있게 설정할 수 있다. <em>(name-number 와 같이 표현)</em></li>
+<li>각 Pod 에 대한 PVC 를 설정할 수 있는 장점이 있다.</li>
+</ul>
+<p><img src="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&ssl=1" alt="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&amp;ssl=1"></p>
+<p>이외 Job, Garbage Collection 등의 Controller 가 존재하지만 여기까지만 정리한다. 추가적으로 깊게 파고들어야 할 부분이 있으면 다음 포스트로 작성하겠다.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a href="https://ooeunz.tistory.com/118" target="_blank" rel="noopener">https://ooeunz.tistory.com/118</a></li>
+<li><a href="https://www.slideshare.net/lahuman1/kubernetes-object" target="_blank" rel="noopener">https://www.slideshare.net/lahuman1/kubernetes-object</a></li>
+<li><a href="https://bcho.tistory.com/1259" target="_blank" rel="noopener">https://bcho.tistory.com/1259</a></li>
+<li><a href="https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/" target="_blank" rel="noopener">https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/</a></li>
+<li><a href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/" target="_blank" rel="noopener">https://perfectacle.github.io/2019/04/21/non-stop-deployment/</a></li>
+<li><a href="https://arisu1000.tistory.com/27834" target="_blank" rel="noopener">https://arisu1000.tistory.com/27834</a></li>
+<li><a href="https://www.joinc.co.kr/w/man/12/kubernetes/overview" target="_blank" rel="noopener">https://www.joinc.co.kr/w/man/12/kubernetes/overview</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/cloud-kubernetes_chapter_01/" rel="prev" title="[Cloud] Kubernetes 소개">
+      <i class="fa fa-chevron-left"></i> [Cloud] Kubernetes 소개
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Architecture"><span class="nav-number">1.</span> <span class="nav-text"> Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Control-Plane-Master"><span class="nav-number">1.1.</span> <span class="nav-text"> Control Plane (Master)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#특징-및-기능"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 특징 및 기능</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component-in-Control-Plane-Node"><span class="nav-number">1.1.2.</span> <span class="nav-text"> Component in Control Plane Node</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worker-Node"><span class="nav-number">1.2.</span> <span class="nav-text"> Worker Node</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#특징-및-기능-1"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 특징 및 기능</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Component-in-Worker-Node"><span class="nav-number">1.2.2.</span> <span class="nav-text"> Component in Worker Node</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object"><span class="nav-number">1.3.</span> <span class="nav-text"> Object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Object"><span class="nav-number">1.3.1.</span> <span class="nav-text"> Basic Object</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller"><span class="nav-number">1.3.2.</span> <span class="nav-text"> Controller</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jaejuning" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jaejuning" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JaeJun Lee</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/cloud-kubernetes_chapter_02.md/";
+    this.page.identifier = "cloud-kubernetes_chapter_02.md/";
+    this.page.title = "[Cloud] Kubernetes 아키텍처에 대해";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
