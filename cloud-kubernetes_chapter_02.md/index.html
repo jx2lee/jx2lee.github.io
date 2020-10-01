@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://blog.kakaocdn.net/dn/VxcCs/btqEsYpkShG/bmYxdIKPS6ELBe1asDwFT0/img.png">
 <meta property="og:image" content="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%252C376&ssl=1">
 <meta property="article:published_time" content="2020-10-27T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-28T13:59:33.663Z">
+<meta property="article:modified_time" content="2020-10-01T04:22:17.067Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -316,12 +316,13 @@
 </ul>
 <p><U>kube-controller-manager</U>:  </p>
 <ul>
-<li>Kubernetes 의 Basic object (Pod, ReplicaSet, Deployment 등) 상태들을 관리한다. </li>
+<li><del>Kubernetes 의 Object (Pod, ReplicaSet, Deployment 등) 상태들을 관리한다.</del></li>
+<li>Kubernetes 의 Controller 실행을 담당한다.</li>
 </ul>
 <p><U>cloud-controller-manager</U>:  </p>
 <ul>
 <li>오픈 클라우드 서비스와 연결하여 관리하는 controller manger 라고 생각하면 된다.</li>
-<li>AWS, GCE, Azure 등의 클라우드 특화</li>
+<li>AWS, GCE, Azure 등의 클라우드 특화되어 있다고 한다!</li>
 </ul>
 <blockquote>
 <p>이번 자료를 준비하면서 안 사실은 api-server, etcd, kube-scheduler, kube-controller-manager 요놈이 container 단위로 실행하여 관리하는 줄 알았는데 막상 보니 아니었다. <code>ps -ef |grep {each_component}</code> 를 수행하면 다음과 같다.  </p>
@@ -341,7 +342,9 @@
 </ul>
 <p><U>kube-proxy</U>:  </p>
 <ul>
-<li>kubelet이 pod를 관리한다면 kube-proxy는 Pod로 연결되는 네트워크를 관리한다. <em>(네트워크 트래픽 분산)</em></li>
+<li>Kubernetes 내부 별도의 가상 네트워크를 설정하고 관리하는데, 이러한 가상 네트워크가 동작할 수 있게 하는 역할을 한다.</li>
+<li>호스트의 <em>(각 노드의)</em> 네트워크 규칙을 관리하고 connection forwarding 을 수행한다.</li>
+<li><a href="https://arisu1000.tistory.com/27839" target="_blank" rel="noopener">참고자료</a></li>
 </ul>
 <h2 id="Object"><a href="#Object" class="headerlink" title=" Object"></a><a name="subject08"></a> Object</h2><p>Kubernets는 상태를 관리하기 위한 대상을 Object라 칭하며 크게 Basic Object(기본 오브젝트)와 Controller(컨트롤러)로 구분한다. </p>
 <h3 id="Basic-Object"><a href="#Basic-Object" class="headerlink" title=" Basic Object"></a><a name="subject09"></a> Basic Object</h3><p>Basic Object 는 Namespace, Pod, Service, Volume 4가지가 존재한다.</p>
@@ -432,7 +435,6 @@
 <li>각 Pod 에 대한 PVC 를 설정할 수 있는 장점이 있다.</li>
 </ul>
 <p><img src="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&ssl=1" alt="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&amp;ssl=1"></p>
-<p>이외 Job, Garbage Collection 등의 Controller 가 존재하지만 여기까지만 정리한다. 추가적으로 깊게 파고들어야 할 부분이 있으면 다음 포스트로 작성하겠다.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
 <li><a href="https://ooeunz.tistory.com/118" target="_blank" rel="noopener">https://ooeunz.tistory.com/118</a></li>
 <li><a href="https://www.slideshare.net/lahuman1/kubernetes-object" target="_blank" rel="noopener">https://www.slideshare.net/lahuman1/kubernetes-object</a></li>
