@@ -8,8 +8,15 @@
     </url>
 
     <url>
+        <loc>https://jx2lee.github.io/categories/Linux/</loc>
+        <lastmod>2020-10-03T14:14:42.565Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/categories/Cloud/</loc>
-        <lastmod>2020-10-01T04:22:17.067Z</lastmod>
+        <lastmod>2020-10-03T13:50:53.848Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
