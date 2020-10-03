@@ -22,15 +22,19 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="머릿속에 안남으니 기록하자:">
-<meta property="og:url" content="https://jx2lee.github.io/archives/2019/page/3/index.html">
+  <meta name="description" content="pytorch 관련 프로젝트를 clone 하여 해보던 중에, requirements.txt 내 torch&#x3D;&#x3D;1.5.0+cu101 부분에서 에러가 발생하였다. 에러를 피하고 제대로 설치해보자!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[TroubleShoot] PyTorch 1.5.0+cu101 버젼 설치 시 에러">
+<meta property="og:url" content="https://jx2lee.github.io/troubleshoot-torch_error/index.html">
 <meta property="og:site_name" content="머릿속에 안남으니 기록하자:">
+<meta property="og:description" content="pytorch 관련 프로젝트를 clone 하여 해보던 중에, requirements.txt 내 torch&#x3D;&#x3D;1.5.0+cu101 부분에서 에러가 발생하였다. 에러를 피하고 제대로 설치해보자!">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-02T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-03T14:29:56.984Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://jx2lee.github.io/archives/2019/page/3/">
+<link rel="canonical" href="https://jx2lee.github.io/troubleshoot-torch_error/">
 
 
 <script id="page-configurations">
@@ -38,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | 머릿속에 안남으니 기록하자:</title>
+  <title>[TroubleShoot] PyTorch 1.5.0+cu101 버젼 설치 시 에러 | 머릿속에 안남으니 기록하자:</title>
   
 
 
@@ -183,240 +187,135 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/troubleshoot-torch_error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="머릿속에 안남으니 기록하자:">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [TroubleShoot] PyTorch 1.5.0+cu101 버젼 설치 시 에러
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-03T00:00:00+09:00">2020-10-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TroubleShoot/" itemprop="url" rel="index"><span itemprop="name">TroubleShoot</span></a>
+                </span>
+            </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Good! 90 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/troubleshoot-torch_error/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="troubleshoot-torch_error/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
-    </div>
+        <p>pytorch 관련 프로젝트를 clone 하여 해보던 중에, requirements.txt 내 torch==1.5.0+cu101 부분에서 에러가 발생하였다. 에러를 피하고 제대로 설치해보자!</p>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">error 메시지</a></li>
+<li><a href="#subject02">해결은 은근 쉽네요?</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="error-메시지"><a href="#error-메시지" class="headerlink" title=" error 메시지"></a><a name="subject01"></a> error 메시지</h1><p><strong>pip install -r requirements.txt</strong> 로 관련 패키지 설치 시 아래와 같은 에러를 맞이하였다.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Could not find a version that satisfies the requirement torch==1.5.0+cu101 (from -r requirements.txt (line 59)) (from versions: 0.1.2, 0.1.2.post1, 0.1.2.post2, 0.3.1, 0.4.0, 0.4.1, 1.0.0, 1.0.1, 1.0.1.post2, 1.1.0, 1.2.0, 1.3.0, 1.3.1, 1.4.0, 1.5.0, 1.5.1, 1.6.0)</span><br><span class="line">ERROR: No matching distribution found <span class="keyword">for</span> torch==1.5.0+cu101 (from -r requirements.txt (line 59))</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h1 id="해결은-은근-쉽네요"><a href="#해결은-은근-쉽네요" class="headerlink" title=" 해결은 은근 쉽네요?"></a><a name="subject02"></a> 해결은 은근 쉽네요?</h1><p>별 거 없었다. pip install 시 -f 옵션을 이용해 stable version 을 찾아가 직접 다운로드 할 수 있다.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install torch==1.5.0+cu101 torchvision==0.6.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-23T00:00:00+09:00"
-              content="2019-10-23">
-          10-23
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-olap/" itemprop="url">
-            <span itemprop="name">[Database] OLAP</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-22T00:00:00+09:00"
-              content="2019-10-22">
-          10-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-introduction_to_hadoop/" itemprop="url">
-            <span itemprop="name">[Hadoop] Hadoop Overview</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-18T00:00:00+09:00"
-              content="2019-10-18">
-          10-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/programmers-tortoise/" itemprop="url">
-            <span itemprop="name">[Python] 등굣길</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-15T00:00:00+09:00"
-              content="2019-10-15">
-          10-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-print_prime_number/" itemprop="url">
-            <span itemprop="name">[SQL] Print Prime Number</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-14T00:00:00+09:00"
-              content="2019-10-14">
-          10-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-symmetric_pairs_draw_triangle_1/" itemprop="url">
-            <span itemprop="name">[SQL] Symmetric Pairs & Draw The Triangle 1</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-10T00:00:00+09:00"
-              content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-project_planning/" itemprop="url">
-            <span itemprop="name">[SQL] SQL Project Planning</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-10T00:00:00+09:00"
-              content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-contest_leaderboard/" itemprop="url">
-            <span itemprop="name">[SQL] Contest Leaderboard</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-07T00:00:00+09:00"
-              content="2019-10-07">
-          10-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-challenges/" itemprop="url">
-            <span itemprop="name">[SQL] Challenges</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-07T00:00:00+09:00"
-              content="2019-10-07">
-          10-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/programmers-disk_controller/" itemprop="url">
-            <span itemprop="name">[Python] 단어 변환</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-07T00:00:00+09:00"
-              content="2019-10-07">
-          10-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-ollivanders_inventory/" itemprop="url">
-            <span itemprop="name">[SQL] Ollivander's Inventory</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<ul>
+<li><strong>f 옵션:</strong> html 파일의 URL 또는 경로를 이용해 패키지를 설치</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a href="https://huvso.github.io/2020/07/02/python-pip-option.html" target="_blank" rel="noopener">https://huvso.github.io/2020/07/02/python-pip-option.html</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/linux-change_timezone/" rel="prev" title="[Linux] Timezone 변경">
+      <i class="fa fa-chevron-left"></i> [Linux] Timezone 변경
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/linux-ssh_nopasswd/" rel="next" title="[Linux] ssh 비밀번호 묻지마!">
+      [Linux] ssh 비밀번호 묻지마! <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/2019/">1</a><a class="page-number" href="/archives/2019/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2019/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/6/">6</a><a class="extend next" rel="next" href="/archives/2019/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  
+  
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -463,6 +362,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#error-메시지"><span class="nav-number">1.</span> <span class="nav-text"> error 메시지</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#해결은-은근-쉽네요"><span class="nav-number">2.</span> <span class="nav-text"> 해결은 은근 쉽네요?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -597,6 +497,26 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/troubleshoot-torch_error/";
+    this.page.identifier = "troubleshoot-torch_error/";
+    this.page.title = "[TroubleShoot] PyTorch 1.5.0+cu101 버젼 설치 시 에러";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
 </script>
 
 </body>
