@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-linkedin">
 
-    <a href="https://www.linkedin.com/in/jaejun-lee-3287b0137/" rel="noopener" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -394,7 +394,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Private-registry-생성"><span class="nav-number">1.</span> <span class="nav-text">Private registry 생성</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-이미지를-Pull-하고-container-를-기동한다"><span class="nav-number">1.1.</span> <span class="nav-text">registry 이미지를 Pull 하고 container 를 기동한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-push"><span class="nav-number">2.</span> <span class="nav-text">Image push</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tar-파일로-묶은-이미지를-docker-load-i-tar-name-으로-이미지를-생성하고-이를-registry-에-push-한다"><span class="nav-number">2.1.</span> <span class="nav-text">tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-확인"><span class="nav-number">3.</span> <span class="nav-text">Image 확인</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-에-해당-이미지가-존재하는지-curl-명령어로-확인한다"><span class="nav-number">3.1.</span> <span class="nav-text">registry 에 해당 이미지가 존재하는지 curl 명령어로 확인한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image-Pull-amp-Push-스크립트"><span class="nav-number">4.</span> <span class="nav-text">Docker Image Pull &amp; Push 스크립트</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Private-registry-%EC%83%9D%EC%84%B1"><span class="nav-number">1.</span> <span class="nav-text">Private registry 생성</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-Pull-%ED%95%98%EA%B3%A0-container-%EB%A5%BC-%EA%B8%B0%EB%8F%99%ED%95%9C%EB%8B%A4"><span class="nav-number">1.1.</span> <span class="nav-text">registry 이미지를 Pull 하고 container 를 기동한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-push"><span class="nav-number">2.</span> <span class="nav-text">Image push</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tar-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EB%AC%B6%EC%9D%80-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-docker-load-i-tar-name-%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-%EC%83%9D%EC%84%B1%ED%95%98%EA%B3%A0-%EC%9D%B4%EB%A5%BC-registry-%EC%97%90-push-%ED%95%9C%EB%8B%A4"><span class="nav-number">2.1.</span> <span class="nav-text">tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-%ED%99%95%EC%9D%B8"><span class="nav-number">3.</span> <span class="nav-text">Image 확인</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-%EC%97%90-%ED%95%B4%EB%8B%B9-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EC%A1%B4%EC%9E%AC%ED%95%98%EB%8A%94%EC%A7%80-curl-%EB%AA%85%EB%A0%B9%EC%96%B4%EB%A1%9C-%ED%99%95%EC%9D%B8%ED%95%9C%EB%8B%A4"><span class="nav-number">3.1.</span> <span class="nav-text">registry 에 해당 이미지가 존재하는지 curl 명령어로 확인한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image-Pull-amp-Push-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8"><span class="nav-number">4.</span> <span class="nav-text">Docker Image Pull &amp; Push 스크립트</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

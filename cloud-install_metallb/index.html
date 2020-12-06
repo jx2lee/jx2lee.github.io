@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-linkedin">
 
-    <a href="https://www.linkedin.com/in/jaejun-lee-3287b0137/" rel="noopener" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -388,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-란"><span class="nav-number">1.</span> <span class="nav-text">Metallb 란</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MetalLB는-표준-라우팅-프로토콜을-사용하여-베어-메탈-깡통-Kubernetes-클러스터에-대한-로드-밸런서-구현-이라고-한다-표준-네트워크-장비와-통합되는-네트워크-LB-구현을-제공하여-베어-메탈-클러스터의-외부-서비스도-가능하게-만들어주는-것을-목표로-한다"><span class="nav-number">1.1.</span> <span class="nav-text">MetalLB는 표준 라우팅 프로토콜을 사용하여 베어 메탈 (깡통) Kubernetes 클러스터에 대한 로드 밸런서 구현 이라고 한다. 표준 네트워크 장비와 통합되는 네트워크 LB 구현을 제공하여 베어 메탈 클러스터의 외부 서비스도 가능하게 만들어주는 것을 목표로 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-설치"><span class="nav-number">2.</span> <span class="nav-text">Metallb 설치</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-Configmap-배포"><span class="nav-number">3.</span> <span class="nav-text">Metallb Configmap 배포</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#서비스-배포-후-확인"><span class="nav-number">4.</span> <span class="nav-text">서비스 배포 후 확인</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-%EB%9E%80"><span class="nav-number">1.</span> <span class="nav-text">Metallb 란</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MetalLB%EB%8A%94-%ED%91%9C%EC%A4%80-%EB%9D%BC%EC%9A%B0%ED%8C%85-%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EB%B2%A0%EC%96%B4-%EB%A9%94%ED%83%88-%EA%B9%A1%ED%86%B5-Kubernetes-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0%EC%97%90-%EB%8C%80%ED%95%9C-%EB%A1%9C%EB%93%9C-%EB%B0%B8%EB%9F%B0%EC%84%9C-%EA%B5%AC%ED%98%84-%EC%9D%B4%EB%9D%BC%EA%B3%A0-%ED%95%9C%EB%8B%A4-%ED%91%9C%EC%A4%80-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%9E%A5%EB%B9%84%EC%99%80-%ED%86%B5%ED%95%A9%EB%90%98%EB%8A%94-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-LB-%EA%B5%AC%ED%98%84%EC%9D%84-%EC%A0%9C%EA%B3%B5%ED%95%98%EC%97%AC-%EB%B2%A0%EC%96%B4-%EB%A9%94%ED%83%88-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0%EC%9D%98-%EC%99%B8%EB%B6%80-%EC%84%9C%EB%B9%84%EC%8A%A4%EB%8F%84-%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C-%EB%A7%8C%EB%93%A4%EC%96%B4%EC%A3%BC%EB%8A%94-%EA%B2%83%EC%9D%84-%EB%AA%A9%ED%91%9C%EB%A1%9C-%ED%95%9C%EB%8B%A4"><span class="nav-number">1.1.</span> <span class="nav-text">MetalLB는 표준 라우팅 프로토콜을 사용하여 베어 메탈 (깡통) Kubernetes 클러스터에 대한 로드 밸런서 구현 이라고 한다. 표준 네트워크 장비와 통합되는 네트워크 LB 구현을 제공하여 베어 메탈 클러스터의 외부 서비스도 가능하게 만들어주는 것을 목표로 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-%EC%84%A4%EC%B9%98"><span class="nav-number">2.</span> <span class="nav-text">Metallb 설치</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metallb-Configmap-%EB%B0%B0%ED%8F%AC"><span class="nav-number">3.</span> <span class="nav-text">Metallb Configmap 배포</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%B0%B0%ED%8F%AC-%ED%9B%84-%ED%99%95%EC%9D%B8"><span class="nav-number">4.</span> <span class="nav-text">서비스 배포 후 확인</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
