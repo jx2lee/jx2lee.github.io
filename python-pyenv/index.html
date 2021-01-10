@@ -22,19 +22,19 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="tzdata 패키지를 설치하고 기존 UTC timezone 을 KST 로 변경하는 과정을 살펴본다.">
+  <meta name="description" content="MacOS 에서 pyenv 를 이용해 Python 개발 환경을 구축한다.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Linux] Timezone 변경">
-<meta property="og:url" content="https://jx2lee.github.io/linux-change_timezone/index.html">
+<meta property="og:title" content="[Python] Python 환경 구축 with pyenv">
+<meta property="og:url" content="https://jx2lee.github.io/python-pyenv/index.html">
 <meta property="og:site_name" content="go hard">
-<meta property="og:description" content="tzdata 패키지를 설치하고 기존 UTC timezone 을 KST 로 변경하는 과정을 살펴본다.">
+<meta property="og:description" content="MacOS 에서 pyenv 를 이용해 Python 개발 환경을 구축한다.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-02T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-03T14:14:42.565Z">
+<meta property="article:published_time" content="2021-01-09T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-10T08:07:36.572Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://jx2lee.github.io/linux-change_timezone/">
+<link rel="canonical" href="https://jx2lee.github.io/python-pyenv/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>[Linux] Timezone 변경 | go hard</title>
+  <title>[Python] Python 환경 구축 with pyenv | go hard</title>
   
 
 
@@ -204,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/linux-change_timezone/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/python-pyenv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -217,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          [Linux] Timezone 변경
+          [Python] Python 환경 구축 with pyenv
         </h1>
 
         <div class="post-meta">
@@ -227,14 +227,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-10-03 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-03T00:00:00+09:00">2020-10-03</time>
+              <time title="Created: 2021-01-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-10T00:00:00+09:00">2021-01-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-03 23:14:42" itemprop="dateModified" datetime="2020-10-03T23:14:42+09:00">2020-10-03</time>
+                <time title="Modified: 2021-01-10 17:07:36" itemprop="dateModified" datetime="2021-01-10T17:07:36+09:00">2021-01-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,7 +242,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
                 </span>
             </span>
 
@@ -255,8 +255,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/linux-change_timezone/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="linux-change_timezone/" itemprop="commentCount"></span>
+    <a title="disqus" href="/python-pyenv/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="python-pyenv/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -270,26 +270,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>tzdata</strong> 패키지를 설치하고 기존 UTC timezone 을 KST 로 변경하는 과정을 살펴본다.</p>
+        <p>MacOS 에서 pyenv 를 이용해 Python 개발 환경을 구축한다.</p>
 <a id="more"></a>
 <p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
 <ol>
-<li><a href="#subject01">패키지 설치</a></li>
-<li><a href="#subject02">Symbolic link 설정 및 패키지 재설정</a></li>
-<li><a href="#reference">Reference</a></li>
+<li><a href="#subject01">Install brew</a></li>
+<li><a href="#subject02">Install pyenv</a></li>
+<li><a href="#subject03">Set env</a><ul>
+<li><a href="#subject04">export PATH</a></li>
+<li><a href="#subject05">가 설치 패키지 (권장)</a></li>
+</ul>
+</li>
+<li><a href="#subject06">Install Python)</a><ul>
+<li><a href="#subject07">global python 설정 후 가상환경 세팅 (with virtualenvwrapper))</a></li>
+<li><a href="#subject08">Set config)</a><blockquote>
+<p><a href="#reference">Reference</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
 </ol>
-<h1 id="패키지-설치"><a href="#패키지-설치" class="headerlink" title=" 패키지 설치"></a><a name="subject01"></a> 패키지 설치</h1><p>Ubuntu 패키지 매니저인 apt 를 이용하여 tzdata 를 설치한다.  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install tzdata</span><br></pre></td></tr></table></figure>
+<h1 id="Install-brew"><a href="#Install-brew" class="headerlink" title=" Install brew"></a><a name="subject01"></a> Install brew</h1><p><code>$ ruby -e &quot;$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/master/install](https://raw.githubusercontent.com/Homebrew/install/master/install))&quot;</code></p>
+<blockquote>
+<p><em>이미 존재하면 homebrew 설치는 생략한다.</em></p>
+</blockquote>
+<h1 id="Install-pyenv"><a href="#Install-pyenv" class="headerlink" title=" Install pyenv"></a><a name="subject02"></a> Install pyenv</h1><p><code>$ brew install pyenv</code></p>
+<h1 id="Set-env"><a href="#Set-env" class="headerlink" title=" Set env"></a><a name="subject03"></a> Set env</h1><h2 id="export-PATH"><a href="#export-PATH" class="headerlink" title=" export PATH"></a><a name="subject04"></a> export PATH</h2><p><code>$ echo &#39;eval &quot;$(pyenv init -)&quot;&#39; &gt;&gt; ~/.zshrc</code></p>
+<ul>
+<li><p>PATH 환경 변수를 관리하기 위해 pyenv를 시작하고 환경에 나타나는 첫 번째 버전과 달리 실행할 Python 버전을 삽입할 수 있다고 한다.</p>
+<ul>
+<li><p>환경변수 세팅을 안하고 진행을 해보니, 나중에 virtualenvwrapper 패키지 사용 시 virtual path not found error 를 반환하므로 꼭 추가하시길 바랍니다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; mkvirtualenv t</span><br><span class="line">ERROR: virtualenvwrapper could not find virtualenv <span class="keyword">in</span> your path</span><br><span class="line"><span class="comment"># after set eval command..</span></span><br><span class="line">❯ mkvirtualenv t</span><br><span class="line">created virtual environment CPython3.7.9.final.0-64 <span class="keyword">in</span> 220ms</span><br><span class="line">  creator CPython3Posix(dest=/Users/nhn/workspace/programming/python/.virtualenvs/t, clear=False, no_vcs_ignore=False, global=False)</span><br><span class="line">  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/Users/nhn/Library/Application Support/virtualenv)</span><br><span class="line">    added seed packages: pip==20.3.1, setuptools==51.0.0, wheel==0.36.1</span><br><span class="line">  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator</span><br><span class="line">virtualenvwrapper.user_scripts creating /Users/nhn/workspace/programming/python/.virtualenvs/t/bin/predeactivate</span><br><span class="line">virtualenvwrapper.user_scripts creating /Users/nhn/workspace/programming/python/.virtualenvs/t/bin/postdeactivate</span><br><span class="line">virtualenvwrapper.user_scripts creating /Users/nhn/workspace/programming/python/.virtualenvs/t/bin/preactivate</span><br><span class="line">virtualenvwrapper.user_scripts creating /Users/nhn/workspace/programming/python/.virtualenvs/t/bin/postactivate</span><br><span class="line">virtualenvwrapper.user_scripts creating /Users/nhn/workspace/programming/python/.virtualenvs/t/bin/get_env_details</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>bash 환경일 경우 <code>.bashrc</code> 에 삽입하도록 한다.</p>
+</li>
+</ul>
+<h2 id="추가-설치-패키지-권장"><a href="#추가-설치-패키지-권장" class="headerlink" title=" 추가 설치 패키지 (권장)"></a><a name="subject05"></a> 추가 설치 패키지 (권장)</h2><p><code>$ brew install zlib sqlite</code></p>
+<ul>
+<li><p>zlib 압축 알고리즘과 SQLite 데이터베이스는 pyenv의 종속된 패키지</p>
+</li>
+<li><p>올바르게 구성되지 않을 경우 빌드 문제를 일으키는 경우가 많다고 한다. 설치 후 아래와 같은 환경 변수를 적용한다.</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ export LDFLAGS=<span class="string">&quot;-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib&quot;</span></span><br><span class="line">$ export CPPFLAGS=<span class="string">&quot;-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="Symbolic-link-설정-및-패키지-재설정"><a href="#Symbolic-link-설정-및-패키지-재설정" class="headerlink" title=" Symbolic link 설정 및 패키지 재설정"></a><a name="subject02"></a> Symbolic link 설정 및 패키지 재설정</h1><p>default timezone UTC 에서 KST 로 바꾸기 위해 link 를 생성한다.  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime</span><br><span class="line">$ date</span><br><span class="line">Fri Sep 18 13:19:40 KST 2020</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Install-Python"><a href="#Install-Python" class="headerlink" title=" Install Python"></a><a name="subject06"></a> Install Python</h1><p><code>$ pyenv install —list</code> 명령어로 설치 가능한 리스트를 확인하고 설치를 진행한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; pyenv install --list | grep 3.7.</span><br><span class="line">  3.7.0</span><br><span class="line">  3.7-dev</span><br><span class="line">  3.7.1</span><br><span class="line">  3.7.2</span><br><span class="line">  3.7.3</span><br><span class="line">  3.7.4</span><br><span class="line">  3.7.5</span><br><span class="line">  3.7.6</span><br><span class="line">  3.7.7</span><br><span class="line">  3.7.8</span><br><span class="line">  3.7.9</span><br><span class="line">  miniconda-3.7.0</span><br><span class="line">  miniconda3-3.7.0</span><br><span class="line">  stackless-3.7.5</span><br><span class="line">&gt; pyenv install 3.7.9</span><br></pre></td></tr></table></figure>
 
-<p>이후 재 설정을 위해 아래 커맨드를 실행하여 timezone 이 KST 로 적용하였는지 확인한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg-reconfigure tzdata</span><br></pre></td></tr></table></figure>
+<h2 id="global-python-설정-후-가상환경-세팅-with-virtualenvwrapper"><a href="#global-python-설정-후-가상환경-세팅-with-virtualenvwrapper" class="headerlink" title=" global python 설정 후 가상환경 세팅 (with virtualenvwrapper)"></a><a name="subject07"></a> global python 설정 후 가상환경 세팅 (with virtualenvwrapper)</h2><p><code>$ pyenv global 3.7.9</code></p>
+<ul>
+<li>python 버젼을 3.7.9 로 세팅</li>
+</ul>
+<p><code>$ $(pyenv which python3) -m pip install virtualenvwrapper</code></p>
+<ul>
+<li>global python 버젼으로 virtualenvwrapper 패키지 설치</li>
+</ul>
+<h2 id="Set-config"><a href="#Set-config" class="headerlink" title=" Set config"></a><a name="subject08"></a> Set config</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;export WORKON_HOME=~/workspace/programming/python/.virtualenvs&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;mkdir -p $WORKON_HOME&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;. ~/.pyenv/versions/3.7.9/bin/virtualenvwrapper.sh&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line">$ <span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 
-<p>끝!</p>
+<p>이후 <code>mkvirtualenv</code> 커맨드를 통해 가상환경을 생성하고 작업을 진행하면 된다.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
-<li><a href="https://www.lesstif.com/lpt/ubuntu-linux-timezone-setting-61899162.html" target="_blank" rel="noopener">https://www.lesstif.com/lpt/ubuntu-linux-timezone-setting-61899162.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://opensource.com/article/19/6/python-virtual-environments-mac">https://opensource.com/article/19/6/python-virtual-environments-mac*</a></li>
 </ul>
 <hr>
 <p>made by <em>jaejun.lee</em></p>
@@ -308,13 +350,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/linux-ssh_nopasswd/" rel="prev" title="[Linux] ssh 비밀번호 묻지마!">
-      <i class="fa fa-chevron-left"></i> [Linux] ssh 비밀번호 묻지마!
+    <a href="/hadoop-troubleshoot_hadoop_client/" rel="prev" title="[Hadoop] Hadoop Client 환경 구성 시 발생한 에러 정리">
+      <i class="fa fa-chevron-left"></i> [Hadoop] Hadoop Client 환경 구성 시 발생한 에러 정리
     </a></div>
-      <div class="post-nav-item">
-    <a href="/cloud-crio_registry_setting/" rel="next" title="[Cloud] cri-o 컨테이너 런타임 사용 시 docker registry 세팅">
-      [Cloud] cri-o 컨테이너 런타임 사용 시 docker registry 세팅 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -380,7 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><span class="nav-number">1.</span> <span class="nav-text"> 패키지 설치</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Symbolic-link-%EC%84%A4%EC%A0%95-%EB%B0%8F-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9E%AC%EC%84%A4%EC%A0%95"><span class="nav-number">2.</span> <span class="nav-text"> Symbolic link 설정 및 패키지 재설정</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-brew"><span class="nav-number">1.</span> <span class="nav-text"> Install brew</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-pyenv"><span class="nav-number">2.</span> <span class="nav-text"> Install pyenv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Set-env"><span class="nav-number">3.</span> <span class="nav-text"> Set env</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#export-PATH"><span class="nav-number">3.1.</span> <span class="nav-text"> export PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%B6%94%EA%B0%80-%EC%84%A4%EC%B9%98-%ED%8C%A8%ED%82%A4%EC%A7%80-%EA%B6%8C%EC%9E%A5"><span class="nav-number">3.2.</span> <span class="nav-text"> 추가 설치 패키지 (권장)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-Python"><span class="nav-number">4.</span> <span class="nav-text"> Install Python</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#global-python-%EC%84%A4%EC%A0%95-%ED%9B%84-%EA%B0%80%EC%83%81%ED%99%98%EA%B2%BD-%EC%84%B8%ED%8C%85-with-virtualenvwrapper"><span class="nav-number">4.1.</span> <span class="nav-text"> global python 설정 후 가상환경 세팅 (with virtualenvwrapper)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-config"><span class="nav-number">4.2.</span> <span class="nav-text"> Set config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -520,9 +559,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://jx2lee.github.io/linux-change_timezone/";
-    this.page.identifier = "linux-change_timezone/";
-    this.page.title = "[Linux] Timezone 변경";
+    this.page.url = "https://jx2lee.github.io/python-pyenv/";
+    this.page.identifier = "python-pyenv/";
+    this.page.title = "[Python] Python 환경 구축 with pyenv";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
