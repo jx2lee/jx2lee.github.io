@@ -3,6 +3,13 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/tags/Kubeflow/</loc>
+        <lastmod>2021-01-24T15:10:56.372Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/tags/Review/</loc>
         <lastmod>2021-01-14T07:25:28.760Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -19,13 +26,6 @@
     <url>
         <loc>https://jx2lee.github.io/tags/Kubernetes/</loc>
         <lastmod>2020-10-29T14:38:30.347Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/tags/Kubeflow/</loc>
-        <lastmod>2020-10-29T14:38:28.109Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
