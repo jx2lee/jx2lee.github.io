@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/12892/1443818798-51909e977d-1.png">
 <meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/12892/1443818693-b384c24e35-2.png">
 <meta property="article:published_time" content="2019-10-13T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.550Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Hackerrank">
 <meta name="twitter:card" content="summary">
@@ -238,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -296,7 +296,7 @@
 
 <p>Write a query to print the pattern  <em>P(20)</em>.</p>
 <h2 id="접근-1"><a href="#접근-1" class="headerlink" title="접근"></a>접근</h2><p><em>사용자 정의 변수</em>를 이용해 접근하였다.<br><code>i</code>라는 변수를 21로 선언하고, <code>repeat</code>함수를 이용해 <code>i &gt; 0</code>일 때까지 반복하는 쿼리를 작성하였다. 4문장으로 쉽게 풀리는 문제인데, <em>사용자 정의 변수</em>에 대해 다시 한 번 생각해보자는 의미로 정리하였고 다음에는 꼭 틀리지 말자.</p>
-<h2 id="해결-1"><a href="#해결-1" class="headerlink" title="해결"></a>해결</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @i = <span class="number">21</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">repeat</span>(<span class="string">'* '</span>, @i := @i - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">from</span> information_schema.tables</span><br><span class="line"><span class="keyword">where</span> @i &gt; <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="해결-1"><a href="#해결-1" class="headerlink" title="해결"></a>해결</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> @i = <span class="number">21</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">repeat</span>(<span class="string">&#x27;* &#x27;</span>, @i := @i - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">from</span> information_schema.tables</span><br><span class="line"><span class="keyword">where</span> @i &gt; <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 <hr>
 <p>2019.10.14 made by <em>jaejun.lee</em></p>
 

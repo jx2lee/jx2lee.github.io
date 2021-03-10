@@ -30,7 +30,7 @@
 <meta property="og:description" content="K8s namespace를 삭제하다보면 state가 Terminating이면서 get namespace 결과에 계속 남아있는 문제가 발생하는데, 이를 해결하는 방법을 다룬다. Updata Note    2020.03.13 : Advanced 추가 (shell script)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-02-03T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-24T14:34:59.240Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-24 23:34:59" itemprop="dateModified" datetime="2020-09-24T23:34:59+09:00">2020-09-24</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,21 +282,21 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get ns</span><br><span class="line">NAME              STATUS        AGE</span><br><span class="line">default           Active        2d21h</span><br><span class="line">istio-system      Active        6h40m</span><br><span class="line">knative-serving   Active        6h40m</span><br><span class="line">kube-node-lease   Active        2d21h</span><br><span class="line">kube-public       Active        2d21h</span><br><span class="line">kube-system       Active        2d21h</span><br><span class="line">rook-ceph         Terminating   16m</span><br></pre></td></tr></table></figure>
 
 <p>Terminating 중인 네임스페이스를 한 번 더 지우는 명령어를 수행하면 에러가 발생한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error from server (Conflict): Operation cannot be fulfilled on namespaces <span class="string">"rook-ceph"</span>: The system is ensuring all content is removed from this namespace.  Upon completion, this namespace will automatically be purged by the system.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error from server (Conflict): Operation cannot be fulfilled on namespaces <span class="string">&quot;rook-ceph&quot;</span>: The system is ensuring all content is removed from this namespace.  Upon completion, this namespace will automatically be purged by the system.</span><br></pre></td></tr></table></figure>
 
 <h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><p>해당 Namespace의 yaml 파일을 살펴보면, <code>.spec/finalizers</code>  부분에 Kubernetes라 명시되어 있다. 이를 빈 공백으로 바꾸고 적용하는 순서로 진행한다.</p>
 <ul>
-<li><code>jq</code> 패키지를 설치하고 <em>(apt get install jq)</em> 아래 명령어를 수행한다.<br><code>kubectl get namespace $NAMESPACE -o json |jq &#39;.spec = {&quot;finalizers&quot;:[]}&#39; &gt; temp.json</code></li>
+<li><code>jq</code> 패키지를 설치하고 <em>(apt get install jq)</em> 아래 명령어를 수행한다.<br><code>kubectl get namespace $NAMESPACE -o json |jq &#39;.spec = &#123;&quot;finalizers&quot;:[]&#125;&#39; &gt; temp.json</code></li>
 <li>명령어를 수행한 디렉토리에 <code>temp.json</code>이 생성되는데, 이를 yaml 파일로 적용할 것이다. 이때 필요한 Ip/port를 아래 명령어로 확인한다.<br><code>kubectl proxy &amp;</code></li>
-<li>curl 명령어로 수정사항을 반영한다.<br><code>curl -k -H &quot;Content-Type: application/json&quot; -X PUT --data-binary @temp.json http://127.0.0.1:8001/api/v1/namespaces/{Namespace-name}/finalize</code></li>
+<li>curl 명령어로 수정사항을 반영한다.<br><code>curl -k -H &quot;Content-Type: application/json&quot; -X PUT --data-binary @temp.json http://127.0.0.1:8001/api/v1/namespaces/&#123;Namespace-name&#125;/finalize</code></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get namespaces</span><br><span class="line">NAME              STATUS   AGE</span><br><span class="line">default           Active   2d21h</span><br><span class="line">istio-system      Active   6h43m</span><br><span class="line">knative-serving   Active   6h43m</span><br><span class="line">kube-node-lease   Active   2d21h</span><br><span class="line">kube-public       Active   2d21h</span><br><span class="line">kube-system       Active   2d21h</span><br></pre></td></tr></table></figure>
 
 <h1 id="Advanced-Shell-script"><a href="#Advanced-Shell-script" class="headerlink" title="(Advanced) Shell script"></a>(Advanced) Shell script</h1><p>이런 에러가 발생할 때마다 일일이 찾기 귀찮아서 쉘 스크립트 공부도 할 겸 <code>deleteNS.sh</code> 스크립트를 구현하였다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"><span class="comment">#  delete namespaces</span></span><br><span class="line"></span><br><span class="line">NS=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">kubectl get namespace <span class="variable">$NS</span> -o json |jq <span class="string">'.spec = &#123;"finalizers":[]&#125;'</span> &gt; temp.json</span><br><span class="line">kubectl proxy &amp;</span><br><span class="line">curl -k -H <span class="string">"Content-Type: application/json"</span> -X PUT --data-binary @temp.json http://127.0.0.1:8001/api/v1/namespaces/<span class="variable">$NS</span>/finalize</span><br><span class="line"><span class="built_in">kill</span> %1 &amp;&amp; rm tmp.json <span class="comment"># proxy process 를 다운하고 tmp.json 파일을 삭제</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#! /bin/bash</span></span><br><span class="line"><span class="comment">#  delete namespaces</span></span><br><span class="line"></span><br><span class="line">NS=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">kubectl get namespace <span class="variable">$NS</span> -o json |jq <span class="string">&#x27;.spec = &#123;&quot;finalizers&quot;:[]&#125;&#x27;</span> &gt; temp.json</span><br><span class="line">kubectl proxy &amp;</span><br><span class="line">curl -k -H <span class="string">&quot;Content-Type: application/json&quot;</span> -X PUT --data-binary @temp.json http://127.0.0.1:8001/api/v1/namespaces/<span class="variable">$NS</span>/finalize</span><br><span class="line"><span class="built_in">kill</span> %1 &amp;&amp; rm tmp.json <span class="comment"># proxy process 를 다운하고 tmp.json 파일을 삭제</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://nasermirzaei89.net/2019/01/27/delete-namespace-stuck-at-terminating-state/" target="_blank" rel="noopener">Delete Namespace Stuck At Terminating State, https://nasermirzaei89.net/2019/01/27/delete-namespace-stuck-at-terminating-state/</a></li>
+<li><a target="_blank" rel="noopener" href="https://nasermirzaei89.net/2019/01/27/delete-namespace-stuck-at-terminating-state/">Delete Namespace Stuck At Terminating State, https://nasermirzaei89.net/2019/01/27/delete-namespace-stuck-at-terminating-state/</a></li>
 </ul>
 <hr>
 <p>2020.02.04 made by <em>jaejun.lee</em></p>

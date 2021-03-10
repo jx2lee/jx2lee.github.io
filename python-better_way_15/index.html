@@ -30,7 +30,7 @@
 <meta property="og:description" content="클로저가 변수 스포크와 상호 작용하는 방법에 대해 알아본다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-08-07T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.546Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Python Better Way">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
 
 <p>숫자 list를 정렬할 때 일정 숫자들을 먼저 정렬하고자 한다. 이는 <code>사용자 인터페이스를 표현</code>하거나, <code>중요 메세지 또는 예외 이벤트를 먼저 보여줄 때</code> 유용하다. 일반적인 방법으로는 list의 sort method에 helper function을 key 변수로 넘기는 것이다. helper function의 return 값은 숫자를 정렬하는 사용된다.</p>
 <p>다음 코드를 확인해보자.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort_priority</span><span class="params">(values, group)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x <span class="keyword">in</span> group:</span><br><span class="line">      <span class="keyword">return</span> (<span class="number">0</span>, x)</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1</span>, x)</span><br><span class="line"></span><br><span class="line">numbers = [<span class="number">8</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>]</span><br><span class="line">group = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;</span><br><span class="line">sort_priority(numbers, group)</span><br><span class="line">print(numbers)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sort_priority</span>(<span class="params">values, group</span>):</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">helper</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x <span class="keyword">in</span> group:</span><br><span class="line">      <span class="keyword">return</span> (<span class="number">0</span>, x)</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1</span>, x)</span><br><span class="line"></span><br><span class="line">numbers = [<span class="number">8</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>]</span><br><span class="line">group = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;</span><br><span class="line">sort_priority(numbers, group)</span><br><span class="line">print(numbers)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</span><br></pre></td></tr></table></figure>
 
 <p>위 함수가 동작하는 이유는 다음과 같다.</p>
 <ul>
@@ -287,7 +287,7 @@
 <li>None을 반환하는 함수는 None 이나 다른 값이 조건식에서 False로 평가되기 때문에 쉽게 오류를 범할 수 있다.</li>
 <li>특별한 상황을 알릴 때는 None 대신 예외를 일으키자.</li>
 </ul>
-<p>참조 : (<a href="http://www.yes24.com/Product/goods/25138160" target="_blank" rel="noopener">http://www.yes24.com/Product/goods/25138160</a>)</p>
+<p>참조 : (<a target="_blank" rel="noopener" href="http://www.yes24.com/Product/goods/25138160">http://www.yes24.com/Product/goods/25138160</a>)</p>
 <hr>
 <p>2019.08.08 made by <em>jaejun.lee</em></p>
 

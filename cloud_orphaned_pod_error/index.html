@@ -30,7 +30,7 @@
 <meta property="og:description" content="본 포스트에서는 kubelet log 에 Orphaned pod found , but volume subpaths are still present on disk 로그가 발생하는 문제를 해결한다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-11T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-24T14:34:50.011Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-24 23:34:50" itemprop="dateModified" datetime="2020-09-24T23:34:50+09:00">2020-09-24</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,7 +275,7 @@
 <a id="more"></a>
 
 <h1 id="Kubelet-log"><a href="#Kubelet-log" class="headerlink" title="Kubelet log"></a>Kubelet log</h1><p><code>journalctl -f | grep kubelet</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mar 12 01:31:04 k8s-node2 kubelet[19210]: E0312 01:31:04.964272   19210 kubelet_volumes.go:154] Orphaned pod <span class="string">"1a2f73f1-77a2-4053-975f-57a89fdba1db"</span> found, but volume subpaths are still present on disk : There were a total of 1 errors similar to this. Turn up verbosity to see them.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mar 12 01:31:04 k8s-node2 kubelet[19210]: E0312 01:31:04.964272   19210 kubelet_volumes.go:154] Orphaned pod <span class="string">&quot;1a2f73f1-77a2-4053-975f-57a89fdba1db&quot;</span> found, but volume subpaths are still present on disk : There were a total of 1 errors similar to this. Turn up verbosity to see them.</span><br></pre></td></tr></table></figure>
 
 <h1 id="문제-원인"><a href="#문제-원인" class="headerlink" title="문제 원인"></a>문제 원인</h1><p>해당 노드를 재부팅했을 때 기존에 남아있던 파드 정보로 인하여 에러가 발생한 것 같다. 사라진 파드의 정보에 volume subpath 도 삭제되지 않은 것이다.</p>
 <h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><p>의외로 간단하다. 해당 pod 정보를 삭제하면 되는데, 본인 환경으로는 <code>/var/lib/kubelet/pods/</code> 에 파드 UUID 폴더를 삭제하면 된다. 이후 kubelet 을 재기동하면 위 로그가 삭제됨을 확인할 수 있다.</p>

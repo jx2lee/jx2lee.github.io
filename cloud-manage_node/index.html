@@ -30,7 +30,7 @@
 <meta property="og:description" content="K8s 클러스터에 노드를 추가 및 삭제하는 과정을 다룬다. Update Node  2020.03.10 : kubectl drain 설명 추가">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-01-28T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.543Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
 
 <p><strong>k8s-node3</strong> 노드를 삭제하고 추가해보도록 하자</p>
 <h1 id="Delete-k8s-master-amp-Reset-k8s-node3"><a href="#Delete-k8s-master-amp-Reset-k8s-node3" class="headerlink" title="Delete (k8s-master) &amp; Reset (k8s-node3)"></a>Delete (k8s-master) &amp; Reset (k8s-node3)</h1><p>마스터 노드에서 <strong>k8s-node3</strong>를 delete 한다</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete node k8s-node3</span><br><span class="line">node <span class="string">"k8s-node3"</span> deleted</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete node k8s-node3</span><br><span class="line">node <span class="string">&quot;k8s-node3&quot;</span> deleted</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><em>kubectl delete 말고 kubectl drain {node_name} 을 수행하면 이미 띄워져있는 해당 노드의 파드들을 클러스터 내 다른 노드로 이동시키는 명령이다. delete 보다 drain을 수행하여 클러스터에서 제외시키는 것이 관리에 더 용이할 것으로 보인다.</em></p>
@@ -312,7 +312,7 @@
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>K8s cluster에 노드를 추가하고 삭제하는 과정을 다뤘다. 노드를 삭제하고 삭제한 노드에서 리셋을 진행한 다음, 마스터에서의 <code>token 및 hash value</code>를 추가 노드에 join에 이용하였다</p>
 <ul>
 <li><p>노드 삭제</p>
-<p><code>kubectl delete node {node-name}</code></p>
+<p><code>kubectl delete node &#123;node-name&#125;</code></p>
 </li>
 <li><p>노드 리셋</p>
 <p><code>kubeadm reset</code></p>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="Hive 에 RDMS 테이블을 import 하는 과정에서 발생한 문제를 해결한다">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-06T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.585Z">
+<meta property="article:modified_time" content="2020-12-06T10:46:03.000Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta name="twitter:card" content="summary">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2020-12-06 19:46:03" itemprop="dateModified" datetime="2020-12-06T19:46:03+09:00">2020-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,9 +274,9 @@
 <a id="more"></a>
 
 <h1 id="Status"><a href="#Status" class="headerlink" title="Status"></a>Status</h1><p>아래와 같은 명령어를 통해 Tibero 테이블 <em>BPRJT00T</em>를 <code>Sqoop</code>으로 땡겨오고 <code>Hive</code>로 Import 하고자 했다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop import <span class="string">"-Dorg.apache.sqoop.splitter.allow_text_splitter=true"</span> \</span><br><span class="line">--connect jdbc:tibero:thin:@192.168.154.xxx:xxxx:tibero \</span><br><span class="line">--driver com.tmax.tibero.jdbc.TbDriver \</span><br><span class="line">--target-dir /project/BPRJT00T \</span><br><span class="line">--username ERP --password xxxx \</span><br><span class="line">--table BPRJT00T \</span><br><span class="line">--fields-terminated-by <span class="string">","</span> \</span><br><span class="line">--hive-import \</span><br><span class="line">--create-hive-table \</span><br><span class="line">--hive-table project.BPRJT00T</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sqoop import <span class="string">&quot;-Dorg.apache.sqoop.splitter.allow_text_splitter=true&quot;</span> \</span><br><span class="line">--connect jdbc:tibero:thin:@192.168.154.xxx:xxxx:tibero \</span><br><span class="line">--driver com.tmax.tibero.jdbc.TbDriver \</span><br><span class="line">--target-dir /project/BPRJT00T \</span><br><span class="line">--username ERP --password xxxx \</span><br><span class="line">--table BPRJT00T \</span><br><span class="line">--fields-terminated-by <span class="string">&quot;,&quot;</span> \</span><br><span class="line">--hive-import \</span><br><span class="line">--create-hive-table \</span><br><span class="line">--hive-table project.BPRJT00T</span><br></pre></td></tr></table></figure>
 
-<h1 id="Error-Message"><a href="#Error-Message" class="headerlink" title="Error Message"></a>Error Message</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Could not initialize class org.apache.derby.jdbc.EmbeddedDriver...</span><br><span class="line">...</span><br><span class="line">... 12 more</span><br></pre></td></tr></table></figure>
+<h1 id="Error-Message"><a href="#Error-Message" class="headerlink" title="Error Message"></a>Error Message</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Could not initialize class org.apache.derby.jdbc.EmbeddedDriver...</span><br><span class="line">...</span><br><span class="line">... 12 more</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>분명 <code>Hive</code>의 MetaStore를 <strong>MySQL</strong>로 설정하였는데<em>(초기화까지 완료한 상태)</em> 자꾸 Derby Driver를 못찾았다는 에러가 발생하였다. 이는, <strong>hive-site.xml이 Hive가 인식을 못해 Default Database로 Derby</strong>를 사용했기 때문이다. 이는 <strong>.bash_profile 또는 .profile 내 HADOOP_CLASSPATH를 추가</strong>하여 해결할 수 있다.</p>
 <blockquote>
