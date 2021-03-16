@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="인스턴스 사용 중 switch root 에러가 발생하여 이를 해결하는 과정을 다뤄본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Linux] switch root 시 cannot open session: 모듈을 알 수 없음 Error">
+<meta property="og:url" content="https://jx2lee.github.io/linux-switch_root_error/index.html">
+<meta property="og:site_name" content="go hard">
+<meta property="og:description" content="인스턴스 사용 중 switch root 에러가 발생하여 이를 해결하는 과정을 다뤄본다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-15T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-16T12:25:57.167Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/linux-switch_root_error/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Linux] switch root 시 cannot open session: 모듈을 알 수 없음 Error | go hard</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="go hard" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">go hard</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/linux-switch_root_error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Linux] switch root 시 cannot open session: 모듈을 알 수 없음 Error
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-16T00:00:00+09:00">2021-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-16 21:25:57" itemprop="dateModified" datetime="2021-03-16T21:25:57+09:00">2021-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/linux-switch_root_error/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="linux-switch_root_error/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>인스턴스 사용 중 switch root 에러가 발생하여 이를 해결하는 과정을 다뤄본다.</p>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">check Log</a></li>
+<li><a href="#subject02">원인</a></li>
+<li><a href="#subject03">Solution</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="check-Log"><a href="#check-Log" class="headerlink" title=" check Log"></a><a name="subject01"></a> check Log</h1><ul>
+<li>path: /var/log/messsages<ul>
+<li>CentOS 7</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Mar  9 20:51:52 singlenode sshd[13968]: pam_unix(sshd:session): session opened <span class="keyword">for</span> user centos by (uid=0)</span><br><span class="line">Mar  9 20:51:53 singlenode su: PAM unable to dlopen(/usr/lib64/security/pam_lists.so): /usr/lib64/security/pam_lists.so: 동적 오브젝트 파일을 열 수 없습니다: 그런 파일이나 디렉터리가 없습니다</span><br><span class="line">Mar  9 20:51:53 singlenode su: PAM adding faulty module: /usr/lib64/security/pam_lists.so</span><br><span class="line">Mar  9 20:51:54 singlenode su: pam_unix(su:session): session opened <span class="keyword">for</span> user root by centos(uid=1000)</span><br></pre></td></tr></table></figure>
+
+<h1 id="원인"><a href="#원인" class="headerlink" title=" 원인"></a><a name="subject02"></a> 원인</h1><ul>
+<li><p>Log 상에서 <code>/usr/lib64/security/pam_lists.so</code> 파일이 존재하지 않는다고 한다.</p>
+</li>
+<li><p>pam_lists.so 를 필요로 하는 파일을 찾아보던 중</p>
+<ul>
+<li><p>/etc/pam.d/su 파일을 확인 (맨 마지막 라인)</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#%PAM-1.0</span></span><br><span class="line">auth            sufficient      pam_rootok.so</span><br><span class="line"><span class="comment"># Uncomment the following line to implicitly trust users in the &quot;wheel&quot; group.</span></span><br><span class="line"><span class="comment">#auth           sufficient      pam_wheel.so trust use_uid</span></span><br><span class="line"><span class="comment"># Uncomment the following line to require a user to be in the &quot;wheel&quot; group.</span></span><br><span class="line"><span class="comment">#auth           required        pam_wheel.so use_uid</span></span><br><span class="line">auth            substack        system-auth</span><br><span class="line">auth            include         postlogin</span><br><span class="line">account         sufficient      pam_succeed_if.so uid = 0 use_uid quiet</span><br><span class="line">account         include         system-auth</span><br><span class="line">password        include         system-auth</span><br><span class="line">session         include         system-auth</span><br><span class="line">session         include         postlogin</span><br><span class="line">session         optional        pam_xauth.so</span><br><span class="line">session         required        pam_lists.so</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title=" Solution"></a><a name="subject03"></a> Solution</h1><ul>
+<li><p>/etc/pam.d/su 파일 마지막 라인 pam_lists.so → pam_limits.so 로 변경</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session         required        pam_limits.so</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>이후 root 로 스위치 해보자</p>
+<ul>
+<li><p>su root</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode pam.d]$ su root</span><br><span class="line">암호:</span><br><span class="line">[root@singlenode pam.d]<span class="comment"># Success!</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://m.blog.naver.com/PostView.nhn?blogId=ddakawar&logNo=60191982338&proxyReferer=https:%2F%2Fwww.google.com%2F">https://m.blog.naver.com/PostView.nhn?blogId=ddakawar&amp;logNo=60191982338&amp;proxyReferer=https:%2F%2Fwww.google.com%2F</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/cloud-events_at_pod_deletion/" rel="prev" title="[Kubernetes] Pod 삭제 이벤트 마슬러보기">
+      <i class="fa fa-chevron-left"></i> [Kubernetes] Pod 삭제 이벤트 마슬러보기
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/es-run_cluster_in_onde_node/" rel="next" title="[ElasticSearch] 하나의 서버에서 여러 ES node 실행">
+      [ElasticSearch] 하나의 서버에서 여러 ES node 실행 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#check-Log"><span class="nav-number">1.</span> <span class="nav-text"> check Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%9B%90%EC%9D%B8"><span class="nav-number">2.</span> <span class="nav-text"> 원인</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Solution"><span class="nav-number">3.</span> <span class="nav-text"> Solution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JaeJun Lee</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/linux-switch_root_error/";
+    this.page.identifier = "linux-switch_root_error/";
+    this.page.title = "[Linux] switch root 시 cannot open session: 모듈을 알 수 없음 Error";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
