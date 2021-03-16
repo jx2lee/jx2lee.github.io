@@ -9,6 +9,13 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/categories/Network/</loc>
+        <lastmod>2021-03-16T12:32:46.871Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/categories/Linux/</loc>
         <lastmod>2021-03-16T12:25:57.167Z</lastmod>
         <changefreq>weekly</changefreq>
