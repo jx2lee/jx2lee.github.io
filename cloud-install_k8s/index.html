@@ -14,12 +14,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto Mono, Stylish:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="K8s cluster는 Master 3대(k8s-master&#x2F;k8s-node1&#x2F;k8s-node2) &#x2F; Worker 2대(k8s-node3&#x2F;k8s-node4)로 구성한다. k8s는 1.15.3 version 이며 서버는 ubuntu 18.04 이다. Update Note  2020.02.25 : kubeadm init 시 --upload-certs 옵션 부가">
@@ -461,77 +461,6 @@
 </script>
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EA%B3%B5%ED%86%B5"><span class="nav-number">1.</span> <span class="nav-text">공통</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Master-Node"><span class="nav-number">2.</span> <span class="nav-text">Master Node</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Keepalived-%EC%84%A4%EC%B9%98"><span class="nav-number">2.1.</span> <span class="nav-text">Keepalived 설치</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K8s-%EC%84%A4%EC%B9%98"><span class="nav-number">2.2.</span> <span class="nav-text">K8s 설치</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Worker-Node"><span class="nav-number">3.</span> <span class="nav-text">Worker Node</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%84%A4%EC%B9%98-%ED%99%95%EC%9D%B8"><span class="nav-number">4.</span> <span class="nav-text">설치 확인</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubectl-get-nodes"><span class="nav-number">4.1.</span> <span class="nav-text">Kubectl get nodes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EC%84%A0%ED%83%9D%EC%82%AC%ED%95%AD-Master-node%EC%97%90%EB%8F%84-pod-%EB%B0%B0%ED%8F%AC%EA%B0%80-%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%83%81%ED%83%9C%EB%A1%9C-%EB%B3%80%ED%99%98"><span class="nav-number">4.2.</span> <span class="nav-text">(선택사항) Master node에도 pod 배포가 가능한 상태로 변환</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Trouble-Shooting"><span class="nav-number">5.</span> <span class="nav-text">Trouble-Shooting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#calico-node-%EA%B0%80-Running-%EC%83%81%ED%83%9C%EC%9D%B4%EC%A7%80%EB%A7%8C-Unhealthy-%EB%AC%B8%EC%A0%9C"><span class="nav-number">5.1.</span> <span class="nav-text">calico node 가 Running 상태이지만 Unhealthy 문제</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">103</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">15</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
 
