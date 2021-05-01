@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Elasticsearch의 노드들은 클라이언트와의 통신을 위한 http 포트(9200-9299), 노드 간의 데이터 교환을 위한 tcp 포트 (9300-9399) 총 2 종류의 네트워크 통신을 사용한다. 일반적으로 1개의 물리 서버마다 하나의 노드를 실행하는 것을 권장하고 있다. 테스트를 위해 하나의 서버에서 2개 elasticsearch 노드를 실행해본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ElasticSearch] 하나의 서버에서 여러 ES node 실행">
+<meta property="og:url" content="https://jx2lee.github.io/es-run_cluster_in_node/index.html">
+<meta property="og:site_name" content="go hard">
+<meta property="og:description" content="Elasticsearch의 노드들은 클라이언트와의 통신을 위한 http 포트(9200-9299), 노드 간의 데이터 교환을 위한 tcp 포트 (9300-9399) 총 2 종류의 네트워크 통신을 사용한다. 일반적으로 1개의 물리 서버마다 하나의 노드를 실행하는 것을 권장하고 있다. 테스트를 위해 하나의 서버에서 2개 elasticsearch 노드를 실행해본다">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-15T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-28T15:07:03.281Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/es-run_cluster_in_node/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[ElasticSearch] 하나의 서버에서 여러 ES node 실행 | go hard</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="go hard" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">go hard</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/es-run_cluster_in_node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [ElasticSearch] 하나의 서버에서 여러 ES node 실행
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-03-16T00:00:00+09:00">2021-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-29 00:07:03" itemprop="dateModified" datetime="2021-04-29T00:07:03+09:00">2021-04-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/es-run_cluster_in_node/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="es-run_cluster_in_node/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Elasticsearch의 노드들은 클라이언트와의 통신을 위한 http 포트(9200-9299), 노드 간의 데이터 교환을 위한 tcp 포트 (9300-9399) 총 2 종류의 네트워크 통신을 사용한다. 일반적으로 1개의 물리 서버마다 하나의 노드를 실행하는 것을 권장하고 있다. 테스트를 위해 하나의 서버에서 2개 elasticsearch 노드를 실행해본다.</p>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">config/elasticsearch.yml</a></li>
+<li><a href="#subject02">Run node-1</a></li>
+<li><a href="#subject03">Run node-2</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="config-elasticsearch-yml"><a href="#config-elasticsearch-yml" class="headerlink" title=" config/elasticsearch.yml"></a><a name="subject01"></a> config/elasticsearch.yml</h1><p>config 파일에 <code>node.max_local_storage_nodes</code> 값을 es node 수로 설정한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#elasticsearch.yml</span></span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">node.max_local_storage_nodes: 3</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<p>node.max_local_storage_nodes<br>데이터 경로는 다른 클러스터의 node 혹은 여러 node에서 공유 할 수 있다. <strong>그러나 동일한 데이터 경로를 사용하여 하나의 Elasticsearch node 만 실행하는 것이 좋다.</strong> 이 설정은 7.x에서 더 이상 사용되지 않으며 버전 8.0에서 사용 불가하다. 기본적으로 Elasticsearch는 둘 이상의 node가 동일한 데이터 경로를 공유하지 못하도록 구성된다. 둘 이상의 노드를 허용하려면 (예 : 개발 머신에서) node.max_local_storage_nodes 를 1보다 큰 정수로 설정한다. 동일한 데이터 디렉토리에서 다른 노드 유형 (예 : 마스터, 데이터)을 실행하면, 이로 인해 예기치 않은 데이터 손실이 발생할 수 있다.</p>
+</blockquote>
+</blockquote>
+<h1 id="Run-node-1"><a href="#Run-node-1" class="headerlink" title=" Run node-1"></a><a name="subject02"></a> Run node-1</h1><p><code>es-cluster-1</code> 클러스터에 <code>node-1</code> 노드를 구동한다.</p>
+<ul>
+<li><code>bin/elasticsearch -Ecluster.name=es-cluster-1 -Enode.name=node-1</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode elasticsearch-7.10.2]$ bin/elasticsearch -Ecluster.name=es-cluster-1 -Enode.name=node-1</span><br><span class="line">[2021-03-04T17:27:20,414][INFO ][o.e.n.Node               ] [node-1] version[7.10.2], pid[16662], build[default/tar/747e1cc71def077253878a59143c1f785afa92b9/2021-01-13T00:42:12.435326Z], OS[Linux/3.10.0-862.14.4.el7.x86_64/amd64], JVM[Red Hat, Inc./OpenJDK 64-Bit Server VM/1.8.0_275/25.275-b01]</span><br><span class="line">[2021-03-04T17:27:20,416][INFO ][o.e.n.Node               ] [node-1] JVM home [/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.275.b01-0.el7_9.x86_64/jre], using bundled JDK [<span class="literal">false</span>]</span><br><span class="line">[2021-03-04T17:27:20,416][INFO ][o.e.n.Node               ] [node-1] JVM arguments [-Xshare:auto, -Des.networkaddress.cache.ttl=60, -Des.networkaddress.cache.negative.ttl=10, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=<span class="literal">true</span>, -Dfile.encoding=UTF-8, -Djna.nosys=<span class="literal">true</span>, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=<span class="literal">true</span>, -Dio.netty.noKeySetOptimization=<span class="literal">true</span>, -Dio.netty.recycler.maxCapacityPerThread=0, -Dio.netty.allocator.numDirectArenas=0, -Dlog4j.shutdownHookEnabled=<span class="literal">false</span>, -Dlog4j2.disable.jmx=<span class="literal">true</span>, -Djava.locale.providers=SPI,JRE, -Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -Djava.io.tmpdir=/tmp/elasticsearch-3044858611283555949, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -XX:+PrintGCDetails, -XX:+PrintGCDateStamps, -XX:+PrintTenuringDistribution, -XX:+PrintGCApplicationStoppedTime, -Xloggc:logs/gc.log, -XX:+UseGCLogFileRotation, -XX:NumberOfGCLogFiles=32, -XX:GCLogFileSize=64m, -XX:MaxDirectMemorySize=536870912, -Des.path.home=/app/elasticsearch-7.10.2, -Des.path.conf=/app/elasticsearch-7.10.2/config, -Des.distribution.flavor=default, -Des.distribution.type=tar, -Des.bundled_jdk=<span class="literal">true</span>]</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">[2021-03-04T17:27:23,567][INFO ][o.e.p.PluginsService     ] [node-1] loaded module [x-pack-watcher]</span><br><span class="line">[2021-03-04T17:27:23,567][INFO ][o.e.p.PluginsService     ] [node-1] no plugins loaded</span><br><span class="line">[2021-03-04T17:27:23,627][INFO ][o.e.e.NodeEnvironment    ] [node-1] using [1] data paths, mounts [[/ (rootfs)]], net usable_space [93.7gb], net total_space [99.9gb], types [rootfs]</span><br><span class="line">[2021-03-04T17:27:23,627][INFO ][o.e.e.NodeEnvironment    ] [node-1] heap size [990.7mb], compressed ordinary object pointers [<span class="literal">true</span>]</span><br><span class="line">[2021-03-04T17:27:23,763][INFO ][o.e.n.Node               ] [node-1] node name [node-1], node ID [nHPEGErISlGQO-7OiBVLbw], cluster name [es-cluster-1], roles [transform, master, remote_cluster_client, data, ml, data_content, data_hot, data_warm, data_cold, ingest]</span><br><span class="line">[2021-03-04T17:27:27,914][INFO ][o.e.x.m.p.l.CppLogMessageHandler] [node-1] [controller/16827] [Main.cc@114] controller (64 bit): Version 7.10.2 (Build 40a3af639d4698) Copyright (c) 2021 Elasticsearch BV</span><br><span class="line">[2021-03-04T17:27:28,769][INFO ][o.e.x.s.a.s.FileRolesStore] [node-1] parsed [0] roles from file [/app/elasticsearch-7.10.2/config/roles.yml]</span><br><span class="line">[2021-03-04T17:27:30,276][INFO ][o.e.t.NettyAllocator     ] [node-1] creating NettyAllocator with the following configs: [name=unpooled, suggested_max_allocation_size=1mb, factors=&#123;es.unsafe.use_unpooled_allocator=null, g1gc_enabled=<span class="literal">false</span>, g1gc_region_size=0b, heap_size=990.7mb&#125;]</span><br><span class="line">[2021-03-04T17:27:30,387][INFO ][o.e.d.DiscoveryModule    ] [node-1] using discovery <span class="built_in">type</span> [zen] and seed hosts providers [settings]</span><br><span class="line">[2021-03-04T17:27:31,102][WARN ][o.e.g.DanglingIndicesState] [node-1] gateway.auto_import_dangling_indices is disabled, dangling indices will not be automatically detected or imported and must be managed manually</span><br><span class="line">[2021-03-04T17:27:31,660][INFO ][o.e.n.Node               ] [node-1] initialized</span><br><span class="line">[2021-03-04T17:27:31,661][INFO ][o.e.n.Node               ] [node-1] starting ...</span><br><span class="line">[2021-03-04T17:27:31,820][INFO ][o.e.t.TransportService   ] [node-1] publish_address &#123;127.0.0.1:9300&#125;, bound_addresses &#123;[::1]:9300&#125;, &#123;127.0.0.1:9300&#125;</span><br><span class="line">[2021-03-04T17:27:32,210][WARN ][o.e.b.BootstrapChecks    ] [node-1] the default discovery settings are unsuitable <span class="keyword">for</span> production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured</span><br><span class="line">[2021-03-04T17:27:32,212][INFO ][o.e.c.c.Coordinator      ] [node-1] cluster UUID [DmY4hGLYRra7H50T-RSoqw]</span><br><span class="line">[2021-03-04T17:27:32,225][INFO ][o.e.c.c.ClusterBootstrapService] [node-1] no discovery configuration found, will perform best-effort cluster bootstrapping after [3s] unless existing master is discovered</span><br><span class="line">[2021-03-04T17:27:32,385][INFO ][o.e.c.s.MasterService    ] [node-1] elected-as-master ([1] nodes joined)[&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>, ml.max_open_jobs=20&#125; elect leader, _BECOME_MASTER_TASK_, _FINISH_ELECTION_], term: 16, version: 243, delta: master node changed &#123;previous [], current [&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>, ml.max_open_jobs=20&#125;]&#125;</span><br><span class="line">[2021-03-04T17:27:32,462][INFO ][o.e.c.s.ClusterApplierService] [node-1] master node changed &#123;previous [], current [&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>, ml.max_open_jobs=20&#125;]&#125;, term: 16, version: 243, reason: Publication&#123;term=16, version=243&#125;</span><br><span class="line">[2021-03-04T17:27:32,512][INFO ][o.e.h.AbstractHttpServerTransport] [node-1] publish_address &#123;127.0.0.1:9200&#125;, bound_addresses &#123;[::1]:9200&#125;, &#123;127.0.0.1:9200&#125;</span><br><span class="line">[2021-03-04T17:27:32,513][INFO ][o.e.n.Node               ] [node-1] started</span><br><span class="line">[2021-03-04T17:27:32,867][INFO ][o.e.l.LicenseService     ] [node-1] license [25e67c23-b75a-4b40-a9ee-78e3ddab64c3] mode [basic] - valid</span><br><span class="line">[2021-03-04T17:27:32,869][INFO ][o.e.x.s.s.SecurityStatusChangeListener] [node-1] Active license is now [BASIC]; Security is disabled</span><br><span class="line">[2021-03-04T17:27:32,874][INFO ][o.e.g.GatewayService     ] [node-1] recovered [8] indices into cluster_state</span><br><span class="line">[2021-03-04T17:27:33,816][INFO ][o.e.c.r.a.AllocationService] [node-1] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[ilm-history-3-000001][0], [basketball][0], [.kibana-event-log-7.10.2-000001][0]]]).</span><br></pre></td></tr></table></figure>
+
+<h1 id="Run-node-2"><a href="#Run-node-2" class="headerlink" title=" Run node-2"></a><a name="subject03"></a> Run node-2</h1><p>같은 서버에서<code>es-cluster-1</code> 클러스터의 <code>node-1</code> 노드를 구동한다.</p>
+<ul>
+<li><code>bin/elasticsearch -Ecluster.name=es-cluster-1 -Enode.name=node-2</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode elasticsearch-7.10.2]$ bin/elasticsearch -Ecluster.name=es-cluster-1 -Enode.name=node-2</span><br><span class="line">[2021-03-04T17:29:35,358][INFO ][o.e.n.Node               ] [node-2] version[7.10.2], pid[16990], build[default/tar/747e1cc71def077253878a59143c1f785afa92b9/2021-01-13T00:42:12.435326Z], OS[Linux/3.10.0-862.14.4.el7.x86_64/amd64], JVM[Red Hat, Inc./OpenJDK 64-Bit Server VM/1.8.0_275/25.275-b01]</span><br><span class="line">[2021-03-04T17:29:35,359][INFO ][o.e.n.Node               ] [node-2] JVM home [/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.275.b01-0.el7_9.x86_64/jre], using bundled JDK [<span class="literal">false</span>]</span><br><span class="line">[2021-03-04T17:29:35,360][INFO ][o.e.n.Node               ] [node-2] JVM arguments [-Xshare:auto, -Des.networkaddress.cache.ttl=60, -Des.networkaddress.cache.negative.ttl=10, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=<span class="literal">true</span>, -Dfile.encoding=UTF-8, -Djna.nosys=<span class="literal">true</span>, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=<span class="literal">true</span>, -Dio.netty.noKeySetOptimization=<span class="literal">true</span>, -Dio.netty.recycler.maxCapacityPerThread=0, -Dio.netty.allocator.numDirectArenas=0, -Dlog4j.shutdownHookEnabled=<span class="literal">false</span>, -Dlog4j2.disable.jmx=<span class="literal">true</span>, -Djava.locale.providers=SPI,JRE, -Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -Djava.io.tmpdir=/tmp/elasticsearch-4970032312008421325, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -XX:+PrintGCDetails, -XX:+PrintGCDateStamps, -XX:+PrintTenuringDistribution, -XX:+PrintGCApplicationStoppedTime, -Xloggc:logs/gc.log, -XX:+UseGCLogFileRotation, -XX:NumberOfGCLogFiles=32, -XX:GCLogFileSize=64m, -XX:MaxDirectMemorySize=536870912, -Des.path.home=/app/elasticsearch-7.10.2, -Des.path.conf=/app/elasticsearch-7.10.2/config, -Des.distribution.flavor=default, -Des.distribution.type=tar, -Des.bundled_jdk=<span class="literal">true</span>]</span><br><span class="line">[2021-03-04T17:29:38,449][INFO ][o.e.p.PluginsService     ] [node-2] loaded module [aggs-matrix-stats]</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">[2021-03-04T17:29:38,460][INFO ][o.e.p.PluginsService     ] [node-2] no plugins loaded</span><br><span class="line">[2021-03-04T17:29:38,522][INFO ][o.e.e.NodeEnvironment    ] [node-2] using [1] data paths, mounts [[/ (rootfs)]], net usable_space [93.7gb], net total_space [99.9gb], types [rootfs]</span><br><span class="line">[2021-03-04T17:29:38,522][INFO ][o.e.e.NodeEnvironment    ] [node-2] heap size [990.7mb], compressed ordinary object pointers [<span class="literal">true</span>]</span><br><span class="line">[2021-03-04T17:29:38,655][INFO ][o.e.n.Node               ] [node-2] node name [node-2], node ID [Xye_inmsQf2pVylm4m65hA], cluster name [es-cluster-1], roles [transform, master, remote_cluster_client, data, ml, data_content, data_hot, data_warm, data_cold, ingest]</span><br><span class="line">[2021-03-04T17:29:42,816][INFO ][o.e.x.m.p.l.CppLogMessageHandler] [node-2] [controller/17156] [Main.cc@114] controller (64 bit): Version 7.10.2 (Build 40a3af639d4698) Copyright (c) 2021 Elasticsearch BV</span><br><span class="line">[2021-03-04T17:29:43,668][INFO ][o.e.x.s.a.s.FileRolesStore] [node-2] parsed [0] roles from file [/app/elasticsearch-7.10.2/config/roles.yml]</span><br><span class="line">[2021-03-04T17:29:45,109][INFO ][o.e.t.NettyAllocator     ] [node-2] creating NettyAllocator with the following configs: [name=unpooled, suggested_max_allocation_size=1mb, factors=&#123;es.unsafe.use_unpooled_allocator=null, g1gc_enabled=<span class="literal">false</span>, g1gc_region_size=0b, heap_size=990.7mb&#125;]</span><br><span class="line">[2021-03-04T17:29:45,203][INFO ][o.e.d.DiscoveryModule    ] [node-2] using discovery <span class="built_in">type</span> [zen] and seed hosts providers [settings]</span><br><span class="line">[2021-03-04T17:29:45,906][WARN ][o.e.g.DanglingIndicesState] [node-2] gateway.auto_import_dangling_indices is disabled, dangling indices will not be automatically detected or imported and must be managed manually</span><br><span class="line">[2021-03-04T17:29:46,453][INFO ][o.e.n.Node               ] [node-2] initialized</span><br><span class="line">[2021-03-04T17:29:46,454][INFO ][o.e.n.Node               ] [node-2] starting ...</span><br><span class="line">[2021-03-04T17:29:46,608][INFO ][o.e.t.TransportService   ] [node-2] publish_address &#123;127.0.0.1:9301&#125;, bound_addresses &#123;[::1]:9301&#125;, &#123;127.0.0.1:9301&#125;</span><br><span class="line">[2021-03-04T17:29:46,970][WARN ][o.e.b.BootstrapChecks    ] [node-2] the default discovery settings are unsuitable <span class="keyword">for</span> production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured</span><br><span class="line">[2021-03-04T17:29:46,972][INFO ][o.e.c.c.Coordinator      ] [node-2] cluster UUID [DmY4hGLYRra7H50T-RSoqw]</span><br><span class="line">[2021-03-04T17:29:46,984][INFO ][o.e.c.c.ClusterBootstrapService] [node-2] no discovery configuration found, will perform best-effort cluster bootstrapping after [3s] unless existing master is discovered</span><br><span class="line">[2021-03-04T17:29:47,415][INFO ][o.e.c.s.ClusterApplierService] [node-2] master node changed &#123;previous [], current [&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125;]&#125;, added &#123;&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125;&#125;, term: 16, version: 257, reason: ApplyCommitRequest&#123;term=16, version=257, sourceNode=&#123;node-1&#125;&#123;nHPEGErISlGQO-7OiBVLbw&#125;&#123;9xoo0XVVSMu0LphMhu9QNw&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9300&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125;&#125;</span><br><span class="line">[2021-03-04T17:29:47,642][INFO ][o.e.x.s.a.TokenService   ] [node-2] refresh keys</span><br><span class="line">[2021-03-04T17:29:47,972][INFO ][o.e.x.s.a.TokenService   ] [node-2] refreshed keys</span><br><span class="line">[2021-03-04T17:29:48,013][INFO ][o.e.l.LicenseService     ] [node-2] license [25e67c23-b75a-4b40-a9ee-78e3ddab64c3] mode [basic] - valid</span><br><span class="line">[2021-03-04T17:29:48,016][INFO ][o.e.x.s.s.SecurityStatusChangeListener] [node-2] Active license is now [BASIC]; Security is disabled</span><br><span class="line">[2021-03-04T17:29:48,048][INFO ][o.e.h.AbstractHttpServerTransport] [node-2] publish_address &#123;127.0.0.1:9201&#125;, bound_addresses &#123;[::1]:9201&#125;, &#123;127.0.0.1:9201&#125;</span><br><span class="line">[2021-03-04T17:29:48,049][INFO ][o.e.n.Node               ] [node-2] started</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>로그를 확인해보면 Cluster UUID(<em>DmY4hGLYRra7H50T-RSoqw</em>) 가 같음을 확인할 수 있다.</p>
+</li>
+<li><p>클러스터에 조인하면 기존 실행한 node-1 에는 다음과 같이 node 가 조인되었음을 확인할 수 있다.</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[2021-03-04T17:29:47,317][INFO ][o.e.c.r.a.AllocationService] [node-1] updating number_of_replicas to [1] <span class="keyword">for</span> indices [.apm-agent-configuration, .kibana_task_manager_1, ilm-history-3-000001, .kibana_1, .apm-custom-link, .kibana-event-log-7.10.2-000001]</span><br><span class="line">[2021-03-04T17:29:47,319][INFO ][o.e.c.s.MasterService    ] [node-1] node-join[&#123;node-2&#125;&#123;Xye_inmsQf2pVylm4m65hA&#125;&#123;fACpCFV-Q56QZk6anPgfEg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9301&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125; join existing leader], term: 16, version: 257, delta: added &#123;&#123;node-2&#125;&#123;Xye_inmsQf2pVylm4m65hA&#125;&#123;fACpCFV-Q56QZk6anPgfEg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9301&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125;&#125;</span><br><span class="line">[2021-03-04T17:29:48,022][INFO ][o.e.c.s.ClusterApplierService] [node-1] added &#123;&#123;node-2&#125;&#123;Xye_inmsQf2pVylm4m65hA&#125;&#123;fACpCFV-Q56QZk6anPgfEg&#125;&#123;127.0.0.1&#125;&#123;127.0.0.1:9301&#125;&#123;cdhilmrstw&#125;&#123;ml.machine_memory=3973890048, ml.max_open_jobs=20, xpack.installed=<span class="literal">true</span>, transform.node=<span class="literal">true</span>&#125;&#125;, term: 16, version: 257, reason: Publication&#123;term=16, version=257&#125;</span><br><span class="line">[2021-03-04T17:29:50,120][INFO ][o.e.c.r.a.AllocationService] [node-1] Cluster health status changed from [YELLOW] to [GREEN] (reason: [shards started [[ilm-history-3-000001][0]]]).</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://kangmyounghun.blogspot.com/2019/08/nodemaxlocalstoragenodes.html">http://kangmyounghun.blogspot.com/2019/08/nodemaxlocalstoragenodes.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#max-local-storage-nodes">https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html#max-local-storage-nodes</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/network-introduction_to_haproxy/" rel="prev" title="[Network] HAProxy 간단히 살펴보기">
+      <i class="fa fa-chevron-left"></i> [Network] HAProxy 간단히 살펴보기
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/network-introduction_to_ngrok/" rel="next" title="[Network] ngrok?">
+      [Network] ngrok? <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#config-elasticsearch-yml"><span class="nav-number">1.</span> <span class="nav-text"> config&#x2F;elasticsearch.yml</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Run-node-1"><span class="nav-number">2.</span> <span class="nav-text"> Run node-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Run-node-2"><span class="nav-number">3.</span> <span class="nav-text"> Run node-2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JaeJun Lee</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/es-run_cluster_in_node/";
+    this.page.identifier = "es-run_cluster_in_node/";
+    this.page.title = "[ElasticSearch] 하나의 서버에서 여러 ES node 실행";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
