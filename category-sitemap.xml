@@ -9,8 +9,36 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/categories/Cloud/</loc>
+        <lastmod>2021-05-02T14:16:07.579Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Linux/</loc>
+        <lastmod>2021-05-02T13:46:33.174Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Python/</loc>
+        <lastmod>2021-05-02T13:44:32.578Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Hadoop/</loc>
+        <lastmod>2021-05-02T13:44:09.420Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/categories/Network/</loc>
-        <lastmod>2021-05-01T15:10:16.751Z</lastmod>
+        <lastmod>2021-05-02T13:43:17.782Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -23,13 +51,6 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/categories/Linux/</loc>
-        <lastmod>2021-03-26T12:24:28.925Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jx2lee.github.io/categories/Etc/</loc>
         <lastmod>2021-03-26T12:24:28.925Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -37,36 +58,8 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/categories/cloud/</loc>
-        <lastmod>2021-03-26T12:24:28.924Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Python/</loc>
-        <lastmod>2021-01-28T15:12:07.417Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jx2lee.github.io/categories/Jenkins/</loc>
         <lastmod>2021-01-28T15:12:07.383Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Hadoop/</loc>
-        <lastmod>2021-01-28T15:12:07.383Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Cloud/</loc>
-        <lastmod>2021-01-28T15:12:07.353Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
