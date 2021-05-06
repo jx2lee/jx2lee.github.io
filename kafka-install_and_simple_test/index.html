@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="운영중인 플랫폼에 사용하는 Kafka 를 설치하고 테스트 한 기록을 남긴다.🔑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Kafka] kafka 설치 및 간단한 테스트">
+<meta property="og:url" content="https://jx2lee.github.io/kafka-install_and_simple_test/index.html">
+<meta property="og:site_name" content="go hard">
+<meta property="og:description" content="운영중인 플랫폼에 사용하는 Kafka 를 설치하고 테스트 한 기록을 남긴다.🔑">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-05T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-06T13:28:15.062Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/kafka-install_and_simple_test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Kafka] kafka 설치 및 간단한 테스트 | go hard</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="go hard" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">go hard</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/kafka-install_and_simple_test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Kafka] kafka 설치 및 간단한 테스트
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-06 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-06T00:00:00+09:00">2021-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-06 22:28:15" itemprop="dateModified" datetime="2021-05-06T22:28:15+09:00">2021-05-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/kafka-install_and_simple_test/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="kafka-install_and_simple_test/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>운영중인 플랫폼에 사용하는 Kafka 를 설치하고 테스트 한 기록을 남긴다.🔑</center>
+
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">용어 정리</a></li>
+<li><a href="#subject02">Download Binary</a></li>
+<li><a href="#subject03">Zookeeper?</a><ul>
+<li><a href="#subject04">Run Zookeeper</a></li>
+</ul>
+</li>
+<li><a href="#subject05">Run Kafka Broker</a><ul>
+<li><a href="#subject06">단일 노드 다중 브로커 클러스터 구동</a></li>
+</ul>
+</li>
+<li><a href="#subject07">Create Topic</a><ul>
+<li><a href="#subject08">Topic 리스트 확인</a></li>
+<li><a href="#subject09">Topic 설정 확인</a></li>
+</ul>
+</li>
+<li><a href="#subject10">Producer &amp; Consumer 테스트</a><ul>
+<li><a href="#subject11">Start Producer</a></li>
+<li><a href="#subject12">Start Consumer</a></li>
+</ul>
+</li>
+<li><a href="#subject13">Consumer lag 확인</a><ul>
+<li><a href="#subject14">Run console Producer &amp; Consumer</a></li>
+<li><a href="#subject15">Consumer list 확인</a></li>
+<li><a href="#subject16">Lag 확인 (주기: 1초)</a></li>
+</ul>
+</li>
+<li><a href="#subject17">Log</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<ul>
+<li>version: 1.1.0</li>
+<li>One broker Cluster</li>
+</ul>
+<h1 id="용어-정리"><a href="#용어-정리" class="headerlink" title=" 용어 정리"></a><a name="subject01"></a> 용어 정리</h1><ul>
+<li><strong>Kafka</strong>: 아파치 프로젝트 애플리케이션 이름. kafka cluster 라고도 부름</li>
+<li><strong>Broker</strong>: 카프카 애플리케이션이 설치되어 있는 서버 혹은 노드</li>
+<li><strong>Topic</strong>: producer 와 consumer 들이 보낸 자신들의 메세지를 구분하기 위한 네임. topic 이라는 개념을 통해 다수의 producer 와 consumer 들이 보낸 메세지를 구분하기 위해 사용</li>
+<li><strong>Partition</strong>: 병렬처리가 가능하게 메세지를 나눈 단위 (많은 양의 메세지 처리를 위해서는 partition 증가)</li>
+<li><strong>Produdcer &amp; Consumer</strong>: 단어 그 자체로 메세지를 생산하여 broker 의 topic 으로 보내는 서버 또는 애플리케이션 &amp; broker 의 topic 으로 저장된 메세지를 가져오는 서버 또는 애플리케이션</li>
+</ul>
+<h1 id="Download-Binary"><a href="#Download-Binary" class="headerlink" title=" Download Binary"></a><a name="subject02"></a> Download Binary</h1><p><code>wget [https://archive.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz](https://archive.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz)</code></p>
+<h2 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title=" Zookeeper?"></a><a name="subject03"></a> Zookeeper?</h2><p>Zookeeper 에 대한 간략한 설명은 다음과 같다.</p>
+<ul>
+<li>분산 application 을 위한 coordination system</li>
+<li>kafka broker 와 consumer 간 인터페이스 역할</li>
+<li>file system 과 유사한 형태의 계층화된 공유 namespace data 등록을 통한 분산 프로세스 조율</li>
+<li>file system 과의 차이점<ul>
+<li>znode(zookeeper component) 제한된 데이터만 저장</li>
+<li>상태 정보, 설정 정보, 위치 정보 등 kafka producer &lt;-&gt; consumer 간 조율에 필요한 데이터만 저장</li>
+</ul>
+</li>
+</ul>
+<h2 id="Run-Zookeeper"><a href="#Run-Zookeeper" class="headerlink" title=" Run Zookeeper"></a><a name="subject04"></a> Run Zookeeper</h2><p><code>bin/zookeeper-server-start.sh -daemon config/zookeeper.properties</code></p>
+<ul>
+<li>-daemon 옵션을 통해 백그라운드 실행</li>
+</ul>
+<h1 id="Run-Kafka-Broker"><a href="#Run-Kafka-Broker" class="headerlink" title=" Run Kafka Broker"></a><a name="subject05"></a> Run Kafka Broker</h1><p><code>config/server.properties</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">############################# Server Basics #############################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The id of the broker. This must be set to a unique integer for each broker.</span></span><br><span class="line">broker.id=0</span><br><span class="line"></span><br><span class="line"><span class="comment">############################# Socket Server Settings #############################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The address the socket server listens on. It will get the value returned from</span></span><br><span class="line"><span class="comment"># java.net.InetAddress.getCanonicalHostName() if not configured.</span></span><br><span class="line"><span class="comment">#   FORMAT:</span></span><br><span class="line"><span class="comment">#     listeners = listener_name://host_name:port</span></span><br><span class="line"><span class="comment">#   EXAMPLE:</span></span><br><span class="line"><span class="comment">#     listeners = PLAINTEXT://your.host.name:9092</span></span><br><span class="line">listeners=PLAINTEXT://:9092</span><br><span class="line"></span><br><span class="line"><span class="comment"># Hostname and port the broker will advertise to producers and consumers. If not set,</span></span><br><span class="line"><span class="comment"># it uses the value for &quot;listeners&quot; if configured.  Otherwise, it will use the value</span></span><br><span class="line"><span class="comment"># returned from java.net.InetAddress.getCanonicalHostName().</span></span><br><span class="line">advertised.listeners=PLAINTEXT://&#123;외부에서 접근할 수 있는 Ip&#125;:9092</span><br></pre></td></tr></table></figure>
+
+<p><code>bin/kafka-server-start.sh -daemon config/server.properties</code></p>
+<ul>
+<li>daemon 옵션을 통해 백그라운드 실행</li>
+</ul>
+<h2 id="단일-노드-다중-브로커-클러스터-구동"><a href="#단일-노드-다중-브로커-클러스터-구동" class="headerlink" title=" 단일 노드 다중 브로커 클러스터 구동"></a><a name="subject06"></a> 단일 노드 다중 브로커 클러스터 구동</h2><ul>
+<li>zookeeper 기동은 단일 노드 단일 브로커 클러스터와 동일</li>
+<li>kafka server 기동 시 <a target="_blank" rel="noopener" href="http://server.properties"><code>server.properties</code></a><ul>
+<li>하기 3개 value 를 다르게 설정하여 해당 config 를 읽어들여 기동<ul>
+<li>brokerid</li>
+<li>listeners<ul>
+<li>ex<em>) listeners=PLAINTEXT://:9092(or 9093 or 9094)</em></li>
+</ul>
+</li>
+<li>log.dir</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>이후 콘솔로 pub/sub 프로세스 실행 시 producer 에 broker-list 인자는 위 kafka server properties.listeners.port 를 확인하여 나열<ul>
+<li><em>ex) bin/kafka-console-producer.sh –broker-list localhost:9092,localhost:9093 –topic 20210324-night</em></li>
+</ul>
+</li>
+</ul>
+<h1 id="Create-Topic"><a href="#Create-Topic" class="headerlink" title=" Create Topic"></a><a name="subject07"></a> Create Topic</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafka-test</span><br><span class="line">Created topic <span class="string">&quot;kafka-test&quot;</span>.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Topic-리스트-확인"><a href="#Topic-리스트-확인" class="headerlink" title=" Topic 리스트 확인"></a><a name="subject08"></a> Topic 리스트 확인</h2><p><code>kafka-topics.sh --list --zookeeper &#123;ip:port&#125;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br><span class="line">kafka-test</span><br></pre></td></tr></table></figure>
+
+<h2 id="Topic-설정-확인"><a href="#Topic-설정-확인" class="headerlink" title=" Topic 설정 확인"></a><a name="subject09"></a> Topic 설정 확인</h2><p><code>kafka-topics.sh --describe &#123;topic_name&#125; --zookeeper &#123;ip:port&#125;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-topics.sh --describe kafka-test --zookeeper localhost:2181</span><br><span class="line">Topic:kafka-test	PartitionCount:1	ReplicationFactor:1	Configs:</span><br><span class="line">	Topic: kafka-test	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</span><br></pre></td></tr></table></figure>
+
+<h1 id="Producer-amp-Consumer-테스트"><a href="#Producer-amp-Consumer-테스트" class="headerlink" title=" Producer &amp; Consumer 테스트"></a><a name="subject10"></a> Producer &amp; Consumer 테스트</h1><h2 id="Start-Producer"><a href="#Start-Producer" class="headerlink" title=" Start Producer"></a><a name="subject11"></a> Start Producer</h2><p><code>kafka-console-producer.sh --topic &#123;topic_name&#125; --broker-list &#123;broker_ip:broker_port&#125;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-console-producer.sh --topic kafka-test --broker-list localhost:9092</span><br><span class="line">&gt;ls</span><br></pre></td></tr></table></figure>
+
+<h2 id="Start-Consumer"><a href="#Start-Consumer" class="headerlink" title=" Start Consumer"></a><a name="subject12"></a> Start Consumer</h2><p><code>kafka-console-consumer.sh --topic &#123;topic_name&#125; --zookeeper &#123;zk_ip:zk_port&#125;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-console-consumer.sh --topic kafka-test --zookeeper localhost:2181</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Consumer 콘솔창에서 ls 텍스트 수신 확인</li>
+</ul>
+<h1 id="Consumer-lag-확인"><a href="#Consumer-lag-확인" class="headerlink" title=" Consumer lag 확인"></a><a name="subject13"></a> Consumer lag 확인</h1><p>컨슈머가 읽어들어야 할 데이터(producer 가 보낸 데이터 - consumer 가 받은 데이터) 양을 나타내는 lag 을 커맨드로 확인한다.</p>
+<h1 id="Run-console-Producer-amp-Consumer"><a href="#Run-console-Producer-amp-Consumer" class="headerlink" title=" Run console Producer &amp; Consumer"></a><a name="subject14"></a> Run console Producer &amp; Consumer</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#producer</span></span><br><span class="line">[centos@singlenode bin]$ ./kafka-console-producer.sh --topic kafka-test --broker-list localhost:9092</span><br><span class="line"><span class="comment">#consumer</span></span><br><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-console-consumer.sh --topic kafka-test --bootstrap-server localhost:9092</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consumer-list-확인"><a href="#Consumer-list-확인" class="headerlink" title=" Consumer list 확인"></a><a name="subject15"></a> Consumer list 확인</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@singlenode kafka_2.11-1.1.0]$ bin/kafka-consumer-groups.sh --list --bootstrap-server localhost:9092</span><br><span class="line">Note: This will not show information about old Zookeeper-based consumers.</span><br><span class="line">console-consumer-62348</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lag-확인-주기-1초"><a href="#Lag-확인-주기-1초" class="headerlink" title=" Lag 확인 (주기: 1초)"></a><a name="subject16"></a> Lag 확인 (주기: 1초)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Every 1.0s: bin/kafka-consumer-groups.sh --describe --bootstrap-server localhost:9092 --group console-consumer-62348                                                                                                                                                                                  Mon Mar 22 16:08:42 2021</span><br><span class="line"></span><br><span class="line">Note: This will not show information about old Zookeeper-based consumers.</span><br><span class="line"></span><br><span class="line">TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID</span><br><span class="line">kafka-test	0          210             210             0               consumer-1-bea6ae07-f72f-4496-b3fc-e429a0f4679d /192.168.0.4    consumer-1</span><br><span class="line"><span class="comment"># 현재 Lag 이 없는데, producer 에서 많은 메세지를 생성해서 enter 를 치면 LAG 값이 상승하는 시점이 존재함</span></span><br><span class="line"></span><br><span class="line">Every 1.0s: bin/kafka-consumer-groups.sh --describe --bootstrap-server localhost:9092 --group console-consumer-62348                                                                                                                                                                                  Mon Mar 22 16:09:48 2021</span><br><span class="line"></span><br><span class="line">Note: This will not show information about old Zookeeper-based consumers.</span><br><span class="line"></span><br><span class="line">TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID</span><br><span class="line">kafka-test	0          222             242             20              consumer-1-bea6ae07-f72f-4496-b3fc-e429a0f4679d /192.168.0.4    consumer-1</span><br><span class="line"><span class="comment"># 이후 produceer 가 생성한 메세지를 consumer 가 가져오면서 LAG 이 0이 되는 시점(생상된 모든 메세지 sub 완료) 이 존재</span></span><br><span class="line">Every 1.0s: bin/kafka-consumer-groups.sh --describe --bootstrap-server localhost:9092 --group console-consumer-62348                                                                                                                                                                                  Mon Mar 22 16:09:48 2021</span><br><span class="line"></span><br><span class="line">Note: This will not show information about old Zookeeper-based consumers.</span><br><span class="line"></span><br><span class="line">TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID</span><br><span class="line">kafka-test	0          222             242              0              consumer-1-bea6ae07-f72f-4496-b3fc-e429a0f4679d /192.168.0.4    consumer-1</span><br></pre></td></tr></table></figure>
+
+<h1 id="Log"><a href="#Log" class="headerlink" title=" Log"></a><a name="subject17"></a> Log</h1><ul>
+<li><p><code>logs/controller.log</code></p>
+<ul>
+<li><p>Kafka 클러스터의 노드들 중에서 하나가 controller 로 작동하는데 controller node 에서 발생한 로그</p>
+<ul>
+<li><p>kafka 노드의 구동과 종료 관련된 로그</p>
+</li>
+<li><p>controller 가 각각의 노드의 broker 와 통신하는 로그</p>
+</li>
+<li><p>어떤 노드가 controller 가 될지 결정하는 로그</p>
+<ul>
+<li>예시 : [2019-08-05 13:20:27,944] DEBUG [Controller id=1] Broker 3 has been elected as the controller, so stopping the election process. (kafka.controller.KafkaController)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Topic 생성에 대한 로그</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[2021-03-22 16:38:36,346] INFO [Controller id=0] New topics: [Set(kafka-test-04)], deleted topics: [Set()], new partition replica assignment [Map(kafka-test-04-0 -&gt; Vector(0))] (kafka.controller.KafkaController)</span><br><span class="line">[2021-03-22 16:38:36,346] INFO [Controller id=0] New partition creation callback <span class="keyword">for</span> kafka-test-04-0 (kafka.controller.KafkaController)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>logs/server.log</code></p>
+<ul>
+<li>노드(주로 broker)에서 발생한 로그</li>
+<li>Topic 들의 각 Partition 에 대한 leader election 에 대한 로그</li>
+</ul>
+</li>
+<li><p><code>logs/zookeeper.out</code> : zookeeper 서버에 대한 로그</p>
+</li>
+<li><p><code>logs/state-change.log</code> : Topic 들의 각각의 Partition 들에 대한 상태 변화 관련 로그</p>
+</li>
+<li><p><code>logs/kafka-authorizer.log</code> : 권한이 부여되는 모든 request 와 관련 user name 을 기록한 로그</p>
+</li>
+<li><p><code>logs/log-cleaner.log</code> : kafka.log.LogCleaner 클래스가 남기는 로그로 보이는데, 메시지 압축과 kafka 가 생상한 로그를 관리하는 로그</p>
+</li>
+<li><p><code>logs/kafka-request.log</code> : kafka.server.KafkaApis 클래스가 남기는 로그로 보이는데, kafka 로 들어온 요청에 대한 정보를 남기는 로그</p>
+</li>
+<li><p><code>logs/kafkaServer.out</code> : kafka.server.KafkaServer 클래스가 남기는 로그로 보이는데, kafka 브로커를 실행할 때 관련 config 및 상태에 대한 정보가 남는다. 정확히 어떤 로그를 남기는지는 확인이 필요하다.</p>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://velog.io/@hanblueblue/Kafka-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89-%EB%B0%8F-%ED%85%8C%EC%8A%A4%ED%8A%B8">https://velog.io/@hanblueblue/Kafka-설치실행-및-테스트</a></li>
+<li><a target="_blank" rel="noopener" href="https://devidea.tistory.com/55">https://devidea.tistory.com/55</a></li>
+<li><a target="_blank" rel="noopener" href="https://community.cloudera.com/t5/Support-Questions/What-is-the-use-of-zookeeper-out/td-p/218537">https://community.cloudera.com/t5/Support-Questions/What-is-the-use-of-zookeeper-out/td-p/218537</a></li>
+<li><a target="_blank" rel="noopener" href="https://godway1225.wordpress.com/2019/08/29/kafka-%EB%A1%9C%EA%B7%B8-%EC%A2%85%EB%A5%98-%EB%B0%8F-%EB%A1%9C%EA%B7%B8-%EC%83%98%ED%94%8C%EC%97%90-%EB%8C%80%ED%95%9C-%EC%84%A4%EB%AA%85/">https://godway1225.wordpress.com/2019/08/29/kafka-로그-종류-및-로그-샘플에-대한-설명/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.confluent.io/platform/current/kafka/authorization.html">https://docs.confluent.io/platform/current/kafka/authorization.html</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/network-introduction_to_ngrok/" rel="prev" title="[Network] ngrok?">
+      <i class="fa fa-chevron-left"></i> [Network] ngrok?
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/es-shard_segment/" rel="next" title="[ElasticSearch] Shard 와 Segment">
+      [ElasticSearch] Shard 와 Segment <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%9A%A9%EC%96%B4-%EC%A0%95%EB%A6%AC"><span class="nav-number">1.</span> <span class="nav-text"> 용어 정리</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Download-Binary"><span class="nav-number">2.</span> <span class="nav-text"> Download Binary</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper"><span class="nav-number">2.1.</span> <span class="nav-text"> Zookeeper?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-Zookeeper"><span class="nav-number">2.2.</span> <span class="nav-text"> Run Zookeeper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Run-Kafka-Broker"><span class="nav-number">3.</span> <span class="nav-text"> Run Kafka Broker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%8B%A8%EC%9D%BC-%EB%85%B8%EB%93%9C-%EB%8B%A4%EC%A4%91-%EB%B8%8C%EB%A1%9C%EC%BB%A4-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0-%EA%B5%AC%EB%8F%99"><span class="nav-number">3.1.</span> <span class="nav-text"> 단일 노드 다중 브로커 클러스터 구동</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-Topic"><span class="nav-number">4.</span> <span class="nav-text"> Create Topic</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Topic-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%99%95%EC%9D%B8"><span class="nav-number">4.1.</span> <span class="nav-text"> Topic 리스트 확인</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Topic-%EC%84%A4%EC%A0%95-%ED%99%95%EC%9D%B8"><span class="nav-number">4.2.</span> <span class="nav-text"> Topic 설정 확인</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Producer-amp-Consumer-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="nav-number">5.</span> <span class="nav-text"> Producer &amp; Consumer 테스트</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Start-Producer"><span class="nav-number">5.1.</span> <span class="nav-text"> Start Producer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Start-Consumer"><span class="nav-number">5.2.</span> <span class="nav-text"> Start Consumer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Consumer-lag-%ED%99%95%EC%9D%B8"><span class="nav-number">6.</span> <span class="nav-text"> Consumer lag 확인</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Run-console-Producer-amp-Consumer"><span class="nav-number">7.</span> <span class="nav-text"> Run console Producer &amp; Consumer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consumer-list-%ED%99%95%EC%9D%B8"><span class="nav-number">7.1.</span> <span class="nav-text"> Consumer list 확인</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lag-%ED%99%95%EC%9D%B8-%EC%A3%BC%EA%B8%B0-1%EC%B4%88"><span class="nav-number">7.2.</span> <span class="nav-text"> Lag 확인 (주기: 1초)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Log"><span class="nav-number">8.</span> <span class="nav-text"> Log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">9.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JaeJun Lee</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/kafka-install_and_simple_test/";
+    this.page.identifier = "kafka-install_and_simple_test/";
+    this.page.title = "[Kafka] kafka 설치 및 간단한 테스트";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
