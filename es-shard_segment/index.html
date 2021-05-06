@@ -22,25 +22,22 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="hackerrank에서 제공하는 Contest Leaderboard 문제를 Group by를 활용해 해결하였다.">
+  <meta name="description" content="shard 는 elasticsearch 의 가장 기본적인 개념으로 머릿속에 저장하기 위해 기록을 남긴다. 💾">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[SQL] Contest Leaderboard">
-<meta property="og:url" content="https://jx2lee.github.io/hackerrank-contest_leaderboard/index.html">
+<meta property="og:title" content="[ElasticSearch] Shard 와 Segment">
+<meta property="og:url" content="https://jx2lee.github.io/es-shard_segment/index.html">
 <meta property="og:site_name" content="go hard">
-<meta property="og:description" content="hackerrank에서 제공하는 Contest Leaderboard 문제를 Group by를 활용해 해결하였다.">
+<meta property="og:description" content="shard 는 elasticsearch 의 가장 기본적인 개념으로 머릿속에 저장하기 위해 기록을 남긴다. 💾">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/19503/1458522826-a9ddd28469-ScreenShot2016-03-21at6.40.27AM.png">
-<meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/19503/1458523022-771511df90-ScreenShot2016-03-21at6.40.37AM.png">
-<meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/19503/1458523374-7ecc39010f-ScreenShot2016-03-21at6.51.56AM.png">
-<meta property="og:image" content="https://s3.amazonaws.com/hr-challenge-images/19503/1458523388-0896218137-ScreenShot2016-03-21at6.51.45AM.png">
-<meta property="article:published_time" content="2019-10-09T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.583Z">
+<meta property="og:image" content="https://jx2lee.github.io/image/es-shard_segment-1.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/es-shard_segment-2.png">
+<meta property="article:published_time" content="2021-05-05T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-06T07:31:26.276Z">
 <meta property="article:author" content="JaeJun Lee">
-<meta property="article:tag" content="Hackerrank">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s3.amazonaws.com/hr-challenge-images/19503/1458522826-a9ddd28469-ScreenShot2016-03-21at6.40.27AM.png">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/es-shard_segment-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/hackerrank-contest_leaderboard/">
+<link rel="canonical" href="https://jx2lee.github.io/es-shard_segment/">
 
 
 <script id="page-configurations">
@@ -53,7 +50,7 @@
   };
 </script>
 
-  <title>[SQL] Contest Leaderboard | go hard</title>
+  <title>[ElasticSearch] Shard 와 Segment | go hard</title>
   
 
 
@@ -210,7 +207,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/hackerrank-contest_leaderboard/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/es-shard_segment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -223,7 +220,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          [SQL] Contest Leaderboard
+          [ElasticSearch] Shard 와 Segment
         </h1>
 
         <div class="post-meta">
@@ -233,14 +230,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-10-10 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-10T00:00:00+09:00">2019-10-10</time>
+              <time title="Created: 2021-05-06 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-06T00:00:00+09:00">2021-05-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-05-06 16:31:26" itemprop="dateModified" datetime="2021-05-06T16:31:26+09:00">2021-05-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,7 +245,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
+                  <a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a>
                 </span>
             </span>
 
@@ -261,8 +258,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/hackerrank-contest_leaderboard/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="hackerrank-contest_leaderboard/" itemprop="commentCount"></span>
+    <a title="disqus" href="/es-shard_segment/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="es-shard_segment/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -276,44 +273,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><code>hackerrank</code>에서 제공하는 <code>Contest Leaderboard</code> 문제를 <code>Group by</code>를 활용해 해결하였다.</p>
-<a id="more"></a>
+        <center>shard 는 elasticsearch 의 가장 기본적인 개념으로 머릿속에 저장하기 위해 기록을 남긴다. 💾</center>
 
-<h1 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h1><p>You did such a great job helping Julia with her last coding contest challenge that she wants you to work on this one, too!</p>
-<p>The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the  <em>hacker_id</em>,  <em>name</em>, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending  <em>hacker_id</em>. Exclude all hackers with a total score of  from your result.</p>
-<p><strong>Input Format</strong></p>
-<p>The following tables contain contest data:</p>
-<ul>
-<li><p><em>Hackers:</em>  The  <em>hacker_id</em>  is the id of the hacker, and  <em>name</em>  is the name of the hacker.  <img src="https://s3.amazonaws.com/hr-challenge-images/19503/1458522826-a9ddd28469-ScreenShot2016-03-21at6.40.27AM.png" alt=""></p>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">정의</a><ul>
+<li><a href="#subject02">Shard</a></li>
+<li><a href="#subject03">Segment</a></li>
+</ul>
 </li>
-<li><p><em>Submissions:</em>  The  <em>submission_id</em>  is the id of the submission,  <em>hacker_id</em>  is the id of the hacker who made the submission,  <em>challenge_id</em>  is the id of the challenge for which the submission belongs to, and  <em>score</em>  is the score of the submission.  <img src="https://s3.amazonaws.com/hr-challenge-images/19503/1458523022-771511df90-ScreenShot2016-03-21at6.40.37AM.png" alt=""></p>
+<li><a href="#subject04">데이터가 저장되는 방식</a></li>
+<li><a href="#subject05">documnet 가 upadte 되는 과정</a><ul>
+<li><a href="#subject06">그럼 계속해서 segment 를 생성할텐데..?</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="정의"><a href="#정의" class="headerlink" title=" 정의"></a><a name="subject01"></a> 정의</h1><p><img align="left" src="/image/es-shard_segment-1.png"><br><br><br><br><br><br></p>
+<h2 id="Shard"><a href="#Shard" class="headerlink" title=" Shard"></a><a name="subject02"></a> Shard</h2><ul>
+<li>index 에 저장되는 논리적인 공간</li>
+<li>하나의 Index 는 다수의 shard 를 가지고 있음</li>
+<li>shard 는 1개 이상의 segment 로 구성<ul>
+<li>shard 마다 segment 수는 상이할 수 있음</li>
+</ul>
 </li>
 </ul>
-<p><strong>Sample Input</strong></p>
-<p><em>Hackers</em>  Table:  <img src="https://s3.amazonaws.com/hr-challenge-images/19503/1458523374-7ecc39010f-ScreenShot2016-03-21at6.51.56AM.png" alt=""></p>
-<p><em>Submissions</em>  Table:  <img src="https://s3.amazonaws.com/hr-challenge-images/19503/1458523388-0896218137-ScreenShot2016-03-21at6.51.45AM.png" alt=""></p>
-<p><strong>Sample Output</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">4071 Rose 191</span><br><span class="line">74842 Lisa 174</span><br><span class="line">84072 Bonnie 100</span><br><span class="line">4806 Angela 89</span><br><span class="line">26071 Frank 85</span><br><span class="line">80305 Kimberly 67</span><br><span class="line">49438 Patrick 43</span><br></pre></td></tr></table></figure>
-
-<p><strong>Explanation</strong></p>
-<p>Hacker  <em>4071</em>  submitted solutions for challenges  <em>19797</em>  and  <em>49593</em>, so the total score  .</p>
-<p>Hacker  <em>74842</em>  submitted solutions for challenges  <em>19797</em>  and  <em>63132</em>, so the total score</p>
-<p>Hacker  <em>84072</em>  submitted solutions for challenges  <em>49593</em>  and  <em>63132</em>, so the total score  .</p>
-<p>The total scores for hackers  <em>4806</em>,  <em>26071</em>,  <em>80305</em>, and  <em>49438</em>  can be similarly calculated.</p>
-<h1 id="접근"><a href="#접근" class="headerlink" title="접근"></a>접근</h1><p>우선은, <code>challenge_id / hacker_id 별 score의 최댓값</code>을 구하고 이를 <code>hackers</code> 테이블과 조인한다.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> h.hacker_id, h.name, <span class="keyword">sum</span>(m.score) <span class="keyword">as</span> total_score</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    (<span class="keyword">select</span> hacker_id, challenge_id, <span class="keyword">max</span>(score) <span class="keyword">as</span> score</span><br><span class="line">    <span class="keyword">from</span> submissions</span><br><span class="line">    <span class="keyword">group</span> <span class="keyword">by</span> challenge_id, hacker_id) <span class="keyword">as</span> m</span><br><span class="line"><span class="keyword">join</span> hackers <span class="keyword">as</span> h <span class="keyword">on</span> h.hacker_id = m.hacker_id</span><br></pre></td></tr></table></figure>
-
-<p>이후 <code>max score</code>들의 <code>total_score</code>를 구하기 위해 <code>hacker_id / name 을 key로 하여 group by</code> 한다.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> h.hacker_id, h.name, <span class="keyword">sum</span>(m.score) <span class="keyword">as</span> total_score</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    (<span class="keyword">select</span> hacker_id, challenge_id, <span class="keyword">max</span>(score) <span class="keyword">as</span> score</span><br><span class="line">    <span class="keyword">from</span> submissions</span><br><span class="line">    <span class="keyword">group</span> <span class="keyword">by</span> challenge_id, hacker_id) <span class="keyword">as</span> m</span><br><span class="line"><span class="keyword">join</span> hackers <span class="keyword">as</span> h <span class="keyword">on</span> h.hacker_id = m.hacker_id</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> h.hacker_id, h.name</span><br></pre></td></tr></table></figure>
-
-<p>마지막으로 문제에 따라 정렬만 하면 된다.</p>
+<h2 id="Segment"><a href="#Segment" class="headerlink" title=" Segment"></a><a name="subject03"></a> Segment</h2><ul>
+<li>shard 의 데이터들이 가지고 있는 물리적인 파일</li>
+<li>불변(immutable)</li>
+</ul>
+<h1 id="데이터가-저장되는-방식"><a href="#데이터가-저장되는-방식" class="headerlink" title=" 데이터가 저장되는 방식"></a><a name="subject04"></a> 데이터가 저장되는 방식</h1><p><img src="/image/es-shard_segment-2.png" alt="shard"></p>
+<ul>
+<li>index 를 shard 로 나누고 데이터 노드에 shard 를 할당</li>
+<li>각 shard 에 문서를 저장</li>
+<li>shard: primary shard &amp; replica shard<ul>
+<li>primary shard: 원본 문서</li>
+<li>replica shard: 원본 문서가 유실되지 않기 위해 복사한 문서</li>
+<li>replica shard 를 통해 데이터 안정성 보장</li>
+<li>primary shard 는 최초 index 생성 시 개수를 결정하는데 이는 설정 이후 변경이 불가하다. 따라서 신중하게 결정해야함</li>
+</ul>
+</li>
+<li>해시 알고리즘을 통해 문서는 shard 들에 분산 저장되고 실제는 segment 라는 실제 물리적 파일에 저장</li>
+<li>색인(indexing)된 문서는 먼저 memory buffer cache 에 저장<ul>
+<li>이후 refresh 를 통해 디스크에 segment 단위로 문서가 저장되고 이때부터 검색이 가능하다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="documnet-가-upadte-되는-과정"><a href="#documnet-가-upadte-되는-과정" class="headerlink" title=" documnet 가 upadte 되는 과정"></a><a name="subject05"></a> documnet 가 upadte 되는 과정</h1><ol>
+<li>document 업데이트를 시도하면 elasticsearch 는 새로운 segment 에 업데이트 된 document 를 저장</li>
+<li>기존 데이터는 쓰이지 않게 불용 처리 (바로 삭제는 하지 않음)</li>
+<li>이후 데이터 조회 시 update 된 document 를 검색하여 기존 불용처리된 document 는 검색되지 않음</li>
+</ol>
+<h2 id="그럼-계속해서-segment-를-생성할텐데"><a href="#그럼-계속해서-segment-를-생성할텐데" class="headerlink" title=" 그럼 계속해서 segment 를 생성할텐데..?"></a><a name="subject06"></a> 그럼 계속해서 segment 를 생성할텐데..?</h2><p>이와 같이 생각할 수 있다. 업데이트 혹은 삭제 시 불용처리만 진행되면 기존 생성된 segment 들이 쌓여 시스템에 영향을 줄 수 있다. 이러한 단점을 보완하기 위해 elasticsearch 는 background 에서 segment merge 작업을 진행한다.</p>
+<ol>
+<li>ID 1,2,3 document 색인</li>
+<li>ID 3인 document 를 삭제하면 해당 문서가 삭제되었다는 flag 를 기록하고 불용 처리</li>
+<li>ID 4인 document 색인</li>
+<li>색인이 된다고 merge 작업이 일어나는 것은 아니지만 예제를 쉽게 설명하기 위해 색인 작업을 추가하였다. 백그라운드에서 merge 작업이 진행될 때 ID 3인 문서는 삭제 flag 가 존재하기 때문에 해당 문서는 제외하고 1,2 문서만 하나의 segment 로 병합한다.</li>
+</ol>
+<p>이러한 segment merge 작업은 하나의 큰 segment 로 합치는 작업이 무수히 많이 발생한다. 또한, merge 시 삭제 flag 가 존재하는 데이터는 실제로 디스크에서 삭제한다. segment 병합을 통해 검색 시 파일 개수가 줄어들기 때문에 적은 비용으로 빠르게 응답할 수 있다.</p>
 <blockquote>
-<p><em>(total_score &gt; 0인 조건도 추가)</em></p>
+<p><em>그렇다면 해당 segment 크기가 커지게 되면 파일 개수가 적지만 응답할 때 그만큼 비용이 더 들 수 있지 않을까? 이 부분은 서치 혹은 저자에게 물어봐야겠다.</em></p>
 </blockquote>
-<h1 id="해결"><a href="#해결" class="headerlink" title="해결"></a>해결</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> h.hacker_id, h.name, <span class="keyword">sum</span>(m.score) <span class="keyword">as</span> total_score</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    (<span class="keyword">select</span> hacker_id, challenge_id, <span class="keyword">max</span>(score) <span class="keyword">as</span> score</span><br><span class="line">    <span class="keyword">from</span> submissions</span><br><span class="line">    <span class="keyword">group</span> <span class="keyword">by</span> challenge_id, hacker_id) <span class="keyword">as</span> m</span><br><span class="line"><span class="keyword">join</span> hackers <span class="keyword">as</span> h <span class="keyword">on</span> h.hacker_id = m.hacker_id</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> h.hacker_id, h.name</span><br><span class="line"><span class="keyword">having</span> total_score &gt; <span class="number">0</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> total_score <span class="keyword">desc</span>, h.hacker_id;</span><br></pre></td></tr></table></figure>
-
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li>기초부터 배우는 ElasticSearch 노하우</li>
+</ul>
 <hr>
-<p>2019.10.10 made by <em>jaejun.lee</em></p>
+<p>made by <em>jaejun.lee</em></p>
 
     </div>
 
@@ -322,9 +349,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Hackerrank/" rel="tag"># Hackerrank</a>
-          </div>
 
         
 
@@ -332,13 +356,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/hackerrank-project_planning/" rel="prev" title="[SQL] SQL Project Planning">
-      <i class="fa fa-chevron-left"></i> [SQL] SQL Project Planning
+    <a href="/network-introduction_to_ngrok/" rel="prev" title="[Network] ngrok?">
+      <i class="fa fa-chevron-left"></i> [Network] ngrok?
     </a></div>
-      <div class="post-nav-item">
-    <a href="/hackerrank-symmetric_pairs_draw_triangle_1/" rel="next" title="[SQL] Symmetric Pairs & Draw The Triangle 1">
-      [SQL] Symmetric Pairs & Draw The Triangle 1 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -404,7 +425,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%AC%B8%EC%A0%9C"><span class="nav-number">1.</span> <span class="nav-text">문제</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A0%91%EA%B7%BC"><span class="nav-number">2.</span> <span class="nav-text">접근</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%ED%95%B4%EA%B2%B0"><span class="nav-number">3.</span> <span class="nav-text">해결</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A0%95%EC%9D%98"><span class="nav-number">1.</span> <span class="nav-text"> 정의</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shard"><span class="nav-number">1.1.</span> <span class="nav-text"> Shard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segment"><span class="nav-number">1.2.</span> <span class="nav-text"> Segment</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0%EA%B0%80-%EC%A0%80%EC%9E%A5%EB%90%98%EB%8A%94-%EB%B0%A9%EC%8B%9D"><span class="nav-number">2.</span> <span class="nav-text"> 데이터가 저장되는 방식</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#documnet-%EA%B0%80-upadte-%EB%90%98%EB%8A%94-%EA%B3%BC%EC%A0%95"><span class="nav-number">3.</span> <span class="nav-text"> documnet 가 upadte 되는 과정</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EA%B7%B8%EB%9F%BC-%EA%B3%84%EC%86%8D%ED%95%B4%EC%84%9C-segment-%EB%A5%BC-%EC%83%9D%EC%84%B1%ED%95%A0%ED%85%90%EB%8D%B0"><span class="nav-number">3.1.</span> <span class="nav-text"> 그럼 계속해서 segment 를 생성할텐데..?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -544,9 +565,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://jx2lee.github.io/hackerrank-contest_leaderboard/";
-    this.page.identifier = "hackerrank-contest_leaderboard/";
-    this.page.title = "[SQL] Contest Leaderboard";
+    this.page.url = "https://jx2lee.github.io/es-shard_segment/";
+    this.page.identifier = "es-shard_segment/";
+    this.page.title = "[ElasticSearch] Shard 와 Segment";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
