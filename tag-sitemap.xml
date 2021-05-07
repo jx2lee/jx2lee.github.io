@@ -3,6 +3,34 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/tags/Bigdata/</loc>
+        <lastmod>2021-05-07T02:41:29.100Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/tags/Docker/</loc>
+        <lastmod>2021-05-07T02:41:29.100Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/tags/Tibero/</loc>
+        <lastmod>2021-05-07T02:40:36.989Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/tags/Spark/</loc>
+        <lastmod>2021-05-07T02:40:12.720Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/tags/Kubernetes/</loc>
         <lastmod>2021-05-02T14:16:07.579Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,29 +45,8 @@
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/tags/Docker/</loc>
-        <lastmod>2021-03-26T12:24:28.924Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jx2lee.github.io/tags/Kubeflow/</loc>
         <lastmod>2021-01-28T15:12:07.353Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/tags/Tibero/</loc>
-        <lastmod>2020-09-26T14:08:33.079Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/tags/Spark/</loc>
-        <lastmod>2020-05-15T05:25:12.601Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

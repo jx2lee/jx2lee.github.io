@@ -19,7 +19,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="docker private registry 를 생성하고, tar 파일로 변환한 이미지를 load 및 registry 에 push 하는 과정을 다룬다. 사이트에 나가게 되면 폐쇄망인 경우가 대부분인데, 이럴 경우를 대비해서 이미지 리스트를 읽어들여 docker image 를 tar로 변환하고 registry 에 push 하는 쉘 스크립트를 작성하였다. Upd">
@@ -389,77 +389,6 @@
 </script>
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Private-registry-%EC%83%9D%EC%84%B1"><span class="nav-number">1.</span> <span class="nav-text">Private registry 생성</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-Pull-%ED%95%98%EA%B3%A0-container-%EB%A5%BC-%EA%B8%B0%EB%8F%99%ED%95%9C%EB%8B%A4"><span class="nav-number">1.1.</span> <span class="nav-text">registry 이미지를 Pull 하고 container 를 기동한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-push"><span class="nav-number">2.</span> <span class="nav-text">Image push</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tar-%ED%8C%8C%EC%9D%BC%EB%A1%9C-%EB%AC%B6%EC%9D%80-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-docker-load-i-tar-name-%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-%EC%83%9D%EC%84%B1%ED%95%98%EA%B3%A0-%EC%9D%B4%EB%A5%BC-registry-%EC%97%90-push-%ED%95%9C%EB%8B%A4"><span class="nav-number">2.1.</span> <span class="nav-text">tar 파일로 묶은 이미지를 docker load -i {tar_name} 으로 이미지를 생성하고, 이를 registry 에 push 한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image-%ED%99%95%EC%9D%B8"><span class="nav-number">3.</span> <span class="nav-text">Image 확인</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#registry-%EC%97%90-%ED%95%B4%EB%8B%B9-%EC%9D%B4%EB%AF%B8%EC%A7%80%EA%B0%80-%EC%A1%B4%EC%9E%AC%ED%95%98%EB%8A%94%EC%A7%80-curl-%EB%AA%85%EB%A0%B9%EC%96%B4%EB%A1%9C-%ED%99%95%EC%9D%B8%ED%95%9C%EB%8B%A4"><span class="nav-number">3.1.</span> <span class="nav-text">registry 에 해당 이미지가 존재하는지 curl 명령어로 확인한다.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image-Pull-amp-Push-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8"><span class="nav-number">4.</span> <span class="nav-text">Docker Image Pull &amp; Push 스크립트</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">106</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">15</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
 

@@ -19,7 +19,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="Hadoop 관련 책을 읽으며 개념을 간단히 정리한다.">
@@ -36,8 +36,9 @@
 <meta property="og:image" content="https://d2.naver.com/content/images/2015/06/helloworld-246342-1.png">
 <meta property="og:image" content="http://labs.gree.jp/blog/wp-content/uploads/2014/12/presto_arch-600x372.png">
 <meta property="article:published_time" content="2019-10-21T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-15T05:29:45.181Z">
+<meta property="article:modified_time" content="2021-05-07T02:40:20.567Z">
 <meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="Bigdata">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jx2lee.github.io/image/hadoop-ecosystem.png">
 
@@ -241,7 +242,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 14:29:45" itemprop="dateModified" datetime="2020-05-15T14:29:45+09:00">2020-05-15</time>
+                <time title="Modified: 2021-05-07 11:40:20" itemprop="dateModified" datetime="2021-05-07T11:40:20+09:00">2021-05-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,7 +281,7 @@
         <p><strong>Hadoop</strong> 관련 책을 읽으며 개념을 간단히 정리한다.</p>
 <a id="more"></a>
 
-<p>맨날 하둡 공부해야지.. 공부해야지 하다가 <a href="http://www.yes24.com/Product/goods/66277191" target="_blank" rel="noopener"><em>빅데이터를 지탱하는 기술</em></a> 책을 읽으며 정리하고자 한다. 무작정 실습부터 하기 보다는, 기본적인 개념을 익히고 <strong>Hadoop</strong> 환경을 구성할 것이다.</p>
+<p>맨날 하둡 공부해야지.. 공부해야지 하다가 <a target="_blank" rel="noopener" href="http://www.yes24.com/Product/goods/66277191"><em>빅데이터를 지탱하는 기술</em></a> 책을 읽으며 정리하고자 한다. 무작정 실습부터 하기 보다는, 기본적인 개념을 익히고 <strong>Hadoop</strong> 환경을 구성할 것이다.</p>
 <blockquote>
 <p><em>우선 내용 전체적으로 도서를 참고해 작성하고 추가적인 부분은 구글 서치를 통해 채워넣을 예정이다.  최대한 책을 기반으로 개념을 정리하는 것을 목표로 한다.</em></p>
 </blockquote>
@@ -306,7 +307,7 @@
 <p>즉, 위에서 소개한 프로젝트에서 분산 파일 시스템으로는 <code>HDFS</code>를 사용하고 resource manager로는 <code>Mesos</code>를, 분산 데이터 처리에는 <code>Spark</code>를 사용할 수 있다. 자신에게 맞고 상황에 맞는 프로젝트를 구성하는 것이 Hadoop을 중심으로 하는 데이터 처리의 특징이다.</p>
 <h2 id="분산-파일-시스템-HDFS-과-리소스-관리자-YARN"><a href="#분산-파일-시스템-HDFS-과-리소스-관리자-YARN" class="headerlink" title=" 분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)"></a><a name="hdfsyarn"></a> 분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)</h2><p>Hadoop에서 처리되는 데이터는 대부분 <code>HDFS</code>에 저장된다. 보통 파일 서버와 비슷한 개념이지만, <code>다수 컴퓨터에 파일을 복사하여 중복성을 높인다</code>는 특징이 있다.</p>
 <blockquote>
-<p>HDFS는 <strong>블록 구조의 file system</strong>이다. 파일을 특정 크기 블록으로 나누어 분산된 서버에 저장한다. 크기는 64MB 에서 Hadoop2 부터는 128M로 증가하였다(<a href="https://yookeun.github.io/java/2015/05/24/hadoop-hdfs/" target="_blank" rel="noopener">참고</a>)</p>
+<p>HDFS는 <strong>블록 구조의 file system</strong>이다. 파일을 특정 크기 블록으로 나누어 분산된 서버에 저장한다. 크기는 64MB 에서 Hadoop2 부터는 128M로 증가하였다(<a target="_blank" rel="noopener" href="https://yookeun.github.io/java/2015/05/24/hadoop-hdfs/">참고</a>)</p>
 </blockquote>
 <p>한편, CPU나 메모리 등의 계산 리소스는 resource manager인 <code>YARN</code>에 의해 관리된다. <code>YARN</code>은 CPU 코어와 메모리를 <strong>컨테이너 (Container)</strong> 단위로 관리한다 <em>(여기서 Container는 Docker Container와는 다르다. 어떤 호스트에서 어떤 프로세스를 실행시킬 것인지 결정하는 앱 수준의 기술)</em>. Hadoop에서  분산 앱을 실행하면 <code>YARN</code>이 클러스터 전체의 부하를 보고 비어 있는 호스트부터 컨테이너를 할당한다.</p>
 <blockquote>
@@ -324,7 +325,7 @@
 </blockquote>
 <center><img src="https://miro.medium.com/max/560/1*ncMKJ3Mdg-QKJQ21zavJeQ.png"></center>
 
-<p>[그림] - Hive Architecture (<a href="https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7" target="_blank" rel="noopener">https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7</a>)</p>
+<p>[그림] - Hive Architecture (<a target="_blank" rel="noopener" href="https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7">https://medium.com/@yigiterbas/apache-hive-and-applications-1-31735b8823c7</a>)</p>
 <h2 id="Hive-on-Tez"><a href="#Hive-on-Tez" class="headerlink" title=" Hive on Tez"></a><a name="hive"></a> Hive on Tez</h2><p>Hive 가속화를 위해 개발된 것으로 MapReduce에서 보인 몇 가지 단점을 해결하고 고속화를 실현하고 있다.</p>
 <blockquote>
 <p>예를 들어, MapReduce의 경우 하나의 stage가 끝날 때 까지 다음의 처리를 진행할 수 없었다. 이에 <code>Tez</code>는 stage 종료를 기다리지 않고 처리가 끝난 데이터를 차례대로 후속 처리로 넘겨 전체 쿼리 시간의 단축을 실현했다.</p>
@@ -345,7 +346,7 @@
 </li>
 </ul>
 <p><img src="https://d2.naver.com/content/images/2015/06/helloworld-246342-1.png" alt=""></p>
-<p>[그림] - impala high-level architecture (<a href="http://blog.cloudera.com/blog/2012/10/cloudera-impala-real-time-queries-in-apache-hadoop-for-real/" target="_blank" rel="noopener">원본출처</a>)</p>
+<p>[그림] - impala high-level architecture (<a target="_blank" rel="noopener" href="http://blog.cloudera.com/blog/2012/10/cloudera-impala-real-time-queries-in-apache-hadoop-for-real/">원본출처</a>)</p>
 <ul>
 <li><p><strong>Presto</strong></p>
 <p>Presto는 크게 <code>Coordinator</code>와 <code>Worker</code>로 구성된다.</p>
@@ -356,7 +357,7 @@
 </li>
 </ul>
 <p><img src="http://labs.gree.jp/blog/wp-content/uploads/2014/12/presto_arch-600x372.png" alt=""></p>
-<p>[그림] - Presto architecture (<a href="http://labs.gree.jp/blog/2014/12/12838/" target="_blank" rel="noopener">출처</a>)</p>
+<p>[그림] - Presto architecture (<a target="_blank" rel="noopener" href="http://labs.gree.jp/blog/2014/12/12838/">출처</a>)</p>
 <p>이러한 대화형 쿼리 엔진은 Hive 와는 달리 순간 최대 속도를 높이기 위해 모든 오버헤드를 제거하여, 리소스를 최대한 활용하여 쿼리를 실행한다 <em>(이는 Hive의 단점으로 언급한 부분을 해결한다)</em> . 그 결과, 대화형 쿼리 엔진은 MPP DB와 비교해도 손색없는 응답 시간을 얻을 수 있다. </p>
 <blockquote>
 <p>Hadoop에서는 쿼리 엔진을 목적에 따라 구분한다. 대량의 비구조화 데이터를 가공하는 무거운 배치 처리에는 높은 처리량으로 리소스를 활용할 수 있는 <code>Hive</code>를, 구조화 및 완성된 데이터를 대화식으로 집계를 원할 땐 지연이 적은 <code>Impala</code>와 <code>Presto</code>가 적합하다.</p>
@@ -371,6 +372,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bigdata/" rel="tag"># Bigdata</a>
+          </div>
 
         
 
@@ -428,77 +432,6 @@
 </script>
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-%EC%9D%B4%EB%9E%80"><span class="nav-number">1.</span> <span class="nav-text"> Hadoop 이란</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C"><span class="nav-number">2.</span> <span class="nav-text"> Hadoop 기본 구성 요소</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B6%84%EC%82%B0-%ED%8C%8C%EC%9D%BC-%EC%8B%9C%EC%8A%A4%ED%85%9C-HDFS-%EA%B3%BC-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EA%B4%80%EB%A6%AC%EC%9E%90-YARN"><span class="nav-number">2.1.</span> <span class="nav-text"> 분산 파일 시스템 (HDFS) 과 리소스 관리자 (YARN)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%B6%84%EC%82%B0-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B2%98%EB%A6%AC-MapReduce-%EB%B0%8F-%EC%BF%BC%EB%A6%AC-%EC%97%94%EC%A7%84-Hive"><span class="nav-number">2.2.</span> <span class="nav-text"> 분산 데이터 처리 (MapReduce) 및 쿼리 엔진 (Hive)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive-on-Tez"><span class="nav-number">2.3.</span> <span class="nav-text"> Hive on Tez</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EB%8C%80%ED%99%94%ED%98%95-%EC%BF%BC%EB%A6%AC-%EC%97%94%EC%A7%84-Impala-amp-Presto"><span class="nav-number">2.4.</span> <span class="nav-text"> 대화형 쿼리 엔진 (Impala &amp; Presto)</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">106</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">15</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
 

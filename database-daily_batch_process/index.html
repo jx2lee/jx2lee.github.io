@@ -19,7 +19,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="프로젝트 시범과제 중 [데이터 마트 구축]을 수행하면서 고객요건에 맞는 테이블을 생성하고 갱신하는 프로세스를 경험하였다. 별 어려운 내용은 없지만 내 머릿속에 저장히기 위해 글로 남겨놓는다. (도움을 주신 갓정희님께 감사의 인사를)">
@@ -412,77 +412,6 @@
 </script>
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%9C%A0%EC%A0%80-%EC%83%9D%EC%84%B1"><span class="nav-number">1.</span> <span class="nav-text"> 유저 생성</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TARGET-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%83%9D%EC%84%B1"><span class="nav-number">2.</span> <span class="nav-text"> TARGET 테이블 생성</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%EC%A3%BC-%EB%8B%A8%EC%9C%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A7%88%EA%B0%90"><span class="nav-number">3.</span> <span class="nav-text"> 주 단위 데이터 마감</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%ED%98%84%EC%9E%AC-%EA%B8%B0%EC%A4%80-%EC%9D%B4-%EC%A0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A1%B0%ED%9A%8C-%ED%9B%84-%EC%A0%80%EC%9E%A5"><span class="nav-number">3.1.</span> <span class="nav-text">1) 현재 기준 이 전 데이터 조회 후 저장</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%ED%98%84%EC%9E%AC-%EA%B8%B0%EC%A4%80-%EC%9D%BC%EC%A3%BC%EC%9D%BC-%EC%A0%84-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%9D%98-DEL-FLAG-%EB%B3%80%EA%B2%BD"><span class="nav-number">3.2.</span> <span class="nav-text">2) 현재 기준 일주일 전 데이터의 DEL_FLAG 변경</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-TEMP-%ED%85%8C%EC%9D%B4%EB%B8%94%EA%B3%BC-TARGET-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B0%84-Merge"><span class="nav-number">3.3.</span> <span class="nav-text">3) TEMP 테이블과 TARGET 테이블 간 Merge</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text"> Reference</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">JaeJun Lee</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">106</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">15</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/jx2lee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jx2lee" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:jaejun.lee.1991@gmail.com" title="E-Mail → mailto:jaejun.lee.1991@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
 
