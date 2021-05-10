@@ -22,17 +22,23 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="go hard">
-<meta property="og:url" content="https://jx2lee.github.io/categories/index.html">
+  <meta name="description" content="Kafka 디자인 특징을 살펴본다. 🖼">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Kafka] Kafka 디자인 특징">
+<meta property="og:url" content="https://jx2lee.github.io/kafka-kafka_design_pattern/index.html">
 <meta property="og:site_name" content="go hard">
+<meta property="og:description" content="Kafka 디자인 특징을 살펴본다. 🖼">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-03-30T15:06:23.592Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.592Z">
+<meta property="og:image" content="https://jx2lee.github.io/image/kafka-kafka_design_pattern-1.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/kafka-kafka_design_pattern-2.png">
+<meta property="article:published_time" content="2021-05-09T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-10T14:38:12.419Z">
 <meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="Bigdata">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/kafka-kafka_design_pattern-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/categories/">
+<link rel="canonical" href="https://jx2lee.github.io/kafka-kafka_design_pattern/">
 
 
 <script id="page-configurations">
@@ -40,13 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category | go hard
-</title>
+  <title>[Kafka] Kafka 디자인 특징 | go hard</title>
   
 
 
@@ -195,51 +200,157 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="en">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/kafka-kafka_design_pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Kafka] Kafka 디자인 특징
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-<div class="post-meta">
+              <time title="Created: 2021-05-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-10T00:00:00+09:00">2021-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-10 23:38:12" itemprop="dateModified" datetime="2021-05-10T23:38:12+09:00">2021-05-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/kafka-kafka_design_pattern/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="kafka-kafka_design_pattern/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center> Kafka 디자인 특징을 살펴본다. 🖼 </center>
+
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">분산 시스템</a></li>
+<li><a href="#subject02">페이지 캐시</a></li>
+<li><a href="#subject03">배치 전송 처리</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="분산-시스템"><a href="#분산-시스템" class="headerlink" title=" 분산 시스템"></a><a name="subject01"></a> 분산 시스템</h1><ul>
+<li>분산 시스템 정의: 네트워크로 이루어진 컴퓨터들의 그룹<ul>
+<li>시스템 전체가 공통의 목표</li>
+<li>단일 시스템 보다 더 많은 성능을 낼 수 있음</li>
+<li>서버 장애 시 다른 서버가 일을 대신 처리</li>
+<li>시스템 확장 용이 (축소도 가능)</li>
+</ul>
+</li>
+<li>Kafka broker 수 측정은 해당 시스템을 잘 파악하여 유동적으로 늘려야 함</li>
+<li>링크드인은 사용량이 가장 높은 클러스터의 경우 60개 broker 를 운영한다고 함 (apache kafka 공식 Document)</li>
+</ul>
+<h1 id="페이지-캐시"><a href="#페이지-캐시" class="headerlink" title=" 페이지 캐시"></a><a name="subject02"></a> 페이지 캐시</h1><p>Kafka 는 메세지 처리량을 높이기 위해 페이지 캐싱을 이용하였다.</p>
+<ul>
+<li>OS 관점에서 물리적 메모리에 애플리케이션이 사용하고 남은 잔여 메모리 부분을 페이지 캐시로 유지해 OS 성능을 향상시킴</li>
+<li>빠른 액세스를 위해 kafka 는 <code>페이지 캐시</code> 를 이용하도록 설계<ul>
+<li>페이지 캐시에 대한 내용은 위키피디아 참고</li>
+</ul>
+</li>
+<li>kafka broker 의 디스크를 SATA 로 사용해도 무방하다고 한다 (공식 Document)</li>
+<li>JVM Heap 여유를 위해 kafka broker 는 5GB 힙 메모리면 충분하다고 한다.<ul>
+<li>여유 메모리는 페이지 캐시로 사용하길 권장한다.</li>
+<li>추가로 kafka broker 내 다른 java application 을 실행하지 않는 것을 권장한다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image/kafka-kafka_design_pattern-1.png" alt="https://needjarvis.tistory.com/602"></p>
+<blockquote>
+<p>페이지 캐시를 검색하던 중 버퍼캐시와 함께 설명한 부분이 딱 와닿았다. 버퍼 캐시는 파일 시스템의 메타 데이터 관련 블록들을 저장한 캐시이며, 페이지 캐시는 파일의 내용을 저장하고 있는 캐시이다. (<a target="_blank" rel="noopener" href="https://brunch.co.kr/@alden/25"><em>https://brunch.co.kr/@alden/25</em></a>)</p>
+</blockquote>
+<h1 id="배치-전송-처리"><a href="#배치-전송-처리" class="headerlink" title=" 배치 전송 처리"></a><a name="subject03"></a> 배치 전송 처리</h1><p>Kafka 는 메시지를 1개 마다 전송할 경우 발생하는 네트워크 오버헤드를 방지하기 위해 <strong>작은 메세지들을 묶어 한 번에 전송</strong>하는 <code>배치 전송 처리</code> 기능을 지원한다.</p>
+<p><img src="/image/kafka-kafka_design_pattern-2.png" alt="/image/kafka-kafka_design_pattern-2.png"> </p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li>카프카, 데이터 플랫폼의 최강자</li>
+<li><a target="_blank" rel="noopener" href="https://needjarvis.tistory.com/602">https://needjarvis.tistory.com/602</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bigdata/" rel="tag"># Bigdata</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/es-shard_segment/" rel="prev" title="[ElasticSearch] Shard 와 Segment">
+      <i class="fa fa-chevron-left"></i> [ElasticSearch] Shard 와 Segment
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              15 categories in total
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/BI/">BI</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Cloud/">Cloud</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ElasticSearch/">ElasticSearch</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Etc/">Etc</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Jenkins/">Jenkins</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Shell/">Shell</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TroubleShoot/">TroubleShoot</a><span class="category-list-count">2</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -366,9 +477,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://jx2lee.github.io/categories/index.html";
-    this.page.identifier = "categories/index.html";
-    this.page.title = "";
+    this.page.url = "https://jx2lee.github.io/kafka-kafka_design_pattern/";
+    this.page.identifier = "kafka-kafka_design_pattern/";
+    this.page.title = "[Kafka] Kafka 디자인 특징";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
