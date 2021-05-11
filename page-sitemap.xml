@@ -10,17 +10,8 @@
     
     
     <url>
-        <loc>https://jx2lee.github.io/about/</loc>
-        <lastmod>2021-05-08T14:33:08.014Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    
-    
-    <url>
         <loc>https://jx2lee.github.io/tags/</loc>
-        <lastmod>2020-03-30T15:06:23.606Z</lastmod>
+        <lastmod>2021-05-11T05:27:51.848Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -29,7 +20,16 @@
     
     <url>
         <loc>https://jx2lee.github.io/categories/</loc>
-        <lastmod>2020-03-30T15:06:23.592Z</lastmod>
+        <lastmod>2021-05-11T05:27:43.776Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://jx2lee.github.io/about/</loc>
+        <lastmod>2021-05-11T05:27:33.854Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
