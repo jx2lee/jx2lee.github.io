@@ -9,15 +9,57 @@
 
 
     <url>
-        <loc>https://jx2lee.github.io/categories/Kafka/</loc>
-        <lastmod>2021-05-11T11:42:59.243Z</lastmod>
+        <loc>https://jx2lee.github.io/categories/Cloud/</loc>
+        <lastmod>2021-05-11T15:24:33.497Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://jx2lee.github.io/categories/Cloud/</loc>
-        <lastmod>2021-05-07T02:41:29.100Z</lastmod>
+        <loc>https://jx2lee.github.io/categories/Python/</loc>
+        <lastmod>2021-05-11T15:22:07.673Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Database/</loc>
+        <lastmod>2021-05-11T15:20:31.272Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Hadoop/</loc>
+        <lastmod>2021-05-11T15:19:57.542Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Linux/</loc>
+        <lastmod>2021-05-11T15:19:27.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Network/</loc>
+        <lastmod>2021-05-11T15:19:04.283Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/ElasticSearch/</loc>
+        <lastmod>2021-05-11T15:17:41.272Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jx2lee.github.io/categories/Kafka/</loc>
+        <lastmod>2021-05-11T15:17:16.178Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -25,41 +67,6 @@
     <url>
         <loc>https://jx2lee.github.io/categories/BI/</loc>
         <lastmod>2021-05-07T02:41:08.442Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Hadoop/</loc>
-        <lastmod>2021-05-07T02:40:45.662Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/ElasticSearch/</loc>
-        <lastmod>2021-05-07T02:39:10.799Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Linux/</loc>
-        <lastmod>2021-05-02T13:46:33.174Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Python/</loc>
-        <lastmod>2021-05-02T13:44:32.578Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Network/</loc>
-        <lastmod>2021-05-02T13:43:17.782Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -102,13 +109,6 @@
     <url>
         <loc>https://jx2lee.github.io/categories/Jenkins/</loc>
         <lastmod>2021-01-28T15:12:07.383Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jx2lee.github.io/categories/Database/</loc>
-        <lastmod>2021-01-28T15:12:07.367Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

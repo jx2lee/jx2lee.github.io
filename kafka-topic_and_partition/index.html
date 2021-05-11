@@ -30,7 +30,7 @@
 <meta property="og:description" content="Kafka 데이터 모델의 핵심 요소인 topic 과 partition 에 대해 살펴보자 〽">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-10T15:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-11T11:42:59.243Z">
+<meta property="article:modified_time" content="2021-05-11T15:16:14.834Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Bigdata">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-11 20:42:59" itemprop="dateModified" datetime="2021-05-11T20:42:59+09:00">2021-05-11</time>
+                <time title="Modified: 2021-05-12 00:16:14" itemprop="dateModified" datetime="2021-05-12T00:16:14+09:00">2021-05-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,6 +272,8 @@
 
       
         <center> Kafka 데이터 모델의 핵심 요소인 topic 과 partition 에 대해 살펴보자 〽 </center>
+<br>
+<br>
 
 <a id="more"></a>
 <p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
@@ -346,7 +348,10 @@
 <li>8개 consumer 가 초당 5개 메세지를 소비한다면 partition 수를 consumer 수에 맞게 8개로 설정해야한다. (<code>producer 의 상황만 고려하지 않고 partition 을 최대로 맞출 수 있는 갯수로 맞춘다</code>)</li>
 </ul>
 </li>
-<li>partition 증가는 아무때나 변경 가능하지만 축소는 삭제 말고는 방법이 없기 때문에 초기 설계가 굉장히 중요하다.</li>
+<li>partition 증가는 아무때나 변경 가능하지만 축소는 삭제 말고는 방법이 없기 때문에 초기 설계가 굉장히 중요하다.<ul>
+<li><strong>축소를 원하면 topic 을 삭제하고 재 생성해야한다.</strong></li>
+</ul>
+</li>
 <li>1개 broker 당 최대 partition 수는 2000 개로 권장하고 있다.</li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
