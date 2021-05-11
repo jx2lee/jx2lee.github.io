@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nanum Gothic Coding:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Kafka 데이터 모델의 핵심 요소인 topic 과 partition 에 대해 살펴보자 〽">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Kafka] Topic &amp; Partition">
+<meta property="og:url" content="https://jx2lee.github.io/kafka-topic_and_partition/index.html">
+<meta property="og:site_name" content="go hard">
+<meta property="og:description" content="Kafka 데이터 모델의 핵심 요소인 topic 과 partition 에 대해 살펴보자 〽">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-10T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-11T11:42:59.243Z">
+<meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="Bigdata">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jx2lee.github.io/kafka-topic_and_partition/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>[Kafka] Topic & Partition | go hard</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <!-- Google AdSense start -->
+  <script data-ad-client="ca-pub-2024744229492552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <!-- Google AdSense end -->
+  <meta name="google-site-verification" content="mt-wza5WUtvq1j8P-WsZN7mrSgXgOawPOdnhsjdlUGg" />
+<link rel="alternate" href="/rss2.xml" title="go hard" type="application/rss+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">go hard</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">focusing@</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        <li class="menu-item menu-item-posts">
+
+    <a href="/" rel="section">Posts</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-github">
+
+    <a href="https://github.com/jx2lee" rel="noopener" target="_blank">Github</a>
+
+  </li>
+        <li class="menu-item menu-item-linkedin">
+
+    <a href="https://www.linkedin.com/in/jx2lee/" rel="noopener" target="_blank">LinkedIn</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/kafka-topic_and_partition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Kafka] Topic & Partition
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T00:00:00+09:00">2021-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-11 20:42:59" itemprop="dateModified" datetime="2021-05-11T20:42:59+09:00">2021-05-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index"><span itemprop="name">Kafka</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/kafka-topic_and_partition/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="kafka-topic_and_partition/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center> Kafka 데이터 모델의 핵심 요소인 topic 과 partition 에 대해 살펴보자 〽 </center>
+
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">Topic</a></li>
+<li><a href="#subject02">Partition</a><ul>
+<li><a href="#subject03">그럼 Partition 은 무작정 늘리는 게 좋을까요?</a></li>
+<li><a href="#subject03">Topic 의 적절한 Partition 수는..</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<ul>
+<li>Topic: 메세지를 consumer 가 나눠가질 수 있도록 논리적 단위로 묶은 개념</li>
+<li>Partition: Topic 을 구성하는 데잍 저장소로 수평 확장이 가능한 단위</li>
+</ul>
+<h1 id="Topic"><a href="#Topic" class="headerlink" title=" Topic"></a><a name="subject01"></a> Topic</h1><ul>
+<li>기본적으로 Topic 에 메세지를 저장</li>
+<li>mail 시스템과 함께 생각해보면 다음과 같다.<ul>
+<li>메일을 보내려면 메일 수신자, 즉 이메일 주소가 필요하다.</li>
+<li>이메일 주소 없이 메일을 발송할 수 있는가? → 없다!</li>
+<li>이메일 주소 == Kafka Topic 이라고 생각하면 이해하기 쉽다.</li>
+</ul>
+</li>
+<li>메세지를 구분하기 위한 단위로 Topic 을 사용</li>
+<li>Topic 명에 prefix 를 통해 메세지 특성에 따라 분류 가능함</li>
+</ul>
+<h1 id="Partition"><a href="#Partition" class="headerlink" title=" Partition"></a><a name="subject02"></a> Partition</h1><ul>
+<li>Topic 을 분할한 것</li>
+<li>왜 분할을 해야 하나?<ul>
+<li>메시징 큐 시스템의 제약조건은 <code>순서가 보장된다.</code></li>
+<li>1개 메세지를 보내는데 1초가 걸린다면, 4개 메세지를 파티션 1개로 유지하며 전송하면 총 4초가 걸림 (<code>순서 보장</code>)</li>
+<li>따라서 효율적인 메세지 전송을 위해 topic 의 partition 을 4개로 구성하면 병렬 처리로 메세지를 전송할 수 있음</li>
+<li>ex. 메세지 1 → partition 1, 메세지 2 → partition 2 … 메세지 4 → partition 4</li>
+</ul>
+</li>
+</ul>
+<h2 id="그럼-Partition-은-무작정-늘리는-게-좋을까요"><a href="#그럼-Partition-은-무작정-늘리는-게-좋을까요" class="headerlink" title=" 그럼 Partition 은 무작정 늘리는 게 좋을까요?"></a><a name="subject03"></a> 그럼 Partition 은 무작정 늘리는 게 좋을까요?</h2><p>라는 질문이 나올 수 있다. 무작정 늘리는 거는 단어부터 거슬린다. 즉, 무조건 partition 을 늘린다고 만능은 아니다. partition 이 늘어나면 발생할 수 있는 문제를 살펴보면 다음과 같다.</p>
+<ul>
+<li>File Handler (리소스 낭비)<ul>
+<li>각 partition 은 broker 의 디렉토리와 매핑, 저장되는 데이터 마다 2개의 파일 (index data + 실제 데이터)이 존재</li>
+<li>모든 디렉토리의 파일들에 대해 file handler 오픈</li>
+<li><strong>결국 리소스 낭비로 이어지게 될 수 있다</strong></li>
+</ul>
+</li>
+<li>장애 복구 시간 증가<ul>
+<li>kafka 는 가용성 확보를 위해 replication 지원</li>
+<li>각 partition 마다 replication 이 동작하여 leader 와 follower 로 구분</li>
+<li>replication 은 topic 을 복제하는 것이 아닌 <code>partition 을 복제하는 것</code></li>
+<li>장애 복구 시나리오는 다음과 같다.<ul>
+<li>broker 다운 → 해당 broker 의 leader partition 이용 불가능 → follower 중 leader 로 선출 → 클라이언트 요청을 새롭게 leader 가 처리</li>
+<li>장애 처리는 controller 로 지정된 broker 가 진행</li>
+<li>controller 는 kafka 클러스터 중 하나만 존재하며 만약 해당 controller 가 다운되면 나머지 broker 중 하나가 controller 역할을 대신 수행한다.</li>
+<li><em>만약 broker 에 1000개 partition 과 2개 replication 이 다운되면 해당 broker 의 1000개 partition 을 사용할 수 없다. partition leader 를 다른 broker 로 이동해야 하는데, 각 partition 별 leader 선출 시간이 2ms 이라면 총 5초가 소요되며 장애시간은 5초 이상이 될 수 있다.</em></li>
+<li><em>만약 해당 broker 가 controller 라면..? 최악이다. 자동으로 fail over 를 시작하지만 초기화 하는 동안 zookeeper 에서 모든 partition 의 데이터를 읽어야 한다. 10,000 개 partition 이 존재하면 20초 이상 장애 상황이 발생한다.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><em>replication 에 대해 학습하려면 다음 url 을 추천한다. (<a target="_blank" rel="noopener" href="https://www.popit.kr/kafka-%EC%9A%B4%EC%98%81%EC%9E%90%EA%B0%80-%EB%A7%90%ED%95%98%EB%8A%94-topic-replication/">https://www.popit.kr/kafka-운영자가-말하는-topic-replication/</a>)</em></p>
+</blockquote>
+<p>이처럼 partition 이 많다고 만능은 아니다. 그러면 최적의 partition 수는 어떻게 설정해야 할까?</p>
+<h2 id="Topic-의-적절한-Partition-수는"><a href="#Topic-의-적절한-Partition-수는" class="headerlink" title=" Topic 의 적절한 Partition 수는.."></a><a name="subject04"></a> Topic 의 적절한 Partition 수는..</h2><ul>
+<li><code>원하는 목표 처리량의 기준을 잡는다.</code></li>
+<li>다음 예를 확인해본다.<ul>
+<li>4개의 producer 가 초당 10개 메세지를 보낸다면</li>
+<li><strong>초당 40개 메세지를 처리해야한다.</strong></li>
+<li>partition 1개당 초당 10개를 처리한다고 하면 partition 수를 4개로 늘려 목표 처리량을 달성할 수 있도록 partition 수를 조정한다.</li>
+<li>producer 말고 consumer 의 상황도 고려해야 한다.</li>
+<li>8개 consumer 가 초당 5개 메세지를 소비한다면 partition 수를 consumer 수에 맞게 8개로 설정해야한다. (<code>producer 의 상황만 고려하지 않고 partition 을 최대로 맞출 수 있는 갯수로 맞춘다</code>)</li>
+</ul>
+</li>
+<li>partition 증가는 아무때나 변경 가능하지만 축소는 삭제 말고는 방법이 없기 때문에 초기 설계가 굉장히 중요하다.</li>
+<li>1개 broker 당 최대 partition 수는 2000 개로 권장하고 있다.</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li>카프카, 데이터플랫폼의 최강자</li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bigdata/" rel="tag"># Bigdata</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/kafka-kafka_design_pattern/" rel="prev" title="[Kafka] Kafka 디자인 특징">
+      <i class="fa fa-chevron-left"></i> [Kafka] Kafka 디자인 특징
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/kafka-set_zookeeper_cluster/" rel="next" title="[Kafka] Zookeeper Cluster 세팅">
+      [Kafka] Zookeeper Cluster 세팅 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jx2lee</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+<script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://jjlee.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/kafka-topic_and_partition/";
+    this.page.identifier = "kafka-topic_and_partition/";
+    this.page.title = "[Kafka] Topic & Partition";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjlee.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
