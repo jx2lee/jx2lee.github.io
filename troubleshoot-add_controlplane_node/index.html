@@ -30,7 +30,7 @@
 <meta property="og:description" content="클러스터 운영 시 컨트롤 플레인 노드가 삭제되었을 때 클러스터에 재 추가하는 과정을 살펴본다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-15T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-26T13:46:18.422Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.422Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-26 22:46:18" itemprop="dateModified" datetime="2020-09-26T22:46:18+09:00">2020-09-26</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,14 +276,14 @@
 
 <h1 id="Kubernetes-컨트롤-플레인-노드-추가-방법"><a href="#Kubernetes-컨트롤-플레인-노드-추가-방법" class="headerlink" title="Kubernetes 컨트롤 플레인 노드 추가 방법"></a>Kubernetes 컨트롤 플레인 노드 추가 방법</h1><h2 id="기존-클러스터-노드-내-etc-kubernetes-pki-폴더를-추가-노드의-etc-kubernetes에-복사"><a href="#기존-클러스터-노드-내-etc-kubernetes-pki-폴더를-추가-노드의-etc-kubernetes에-복사" class="headerlink" title="기존 클러스터 노드 내 /etc/kubernetes/pki 폴더를 추가 노드의 /etc/kubernetes에 복사"></a>기존 클러스터 노드 내 <strong>/etc/kubernetes/pki</strong> 폴더를 추가 노드의 <strong>/etc/kubernetes</strong>에 복사</h2><h2 id="기존-클러스터-노드-내-var-lib-etcd-member-폴더를-추가-노드-내-특정-디렉토리-나의-경우-init-폴더-로-복사"><a href="#기존-클러스터-노드-내-var-lib-etcd-member-폴더를-추가-노드-내-특정-디렉토리-나의-경우-init-폴더-로-복사" class="headerlink" title="기존 클러스터 노드 내 /var/lib/etcd/member 폴더를 추가 노드 내 특정 디렉토리 (나의 경우 init 폴더) 로 복사"></a>기존 클러스터 노드 내 <strong>/var/lib/etcd/member</strong> 폴더를 추가 노드 내 특정 디렉토리 <em>(나의 경우 init 폴더)</em> 로 복사</h2><h3 id="기존-클러스터-노드-내-etcd-파드에-접근하여-다음-명령어로-snap-db-생성"><a href="#기존-클러스터-노드-내-etcd-파드에-접근하여-다음-명령어로-snap-db-생성" class="headerlink" title="기존 클러스터 노드 내 etcd 파드에 접근하여 다음 명령어로 snap db 생성"></a>기존 클러스터 노드 내 etcd 파드에 접근하여 다음 명령어로 snap db 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 \</span><br><span class="line">--cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt \</span><br><span class="line">--key /etc/kubernetes/pki/etcd/server.key snapshot save snap</span><br></pre></td></tr></table></figure>
 
-<h3 id="생성한-snap-db-를-추가하고자-하는-노드의-특정-디렉토리-나의-경우-init-폴더-로-이동"><a href="#생성한-snap-db-를-추가하고자-하는-노드의-특정-디렉토리-나의-경우-init-폴더-로-이동" class="headerlink" title="생성한 snap db 를 추가하고자 하는 노드의 특정 디렉토리 (나의 경우 init 폴더) 로 이동"></a>생성한 snap db 를 추가하고자 하는 노드의 특정 디렉토리 <em>(나의 경우 init 폴더)</em> 로 이동</h3><h2 id="초기-클러스터-구축-시-사용한-kubeadm-config-yaml-준비"><a href="#초기-클러스터-구축-시-사용한-kubeadm-config-yaml-준비" class="headerlink" title="초기 클러스터 구축 시 사용한 kubeadm-config.yaml 준비"></a>초기 클러스터 구축 시 사용한 kubeadm-config.yaml 준비</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: kubeadm.k8s.io/v1beta2</span><br><span class="line">kind: ClusterConfiguration</span><br><span class="line">kubernetesVersion: <span class="string">"v1.15.3"</span></span><br><span class="line">controlPlaneEndpoint: <span class="string">"192.168.179.185:6443"</span> <span class="comment"># VIP:6443</span></span><br><span class="line">networking:</span><br><span class="line"> serviceSubnet: <span class="string">"10.96.0.0/16"</span></span><br><span class="line"> podSubnet: <span class="string">"10.244.0.0/16"</span> <span class="comment"># must equal CIDR in calico.yaml</span></span><br><span class="line">apiServer:</span><br><span class="line">  extraArgs:</span><br><span class="line">    advertise-address: <span class="string">"192.168.179.185"</span> <span class="comment"># VIP</span></span><br></pre></td></tr></table></figure>
+<h3 id="생성한-snap-db-를-추가하고자-하는-노드의-특정-디렉토리-나의-경우-init-폴더-로-이동"><a href="#생성한-snap-db-를-추가하고자-하는-노드의-특정-디렉토리-나의-경우-init-폴더-로-이동" class="headerlink" title="생성한 snap db 를 추가하고자 하는 노드의 특정 디렉토리 (나의 경우 init 폴더) 로 이동"></a>생성한 snap db 를 추가하고자 하는 노드의 특정 디렉토리 <em>(나의 경우 init 폴더)</em> 로 이동</h3><h2 id="초기-클러스터-구축-시-사용한-kubeadm-config-yaml-준비"><a href="#초기-클러스터-구축-시-사용한-kubeadm-config-yaml-준비" class="headerlink" title="초기 클러스터 구축 시 사용한 kubeadm-config.yaml 준비"></a>초기 클러스터 구축 시 사용한 kubeadm-config.yaml 준비</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: kubeadm.k8s.io/v1beta2</span><br><span class="line">kind: ClusterConfiguration</span><br><span class="line">kubernetesVersion: <span class="string">&quot;v1.15.3&quot;</span></span><br><span class="line">controlPlaneEndpoint: <span class="string">&quot;192.168.179.185:6443&quot;</span> <span class="comment"># VIP:6443</span></span><br><span class="line">networking:</span><br><span class="line"> serviceSubnet: <span class="string">&quot;10.96.0.0/16&quot;</span></span><br><span class="line"> podSubnet: <span class="string">&quot;10.244.0.0/16&quot;</span> <span class="comment"># must equal CIDR in calico.yaml</span></span><br><span class="line">apiServer:</span><br><span class="line">  extraArgs:</span><br><span class="line">    advertise-address: <span class="string">&quot;192.168.179.185&quot;</span> <span class="comment"># VIP</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="새로-추가할-노드-k8s-node5-라-가정-에-다음-명령어를-통해-etcd-데이터-복구"><a href="#새로-추가할-노드-k8s-node5-라-가정-에-다음-명령어를-통해-etcd-데이터-복구" class="headerlink" title="새로 추가할 노드(k8s-node5 라 가정)에 다음 명령어를 통해 etcd 데이터 복구"></a>새로 추가할 노드<em>(k8s-node5 라 가정)</em>에 다음 명령어를 통해 etcd 데이터 복구</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm \</span><br><span class="line">    -v <span class="string">'/root/init:/backup'</span> \</span><br><span class="line">    -v <span class="string">'/var/lib/etcd:/var/lib/etcd'</span> \</span><br><span class="line">    --env ETCDCTL_API=3 \</span><br><span class="line">    <span class="string">'k8s.gcr.io/etcd:3.3.10'</span> \</span><br><span class="line">    /bin/sh -c <span class="string">"etcdctl snapshot restore '/backup/snap.db' ; mv /default.etcd/member/ /var/lib/etcd/"</span></span><br></pre></td></tr></table></figure>
+<h2 id="새로-추가할-노드-k8s-node5-라-가정-에-다음-명령어를-통해-etcd-데이터-복구"><a href="#새로-추가할-노드-k8s-node5-라-가정-에-다음-명령어를-통해-etcd-데이터-복구" class="headerlink" title="새로 추가할 노드(k8s-node5 라 가정)에 다음 명령어를 통해 etcd 데이터 복구"></a>새로 추가할 노드<em>(k8s-node5 라 가정)</em>에 다음 명령어를 통해 etcd 데이터 복구</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm \</span><br><span class="line">    -v <span class="string">&#x27;/root/init:/backup&#x27;</span> \</span><br><span class="line">    -v <span class="string">&#x27;/var/lib/etcd:/var/lib/etcd&#x27;</span> \</span><br><span class="line">    --env ETCDCTL_API=3 \</span><br><span class="line">    <span class="string">&#x27;k8s.gcr.io/etcd:3.3.10&#x27;</span> \</span><br><span class="line">    /bin/sh -c <span class="string">&quot;etcdctl snapshot restore &#x27;/backup/snap.db&#x27; ; mv /default.etcd/member/ /var/lib/etcd/&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="새로-추가할-노드-k8s-node5-에-kubeadm-init-수행"><a href="#새로-추가할-노드-k8s-node5-에-kubeadm-init-수행" class="headerlink" title="새로 추가할 노드 (k8s-node5) 에 kubeadm init 수행"></a>새로 추가할 노드 <em>(k8s-node5)</em> 에 kubeadm init 수행</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --config=kubeadm-config.yaml\</span><br><span class="line">--ignore-preflight-errors=DirAvailable--var-lib-etcd</span><br></pre></td></tr></table></figure>
 
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://codefarm.me/2019/05/22/kubernetes-recovery-master-failure/" target="_blank" rel="noopener">https://codefarm.me/2019/05/22/kubernetes-recovery-master-failure/</a></li>
+<li><a target="_blank" rel="noopener" href="https://codefarm.me/2019/05/22/kubernetes-recovery-master-failure/">https://codefarm.me/2019/05/22/kubernetes-recovery-master-failure/</a></li>
 </ul>
 <hr>
 <p>made by <em>jaejun.lee</em></p>
@@ -293,6 +293,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-crio_registry_setting/" rel="bookmark">[Cloud] cri-o 컨테이너 런타임 사용 시 docker registry 세팅</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-delete_ns_at_terminating_state/" rel="bookmark">[Cloud] Terminating State에 빠진 Namespace 삭제</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-deploy_es/" rel="bookmark">[Cloud] Elasticsearch 배포 on K8s</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-etcd_cronjob/" rel="bookmark">[Cloud] Etcd 백업을 위한 CronJob 생성</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-events_at_pod_deletion/" rel="bookmark">[Kubernetes] Pod 삭제 이벤트 마슬러보기</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

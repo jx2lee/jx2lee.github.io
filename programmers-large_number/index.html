@@ -30,7 +30,7 @@
 <meta property="og:description" content="주어진 숫자에서 특정 갯수의 숫자만으로 가장 큰 수를 만드는 문제를 풀어본다">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-16T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.536Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.392Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Programmers">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -303,7 +303,7 @@
 </tbody></table>
 <h1 id="문제-풀이"><a href="#문제-풀이" class="headerlink" title="문제 풀이"></a>문제 풀이</h1><p>탐욕법으로 풀 수 있는 문제로, 우선 collected 라는 결과물 저장 List를 선언한다. number의 숫자를 for문으로 돌면서 <u>collected 길이 &gt; 0</u> / <u>collected의 마지막 숫자 비교</u> / <u>k &gt; 0</u> 조건을 만족하면, 원소 하나를 빼주고 k를 차감한다.</p>
 <p>이후 k가 0이면 빈 리스트를 반환하는 걸 방지하고자 index i이상 만큼의 number를 담는다. for문의 마지막으로 조건에 안걸리는 num은 collected에 담는다. 이후 k가 음수일 경우를 대비해 -k 까지 slice를 수행하고 결과물이 담긴 collected List를 join하여 숫자로 변환한다.</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(number, k)</span>:</span></span><br><span class="line">    collected = []</span><br><span class="line">    <span class="keyword">for</span> i, num <span class="keyword">in</span> enumerate(number):</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> len(collected) &gt; <span class="number">0</span> <span class="keyword">and</span> collected[<span class="number">-1</span>] &lt; num <span class="keyword">and</span> k &gt; <span class="number">0</span>:</span><br><span class="line">            collected.pop()</span><br><span class="line">            k -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">            collected += list(number[i:])</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        collected.append(num)</span><br><span class="line"></span><br><span class="line">    collected = collected[:-k] <span class="keyword">if</span> k &gt; <span class="number">0</span> <span class="keyword">else</span> collected</span><br><span class="line">    answer = <span class="string">''</span>.join(collected)</span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">number, k</span>):</span></span><br><span class="line">    collected = []</span><br><span class="line">    <span class="keyword">for</span> i, num <span class="keyword">in</span> <span class="built_in">enumerate</span>(number):</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(collected) &gt; <span class="number">0</span> <span class="keyword">and</span> collected[-<span class="number">1</span>] &lt; num <span class="keyword">and</span> k &gt; <span class="number">0</span>:</span><br><span class="line">            collected.pop()</span><br><span class="line">            k -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">0</span>:</span><br><span class="line">            collected += <span class="built_in">list</span>(number[i:])</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        collected.append(num)</span><br><span class="line"></span><br><span class="line">    collected = collected[:-k] <span class="keyword">if</span> k &gt; <span class="number">0</span> <span class="keyword">else</span> collected</span><br><span class="line">    answer = <span class="string">&#x27;&#x27;</span>.join(collected)</span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
 
 
 <hr>
@@ -314,6 +314,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-budgets/" rel="bookmark">[Python] 예산</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-camera/" rel="bookmark">[Python] 단속카메라</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-compress_char/" rel="bookmark">[Python] 문자열 압축</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-convert_word/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-disk_controller/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

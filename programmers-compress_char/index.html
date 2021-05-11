@@ -30,7 +30,7 @@
 <meta property="og:description" content="주어진 문자열을 가장 짧게 압축하는 문제를 풀어본다 (2020 카카오 1차 코딩테스트)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-25T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.535Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.388Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Programmers">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -307,7 +307,7 @@
 </li>
 </ul>
 <h1 id="문제-풀이"><a href="#문제-풀이" class="headerlink" title="문제 풀이"></a>문제 풀이</h1><p>딱히 사용한 알고리즘은 없는 것 같다 <del>(굳이 선택하면 브루트포스?)</del>. 반복하는 문자열 길이에 따라 모든 문자열을 압축하고, 이에 대한 길이를 res 리스트에 담아 최솟값을 출력해낸다.</p>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(s)</span>:</span></span><br><span class="line">    result = <span class="string">''</span></span><br><span class="line">    cnt = <span class="number">1</span></span><br><span class="line">    res = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">1</span>, len(s)+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(s), n):</span><br><span class="line">            <span class="keyword">if</span> s[i:i+n] == s[i+n:i+<span class="number">2</span>*n]:</span><br><span class="line">                cnt += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> cnt &gt; <span class="number">1</span>:</span><br><span class="line">                    result += str(cnt) + s[i:i+n]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    result += s[i:i+n]</span><br><span class="line">                cnt = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> i == len(s) - n:</span><br><span class="line">                <span class="keyword">if</span> cnt &gt; <span class="number">1</span>:</span><br><span class="line">                    result += str(cnt) + s[i+n:i+<span class="number">2</span>*n]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    result += s[i+n:i+<span class="number">2</span>*n]</span><br><span class="line"></span><br><span class="line">        res.append(len(result))</span><br><span class="line">        result = <span class="string">''</span></span><br><span class="line">        cnt = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> min(res)</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">s</span>):</span></span><br><span class="line">    result = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    cnt = <span class="number">1</span></span><br><span class="line">    res = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(s)+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(s), n):</span><br><span class="line">            <span class="keyword">if</span> s[i:i+n] == s[i+n:i+<span class="number">2</span>*n]:</span><br><span class="line">                cnt += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> cnt &gt; <span class="number">1</span>:</span><br><span class="line">                    result += <span class="built_in">str</span>(cnt) + s[i:i+n]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    result += s[i:i+n]</span><br><span class="line">                cnt = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> i == <span class="built_in">len</span>(s) - n:</span><br><span class="line">                <span class="keyword">if</span> cnt &gt; <span class="number">1</span>:</span><br><span class="line">                    result += <span class="built_in">str</span>(cnt) + s[i+n:i+<span class="number">2</span>*n]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    result += s[i+n:i+<span class="number">2</span>*n]</span><br><span class="line"></span><br><span class="line">        res.append(<span class="built_in">len</span>(result))</span><br><span class="line">        result = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        cnt = <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">min</span>(res)</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p>2019.11.26 made by <em>jaejun.lee</em></p>
@@ -317,6 +317,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-budgets/" rel="bookmark">[Python] 예산</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-camera/" rel="bookmark">[Python] 단속카메라</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-convert_word/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-disk_controller/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-island/" rel="bookmark">[Python] 섬 연결하기</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

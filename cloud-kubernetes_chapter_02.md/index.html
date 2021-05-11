@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://blog.kakaocdn.net/dn/VxcCs/btqEsYpkShG/bmYxdIKPS6ELBe1asDwFT0/img.png">
 <meta property="og:image" content="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&ssl=1">
 <meta property="article:published_time" content="2020-09-27T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-03T13:50:53.848Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.354Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-10-03 22:50:53" itemprop="dateModified" datetime="2020-10-03T22:50:53+09:00">2020-10-03</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -342,8 +342,8 @@
 <li>AWS, GCE, Azure 등의 클라우드 특화되어 있다고 한다!</li>
 </ul>
 <blockquote>
-<p>이번 자료를 준비하면서 안 사실은 api-server, etcd, kube-scheduler, kube-controller-manager 요놈이 container 단위로 실행하여 관리하는 줄 알았는데 막상 보니 아니었다. <code>ps -ef |grep {each_component}</code> 를 수행하면 다음과 같다.  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~<span class="comment"># ps -ef|grep -E "kube-apiserver|etcd|kube-controller-manager|kube-scheduler"</span></span><br><span class="line">root      3368  3311  1 Aug31 ?        10:17:51 kube-apiserver --advertise-address=192.&gt; 168.179.185 --allow-privileged=<span class="literal">true</span> --authorization-mode=Node,RBAC ...</span><br><span class="line">root      3584  3554  1 Aug31 ?        05:58:22 etcd --advertise-client-urls=https://192.&gt; 168.179.173:2379 --cert-file=/etc/kubernetes/pki/etcd/server.crt ...</span><br><span class="line">root      3677  3636  0 Aug31 ?        00:20:07 kube-controller-manager &gt; --allocate-node-cidrs=<span class="literal">true</span> --authentication-kubeconfig=/etc/kubernetes/&gt; controller-manager.conf ... </span><br><span class="line">root      3678  3626  0 Aug31 ?        00:38:15 kube-scheduler --<span class="built_in">bind</span>-address=127.0.0.1 &gt; --kubeconfig=/etc/kubernetes/scheduler.conf --leader-elect=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>이번 자료를 준비하면서 안 사실은 api-server, etcd, kube-scheduler, kube-controller-manager 요놈이 container 단위로 실행하여 관리하는 줄 알았는데 막상 보니 아니었다. <code>ps -ef |grep &#123;each_component&#125;</code> 를 수행하면 다음과 같다.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~<span class="comment"># ps -ef|grep -E &quot;kube-apiserver|etcd|kube-controller-manager|kube-scheduler&quot;</span></span><br><span class="line">root      3368  3311  1 Aug31 ?        10:17:51 kube-apiserver --advertise-address=192.&gt; 168.179.185 --allow-privileged=<span class="literal">true</span> --authorization-mode=Node,RBAC ...</span><br><span class="line">root      3584  3554  1 Aug31 ?        05:58:22 etcd --advertise-client-urls=https://192.&gt; 168.179.173:2379 --cert-file=/etc/kubernetes/pki/etcd/server.crt ...</span><br><span class="line">root      3677  3636  0 Aug31 ?        00:20:07 kube-controller-manager &gt; --allocate-node-cidrs=<span class="literal">true</span> --authentication-kubeconfig=/etc/kubernetes/&gt; controller-manager.conf ... </span><br><span class="line">root      3678  3626  0 Aug31 ?        00:38:15 kube-scheduler --bind-address=127.0.0.1 &gt; --kubeconfig=/etc/kubernetes/scheduler.conf --leader-elect=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="Worker-Node"><a href="#Worker-Node" class="headerlink" title=" Worker Node"></a><a name="subject05"></a> Worker Node</h2><h3 id="특징-및-기능-1"><a href="#특징-및-기능-1" class="headerlink" title=" 특징 및 기능"></a><a name="subject06"></a> 특징 및 기능</h3><ul>
 <li>Pod를 생성하고 네트워크와 볼륨을 설정합니다. kubelet 이라는 kubernetes Agent 를 통해 “어떤 조건을 만족하는 Pod 를 띄워!” 라는 임무를 받는다.</li>
@@ -361,7 +361,7 @@
 <ul>
 <li>Kubernetes 내부 별도의 가상 네트워크를 설정하고 관리하는데, 이러한 가상 네트워크가 동작할 수 있게 하는 역할을 한다.</li>
 <li>호스트의 <em>(각 노드의)</em> 네트워크 규칙을 관리하고 connection forwarding 을 수행한다.</li>
-<li><a href="https://arisu1000.tistory.com/27839" target="_blank" rel="noopener">참고자료</a></li>
+<li><a target="_blank" rel="noopener" href="https://arisu1000.tistory.com/27839">참고자료</a></li>
 </ul>
 <h2 id="Object"><a href="#Object" class="headerlink" title=" Object"></a><a name="subject08"></a> Object</h2><p>Kubernets는 상태를 관리하기 위한 대상을 Object라 칭하며 크게 Basic Object(기본 오브젝트)와 Controller(컨트롤러)로 구분한다. </p>
 <h3 id="Basic-Object"><a href="#Basic-Object" class="headerlink" title=" Basic Object"></a><a name="subject09"></a> Basic Object</h3><p>Basic Object 는 Namespace, Pod, Service, Volume 4가지가 존재한다.</p>
@@ -428,10 +428,10 @@
 <ul>
 <li>Kubernetes 에서 상태가 없는(stateless) 앱을 배포할 때 가장 기본적인 컨트롤러, 이전 버젼에서는 ReplicaSet 이 담당했지만 이제는 Deployment 가 담당한다.</li>
 <li>Pod 개수를 유지하는 것 뿐 아니라 무중단 배포를 위한 방식 <em>(blue/green deployment, canary deployment, rolling deployment)</em> 을 제공한다. ReplicaSet 과 비교하면 Pod 개수 유지는 같지만 추가적으로 무중단 배포 방식을 설정할 수 있다.</li>
-<li>deployment 배포 시 업데이트 방식을 설정할 수 있다. <em>(조대협님 블로그에 따르면 가장 많이 사용하는 배포 방식이며, 따로 설정하지 않으면 rolling 배포를 수행한다. <a href="https://bcho.tistory.com/1266" target="_blank" rel="noopener">참고</a>)</em></li>
+<li>deployment 배포 시 업데이트 방식을 설정할 수 있다. <em>(조대협님 블로그에 따르면 가장 많이 사용하는 배포 방식이며, 따로 설정하지 않으면 rolling 배포를 수행한다. <a target="_blank" rel="noopener" href="https://bcho.tistory.com/1266">참고</a>)</em></li>
 </ul>
 <blockquote>
-<p>무중단 배포방식: <a href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/" target="_blank" rel="noopener">참고자료</a></p>
+<p>무중단 배포방식: <a target="_blank" rel="noopener" href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/">참고자료</a></p>
 </blockquote>
 <p><img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmVW7g%2FbtqFNFa7u1E%2FRTURWaMRdcLNpDzxj3GAwk%2Fimg.png" alt="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmVW7g%2FbtqFNFa7u1E%2FRTURWaMRdcLNpDzxj3GAwk%2Fimg.png"></p>
 <p><U>DaemonSet</U>  </p>
@@ -453,13 +453,13 @@
 </ul>
 <p><img src="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&ssl=1" alt="https://i2.wp.com/www.kylezsembery.com/wp-content/uploads/2020/06/StatefulSet.png?resize=691%2C376&amp;ssl=1"></p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
-<li><a href="https://ooeunz.tistory.com/118" target="_blank" rel="noopener">https://ooeunz.tistory.com/118</a></li>
-<li><a href="https://www.slideshare.net/lahuman1/kubernetes-object" target="_blank" rel="noopener">https://www.slideshare.net/lahuman1/kubernetes-object</a></li>
-<li><a href="https://bcho.tistory.com/1259" target="_blank" rel="noopener">https://bcho.tistory.com/1259</a></li>
-<li><a href="https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/" target="_blank" rel="noopener">https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/</a></li>
-<li><a href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/" target="_blank" rel="noopener">https://perfectacle.github.io/2019/04/21/non-stop-deployment/</a></li>
-<li><a href="https://arisu1000.tistory.com/27834" target="_blank" rel="noopener">https://arisu1000.tistory.com/27834</a></li>
-<li><a href="https://www.joinc.co.kr/w/man/12/kubernetes/overview" target="_blank" rel="noopener">https://www.joinc.co.kr/w/man/12/kubernetes/overview</a></li>
+<li><a target="_blank" rel="noopener" href="https://ooeunz.tistory.com/118">https://ooeunz.tistory.com/118</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.slideshare.net/lahuman1/kubernetes-object">https://www.slideshare.net/lahuman1/kubernetes-object</a></li>
+<li><a target="_blank" rel="noopener" href="https://bcho.tistory.com/1259">https://bcho.tistory.com/1259</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/">https://blog.2dal.com/2018/04/30/kubernetes-02-replicaset/</a></li>
+<li><a target="_blank" rel="noopener" href="https://perfectacle.github.io/2019/04/21/non-stop-deployment/">https://perfectacle.github.io/2019/04/21/non-stop-deployment/</a></li>
+<li><a target="_blank" rel="noopener" href="https://arisu1000.tistory.com/27834">https://arisu1000.tistory.com/27834</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.joinc.co.kr/w/man/12/kubernetes/overview">https://www.joinc.co.kr/w/man/12/kubernetes/overview</a></li>
 </ul>
 
     </div>
@@ -467,6 +467,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-crio_registry_setting/" rel="bookmark">[Cloud] cri-o 컨테이너 런타임 사용 시 docker registry 세팅</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-delete_ns_at_terminating_state/" rel="bookmark">[Cloud] Terminating State에 빠진 Namespace 삭제</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-deploy_es/" rel="bookmark">[Cloud] Elasticsearch 배포 on K8s</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-etcd_cronjob/" rel="bookmark">[Cloud] Etcd 백업을 위한 CronJob 생성</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/cloud-events_at_pod_deletion/" rel="bookmark">[Kubernetes] Pod 삭제 이벤트 마슬러보기</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

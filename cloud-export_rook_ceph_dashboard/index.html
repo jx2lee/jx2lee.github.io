@@ -30,7 +30,7 @@
 <meta property="og:description" content="Toolbox POD 로 접근하여 ceph cluster 를 확인하곤 한다. alias 로 바로 접근할 수 있게 설정하였지만, 좀 더 직관적으로 보기 위해 dashboard 를 배포해 보자!">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-02T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-26T13:42:48.682Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.344Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta name="twitter:card" content="summary">
 
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-26 22:42:48" itemprop="dateModified" datetime="2020-09-26T22:42:48+09:00">2020-09-26</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,7 @@
 <li><a href="#ref">Reference</a></li>
 </ol>
 <h1 id="rook-ceph-Service-확인"><a href="#rook-ceph-Service-확인" class="headerlink" title=" rook-ceph Service 확인"></a><a name="checksvc"></a> rook-ceph Service 확인</h1><p><code>kubectl get service -n rook-ceph</code> 명령어로 기동중인 서비스를 확인한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~<span class="comment"># kubectl get service -n rook-ceph</span></span><br><span class="line">NAME                                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE</span><br><span class="line">csi-cephfsplugin-metrics                ClusterIP   10.96.205.129   &lt;none&gt;        8080/TCP,8081/TCP   2d17h</span><br><span class="line">csi-rbdplugin-metrics                   ClusterIP   10.96.158.126   &lt;none&gt;        8080/TCP,8081/TCP   2d17h</span><br><span class="line">rook-ceph-mgr                           ClusterIP   10.96.133.224   &lt;none&gt;        9283/TCP            2d17h</span><br><span class="line">rook-ceph-mgr-dashboard                 ClusterIP   10.96.37.245    &lt;none&gt;        8443/TCP            2d17h</span><br><span class="line">rook-ceph-mon<span class="_">-a</span>                         ClusterIP   10.96.59.113    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br><span class="line">rook-ceph-mon-b                         ClusterIP   10.96.26.250    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br><span class="line">rook-ceph-mon-c                         ClusterIP   10.96.235.59    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~<span class="comment"># kubectl get service -n rook-ceph</span></span><br><span class="line">NAME                                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE</span><br><span class="line">csi-cephfsplugin-metrics                ClusterIP   10.96.205.129   &lt;none&gt;        8080/TCP,8081/TCP   2d17h</span><br><span class="line">csi-rbdplugin-metrics                   ClusterIP   10.96.158.126   &lt;none&gt;        8080/TCP,8081/TCP   2d17h</span><br><span class="line">rook-ceph-mgr                           ClusterIP   10.96.133.224   &lt;none&gt;        9283/TCP            2d17h</span><br><span class="line">rook-ceph-mgr-dashboard                 ClusterIP   10.96.37.245    &lt;none&gt;        8443/TCP            2d17h</span><br><span class="line">rook-ceph-mon-a                         ClusterIP   10.96.59.113    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br><span class="line">rook-ceph-mon-b                         ClusterIP   10.96.26.250    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br><span class="line">rook-ceph-mon-c                         ClusterIP   10.96.235.59    &lt;none&gt;        6789/TCP,3300/TCP   2d17h</span><br></pre></td></tr></table></figure>
 
 <p><code>rook-ceph-mgr-dashboard</code> 서비스가 8443 포트로 통신 가능하게 설정되어 있다. 외부로 dashboard 를 노출하는 방법은 <em>1) rook-ceph-mgr 서비스 type 바꾸기</em> 와 <em>2) external service</em> 가 있다. 이번 글에서는 2번 방법을 이용해 dashboard 를 사용해보겠다.</p>
 <h1 id="rook-ceph-mgr-dashboard-external-http-서비스-생성하기"><a href="#rook-ceph-mgr-dashboard-external-http-서비스-생성하기" class="headerlink" title=" rook-ceph-mgr-dashboard-external-http 서비스 생성하기"></a><a name="makesvc"></a> rook-ceph-mgr-dashboard-external-http 서비스 생성하기</h1><p>다음과 같은 yaml 를 작성한다.</p>
@@ -292,7 +292,7 @@
 <li>rook-ceph-mgr Port 가 만약 나와 다른 번호(예. 7775) 로 설정되어 있다면, 위 yaml 에서도 같은 포트로 설정해야한다.</li>
 </ul>
 <p>생성한 yaml 을 이용해 <code>kubectl apply -f dashboard-external-http.yaml</code> 커맨드로 service 를 생성한다. 이후 접속하기 위한 초기 admin 비밀번호 확인을 위해 다음과 같은 커맨드를 수행한다.</p>
-<p><code>kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath=&quot;{[&#39;data&#39;][&#39;password&#39;]}&quot; | base64 --decode &amp;&amp; echo</code></p>
+<p><code>kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath=&quot;&#123;[&#39;data&#39;][&#39;password&#39;]&#125;&quot; | base64 --decode &amp;&amp; echo</code></p>
 <h1 id="dashboard-접속"><a href="#dashboard-접속" class="headerlink" title=" dashboard 접속"></a><a name="connect"></a> dashboard 접속</h1><p>클러스터 노드 중 하나를 골라 <code>https://[노드ip]:[port]</code> 로 접속한다.</p>
 <ul>
 <li>ID/PW:  <code>admin/[바로 위 커맨드 수행 결과]</code></li>
@@ -300,7 +300,7 @@
 </ul>
 <p>dashboard UI 를 통해 ceph cluster 상태를 직관적으로 볼 수 있어 편리하긴 하다.  그래도 조금 더 쿠버네티스와 친해지기 위해 커맨드로 ceph cluster 상태를 확인하는 것이 더 나을듯 하다!</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="ref"></a> Reference</h1><ul>
-<li><a href="https://github.com/rook/rook/blob/master/Documentation/ceph-dashboard.md" target="_blank" rel="noopener">https://github.com/rook/rook/blob/master/Documentation/ceph-dashboard.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rook/rook/blob/master/Documentation/ceph-dashboard.md">https://github.com/rook/rook/blob/master/Documentation/ceph-dashboard.md</a></li>
 </ul>
 <hr>
 <p>made by <em>jaejun.lee</em></p>
@@ -310,6 +310,8 @@
     
     
     
+      
+
 
       <footer class="post-footer">
 

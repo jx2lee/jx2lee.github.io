@@ -30,7 +30,7 @@
 <meta property="og:description" content="정해진 총액 이하에서 가능한 한 최대 예산을 배정하는 문제를 풀어본다.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-30T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.530Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.387Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Programmers">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,7 +275,7 @@
 <a id="more"></a>
 
 <h2 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h2><h3 id="문제-설명-1"><a href="#문제-설명-1" class="headerlink" title="문제 설명"></a>문제 설명</h3><p>국가의 역할 중 하나는 여러 지방의 예산요청을 심사하여 국가의 예산을 분배하는 것입니다. 국가예산의 총액은 미리 정해져 있어서 모든 예산요청을 배정해 주기는 어려울 수도 있습니다. 그래서 정해진 총액 이하에서 <strong>가능한 한 최대의</strong> 총 예산을 다음과 같은 방법으로 배정합니다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 모든 요청이 배정될 수 있는 경우에는 요청한 금액을 그대로 배정합니다.</span><br><span class="line">2. 모든 요청이 배정될 수 없는 경우에는 특정한 정수 상한액을 계산하여 그 이상인 예산요청에는 모두 상한액을 배정합니다. </span><br><span class="line">   상한액 이하의 예산요청에 대해서는 요청한 금액을 그대로 배정합니다.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 모든 요청이 배정될 수 있는 경우에는 요청한 금액을 그대로 배정합니다.</span><br><span class="line">2. 모든 요청이 배정될 수 없는 경우에는 특정한 정수 상한액을 계산하여 그 이상인 예산요청에는 모두 상한액을 배정합니다. </span><br><span class="line">   상한액 이하의 예산요청에 대해서는 요청한 금액을 그대로 배정합니다. </span><br></pre></td></tr></table></figure>
 
 <p>예를 들어, 전체 국가예산이 485이고 4개 지방의 예산요청이 각각 120, 110, 140, 150일 때, 상한액을 127로 잡으면 위의 요청들에 대해서 각각 120, 110, 127, 127을 배정하고 그 합이 484로 가능한 최대가 됩니다.<br>각 지방에서 요청하는 예산이 담긴 배열 budgets과 총 예산 M이 매개변수로 주어질 때, 위의 조건을 모두 만족하는 상한액을 return 하도록 solution 함수를 작성해주세요.</p>
 <h3 id="제한-사항"><a href="#제한-사항" class="headerlink" title="제한 사항"></a>제한 사항</h3><ul>
@@ -297,7 +297,7 @@
 <td>127</td>
 </tr>
 </tbody></table>
-<p><a href="https://www.digitalculture.or.kr/koi/selectOlymPiadDissentList.do" target="_blank" rel="noopener">출처</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.digitalculture.or.kr/koi/selectOlymPiadDissentList.do">출처</a></p>
 <hr>
 <p>※ 공지 - 2019년 3월 15일, 테스트케이스가 강화되었습니다.</p>
 <p>이번 업데이트로 인해 지방의 수가 최대 10,000개에서 100,000개로 늘어났으며, 이에 따라 테스트케이스가 수정되었습니다.</p>
@@ -310,10 +310,10 @@
 </ul>
 </li>
 </ul>
-<h2 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h2><h3 id="틀린-코드"><a href="#틀린-코드" class="headerlink" title="틀린 코드"></a>틀린 코드</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(budgets, M)</span>:</span></span><br><span class="line">    sorted_budgets = sorted(budgets)</span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> M &gt; <span class="number">0</span>:</span><br><span class="line">        tmp = sorted_budgets[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> tmp &lt; M // len(sorted_budgets):</span><br><span class="line">            res = tmp</span><br><span class="line">            M -= tmp</span><br><span class="line">            sorted_budgets.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res = M // len(sorted_budgets)</span><br><span class="line">            M -= res</span><br><span class="line">            sorted_budgets.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> len(sorted_budgets) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h2><h3 id="틀린-코드"><a href="#틀린-코드" class="headerlink" title="틀린 코드"></a>틀린 코드</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">budgets, M</span>):</span></span><br><span class="line">    sorted_budgets = <span class="built_in">sorted</span>(budgets)</span><br><span class="line">    res = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> M &gt; <span class="number">0</span>:</span><br><span class="line">        tmp = sorted_budgets[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> tmp &lt; M // <span class="built_in">len</span>(sorted_budgets):</span><br><span class="line">            res = tmp</span><br><span class="line">            M -= tmp</span><br><span class="line">            sorted_budgets.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res = M // <span class="built_in">len</span>(sorted_budgets)</span><br><span class="line">            M -= res</span><br><span class="line">            sorted_budgets.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(sorted_budgets) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="맞은-코드"><a href="#맞은-코드" class="headerlink" title="맞은 코드"></a>맞은 코드</h3><p><a href="https://codedrive.tistory.com/47" target="_blank" rel="noopener">참고 blog</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(budgets, M)</span>:</span></span><br><span class="line">    left, right, tmp = <span class="number">0</span>, max(budgets), <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> right &gt;= left:</span><br><span class="line">        mid = (left + right) // <span class="number">2</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> budget <span class="keyword">in</span> budgets:</span><br><span class="line">            <span class="keyword">if</span> mid &gt; budget:</span><br><span class="line">                res += budget</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res += mid</span><br><span class="line">        <span class="keyword">if</span> res &gt; M:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer = mid</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<h3 id="맞은-코드"><a href="#맞은-코드" class="headerlink" title="맞은 코드"></a>맞은 코드</h3><p><a target="_blank" rel="noopener" href="https://codedrive.tistory.com/47">참고 blog</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">budgets, M</span>):</span></span><br><span class="line">    left, right, tmp = <span class="number">0</span>, <span class="built_in">max</span>(budgets), <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> right &gt;= left:</span><br><span class="line">        mid = (left + right) // <span class="number">2</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> budget <span class="keyword">in</span> budgets:</span><br><span class="line">            <span class="keyword">if</span> mid &gt; budget:</span><br><span class="line">                res += budget</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                res += mid</span><br><span class="line">        <span class="keyword">if</span> res &gt; M:</span><br><span class="line">            right = mid - <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            answer = mid</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p>2019.10.01 made by <em>jaejun.lee</em></p>
@@ -323,6 +323,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-camera/" rel="bookmark">[Python] 단속카메라</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-compress_char/" rel="bookmark">[Python] 문자열 압축</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-convert_word/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-disk_controller/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-island/" rel="bookmark">[Python] 섬 연결하기</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://grepp-programmers.s3.amazonaws.com/files/production/5e677b4646/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png">
 <meta property="og:image" content="https://grepp-programmers.s3.amazonaws.com/files/production/9eb7c5a6f1/a6cff04d-86bb-4b5b-98bf-6359158940ac.png">
 <meta property="article:published_time" content="2019-10-06T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.545Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.390Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Programmers">
 <meta name="twitter:card" content="summary">
@@ -239,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,15 +279,15 @@
 <a id="more"></a>
 
 <h1 id="문제-설명"><a href="#문제-설명" class="headerlink" title="문제 설명"></a>문제 설명</h1><p>하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다.<br>예를들어</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 0ms 시점에 3ms가 소요되는 A작업 요청</span><br><span class="line">- 1ms 시점에 9ms가 소요되는 B작업 요청</span><br><span class="line">- 2ms 시점에 6ms가 소요되는 C작업 요청</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- 0ms 시점에 3ms가 소요되는 A작업 요청</span><br><span class="line">- 1ms 시점에 9ms가 소요되는 B작업 요청</span><br><span class="line">- 2ms 시점에 6ms가 소요되는 C작업 요청</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>와 같은 요청이 들어왔습니다. 이를 그림으로 표현하면 아래와 같습니다.<br><img src="https://grepp-programmers.s3.amazonaws.com/files/production/b68eb5cec6/38dc6a53-2d21-4c72-90ac-f059729c51d5.png" alt="Screen Shot 2018-09-13 at 6.34.58 PM.png"></p>
 <p>한 번에 하나의 요청만을 수행할 수 있기 때문에 각각의 작업을 요청받은 순서대로 처리하면 다음과 같이 처리 됩니다.<br><img src="https://grepp-programmers.s3.amazonaws.com/files/production/5e677b4646/90b91fde-cac4-42c1-98b8-8f8431c52dcf.png" alt="Screen Shot 2018-09-13 at 6.38.52 PM.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 12ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 16ms)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료 (요청에서 종료까지 : 3ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 3ms 시점에 작업을 시작해서 12ms 시점에 작업 완료(요청에서 종료까지 : 11ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 12ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 16ms)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>이 때 각 작업의 요청부터 종료까지 걸린 시간의 평균은 10ms(= (3 + 11 + 16) / 3)가 됩니다.</p>
 <p>하지만 A → C → B 순서대로 처리하면<br><img src="https://grepp-programmers.s3.amazonaws.com/files/production/9eb7c5a6f1/a6cff04d-86bb-4b5b-98bf-6359158940ac.png" alt="Screen Shot 2018-09-13 at 6.41.42 PM.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- A: 3ms 시점에 작업 완료(요청에서 종료까지 : 3ms)</span><br><span class="line">- C: 2ms부터 대기하다가, 3ms 시점에 작업을 시작해서 9ms 시점에 작업 완료(요청에서 종료까지 : 7ms)</span><br><span class="line">- B: 1ms부터 대기하다가, 9ms 시점에 작업을 시작해서 18ms 시점에 작업 완료(요청에서 종료까지 : 17ms)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>이렇게 A → C → B의 순서로 처리하면 각 작업의 요청부터 종료까지 걸린 시간의 평균은 9ms(= (3 + 7 + 17) / 3)가 됩니다.</p>
 <p>각 작업에 대해 [작업이 요청되는 시점, 작업의 소요시간]을 담은 2차원 배열 jobs가 매개변수로 주어질 때, 작업의 요청부터 종료까지 걸린 시간의 평균을 가장 줄이는 방법으로 처리하면 평균이 얼마가 되는지 return 하도록 solution 함수를 작성해주세요. (단, 소수점 이하의 수는 버립니다)</p>
@@ -319,8 +319,8 @@
 </ul>
 </li>
 </ul>
-<h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><p><a href="https://codedrive.tistory.com/129" target="_blank" rel="noopener">참고 블로그</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(jobs)</span>:</span></span><br><span class="line">    in_, out_, ans, cnt = <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    wt = []</span><br><span class="line">    n = len(jobs)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> cnt &lt; n:</span><br><span class="line">        <span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">            <span class="keyword">if</span> in_ &lt; job[<span class="number">0</span>] &lt;= out_ :</span><br><span class="line">                ans += (out_ - job[<span class="number">0</span>])</span><br><span class="line">                heapq.heappush(wt, job[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> len(wt) &gt; <span class="number">0</span>:</span><br><span class="line">            ans += len(wt) * wt[<span class="number">0</span>] <span class="comment">#len(wt)를 곱하는 이유는 대기열에 들어간 작업도 작업 중인 시간을 더해야하므로 wt 길이를 곱해준다.</span></span><br><span class="line">            in_ = out_</span><br><span class="line">            out_ += heapq.heappop(wt)</span><br><span class="line">            cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            out_ += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans // n</span><br></pre></td></tr></table></figure>
+<h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><p><a target="_blank" rel="noopener" href="https://codedrive.tistory.com/129">참고 블로그</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">jobs</span>):</span></span><br><span class="line">    in_, out_, ans, cnt = -<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    wt = []</span><br><span class="line">    n = <span class="built_in">len</span>(jobs)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> cnt &lt; n:</span><br><span class="line">        <span class="keyword">for</span> job <span class="keyword">in</span> jobs:</span><br><span class="line">            <span class="keyword">if</span> in_ &lt; job[<span class="number">0</span>] &lt;= out_ :</span><br><span class="line">                ans += (out_ - job[<span class="number">0</span>])</span><br><span class="line">                heapq.heappush(wt, job[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(wt) &gt; <span class="number">0</span>:</span><br><span class="line">            ans += <span class="built_in">len</span>(wt) * wt[<span class="number">0</span>] <span class="comment">#len(wt)를 곱하는 이유는 대기열에 들어간 작업도 작업 중인 시간을 더해야하므로 wt 길이를 곱해준다.</span></span><br><span class="line">            in_ = out_</span><br><span class="line">            out_ += heapq.heappop(wt)</span><br><span class="line">            cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            out_ += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ans // n</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p>2019.10.07 made by <em>jaejun.lee</em></p>
@@ -330,6 +330,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-budgets/" rel="bookmark">[Python] 예산</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-camera/" rel="bookmark">[Python] 단속카메라</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-compress_char/" rel="bookmark">[Python] 문자열 압축</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-convert_word/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-island/" rel="bookmark">[Python] 섬 연결하기</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">

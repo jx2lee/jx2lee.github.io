@@ -31,7 +31,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://grepp-programmers.s3.amazonaws.com/files/ybm/fadbae38bb/dec85ab5-0273-47b3-ba73-fc0b5f6be28a.png">
 <meta property="article:published_time" content="2019-09-26T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-30T15:06:23.561Z">
+<meta property="article:modified_time" content="2021-01-28T15:12:07.396Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Programmers">
 <meta name="twitter:card" content="summary">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-31 00:06:23" itemprop="dateModified" datetime="2020-03-31T00:06:23+09:00">2020-03-31</time>
+                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -299,7 +299,7 @@
 </tbody></table>
 <h2 id="입출력-예-설명"><a href="#입출력-예-설명" class="headerlink" title="입출력 예 설명"></a>입출력 예 설명</h2><p>예제의 그래프를 표현하면 아래 그림과 같고, 1번 노드에서 가장 멀리 떨어진 노드는 4,5,6번 노드입니다.</p>
 <p><img src="https://grepp-programmers.s3.amazonaws.com/files/ybm/fadbae38bb/dec85ab5-0273-47b3-ba73-fc0b5f6be28a.png" alt="image.png"></p>
-<h1 id="문제-접근"><a href="#문제-접근" class="headerlink" title="문제 접근"></a>문제 접근</h1><p>그래프 관련 문제를 처음 풀어보았다. 어떻게 접근해야 될지를 몰라 <a href="https://codedrive.tistory.com/189" target="_blank" rel="noopener">구글에서 찾은 이 블로그</a>를 우선 참고했다. 해결 방법의 간단한 스케치는 <code>1) 각 노드별 인접한 노드 index 구하기</code>, <code>2) queue를 이용해 방문여부(is_visit)이 False인 경우 True로 바꿔주며 distance, queue를 업데이트</code>, <code>3) distance 변수를 sorting하고 max값을 count하여 return</code> 이다. 좀 더 자세히 살펴보면 아래와 같다.</p>
+<h1 id="문제-접근"><a href="#문제-접근" class="headerlink" title="문제 접근"></a>문제 접근</h1><p>그래프 관련 문제를 처음 풀어보았다. 어떻게 접근해야 될지를 몰라 <a target="_blank" rel="noopener" href="https://codedrive.tistory.com/189">구글에서 찾은 이 블로그</a>를 우선 참고했다. 해결 방법의 간단한 스케치는 <code>1) 각 노드별 인접한 노드 index 구하기</code>, <code>2) queue를 이용해 방문여부(is_visit)이 False인 경우 True로 바꿔주며 distance, queue를 업데이트</code>, <code>3) distance 변수를 sorting하고 max값을 count하여 return</code> 이다. 좀 더 자세히 살펴보면 아래와 같다.</p>
 <ul>
 <li>변수 설정<ul>
 <li><code>graph</code> : 인접한 노드를 나타내는 변수</li>
@@ -324,7 +324,7 @@
 </li>
 <li><code>distance</code> 정렬 후 첫 번째 값<em>(max)</em> 카운트 값 return</li>
 </ul>
-<h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(n, edge)</span>:</span></span><br><span class="line">    graph =[  [] <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>) ]</span><br><span class="line">    distances = [ <span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(n) ]</span><br><span class="line">    is_visit = [<span class="literal">False</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(n)]</span><br><span class="line">    queue = [<span class="number">0</span>]</span><br><span class="line">    is_visit[<span class="number">0</span>] = <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 연결된 node append</span></span><br><span class="line">    <span class="keyword">for</span> (a, b) <span class="keyword">in</span> edge:</span><br><span class="line">        graph[a<span class="number">-1</span>].append(b<span class="number">-1</span>)</span><br><span class="line">        graph[b<span class="number">-1</span>].append(a<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># queue를 이용한 distance 계산</span></span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        i = queue.pop(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> graph[i]:</span><br><span class="line">            <span class="keyword">if</span> is_visit[j] == <span class="literal">False</span>:</span><br><span class="line">                is_visit[j] = <span class="literal">True</span></span><br><span class="line">                queue.append(j)</span><br><span class="line">                distances[j] = distances[i] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># max distance를 계산한 후 count 결과 return</span></span><br><span class="line">    distances.sort(reverse=<span class="literal">True</span>)</span><br><span class="line">    answer = distances.count(distances[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
+<h1 id="문제-해결"><a href="#문제-해결" class="headerlink" title="문제 해결"></a>문제 해결</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span>(<span class="params">n, edge</span>):</span></span><br><span class="line">    graph =[  [] <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n + <span class="number">1</span>) ]</span><br><span class="line">    distances = [ <span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n) ]</span><br><span class="line">    is_visit = [<span class="literal">False</span> <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line">    queue = [<span class="number">0</span>]</span><br><span class="line">    is_visit[<span class="number">0</span>] = <span class="literal">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 연결된 node append</span></span><br><span class="line">    <span class="keyword">for</span> (a, b) <span class="keyword">in</span> edge:</span><br><span class="line">        graph[a-<span class="number">1</span>].append(b-<span class="number">1</span>)</span><br><span class="line">        graph[b-<span class="number">1</span>].append(a-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># queue를 이용한 distance 계산</span></span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        i = queue.pop(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> graph[i]:</span><br><span class="line">            <span class="keyword">if</span> is_visit[j] == <span class="literal">False</span>:</span><br><span class="line">                is_visit[j] = <span class="literal">True</span></span><br><span class="line">                queue.append(j)</span><br><span class="line">                distances[j] = distances[i] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># max distance를 계산한 후 count 결과 return</span></span><br><span class="line">    distances.sort(reverse=<span class="literal">True</span>)</span><br><span class="line">    answer = distances.count(distances[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> answer</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p>2019.09.27 made by <em>jaejun.lee</em></p>
@@ -334,6 +334,26 @@
     
     
     
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-budgets/" rel="bookmark">[Python] 예산</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-camera/" rel="bookmark">[Python] 단속카메라</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-compress_char/" rel="bookmark">[Python] 문자열 압축</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-convert_word/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/programmers-disk_controller/" rel="bookmark">[Python] 단어 변환</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
           <div class="post-tags">
