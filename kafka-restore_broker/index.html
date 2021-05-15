@@ -30,7 +30,7 @@
 <meta property="og:description" content="Kafka 는 partition replication 기능을 제공하여 하나의 broker 가 다운되도 topic 을 유지할 수 있는데 최악의 상황인 전 broker 가 다운되었을 때 복구 전략이 무엇인지 확인한다 😌">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-14T15:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-15T14:30:56.087Z">
+<meta property="article:modified_time" content="2021-05-15T15:32:18.097Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Bigdata">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-15 23:30:56" itemprop="dateModified" datetime="2021-05-15T23:30:56+09:00">2021-05-15</time>
+                <time title="Modified: 2021-05-16 00:32:18" itemprop="dateModified" datetime="2021-05-16T00:32:18+09:00">2021-05-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,10 +280,10 @@
 <ol>
 <li><a href="#subject01">그s럴 일은 업겠지만 대비해야지</a><ul>
 <li><a href="#subject02">마지막으로 장애가 난 리더가 살아나길 기다린다</a></li>
-<li><a href="#subject02">장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다</a></li>
+<li><a href="#subject03">장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다</a></li>
 </ul>
 </li>
-<li><a href="#subject03">그럼 무슨 전략이 좋을까요?</a></li>
+<li><a href="#subject04">그럼 무슨 전략이 좋을까요?</a></li>
 <li><a href="#reference">Reference</a></li>
 </ol>
 <h1 id="그럴-일은-업겠지만-대비해야지"><a href="#그럴-일은-업겠지만-대비해야지" class="headerlink" title=" 그럴 일은 업겠지만 대비해야지"></a><a name="subject01"></a> 그럴 일은 업겠지만 대비해야지</h1><p>재수가 없다면 모든 broker 장애가 발생할 수 있다. (딱히 들 수 있는 얘가 없지만..) 이럴 때 kafka 에서 제공하는 복구 전략이 무엇인 지 살펴본다.</p>
