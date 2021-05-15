@@ -22,22 +22,20 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="NHN Cloud 인스턴스를 이용해 zookeeper 클러스터(3-node)를 구축한다 🐒">
+  <meta name="description" content="Kafka 는 partition replication 기능을 제공하여 하나의 broker 가 다운되도 topic 을 유지할 수 있는데 최악의 상황인 전 broker 가 다운되었을 때 복구 전략이 무엇인지 확인한다 😌">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Kafka] Zookeeper Cluster 세팅">
-<meta property="og:url" content="https://jx2lee.github.io/kafka-set_zookeeper_cluster/index.html">
+<meta property="og:title" content="[Kafka] 모든 broker 다운 시 복구 시나리오">
+<meta property="og:url" content="https://jx2lee.github.io/kafka-restore_broker/index.html">
 <meta property="og:site_name" content="go hard">
-<meta property="og:description" content="NHN Cloud 인스턴스를 이용해 zookeeper 클러스터(3-node)를 구축한다 🐒">
+<meta property="og:description" content="Kafka 는 partition replication 기능을 제공하여 하나의 broker 가 다운되도 topic 을 유지할 수 있는데 최악의 상황인 전 broker 가 다운되었을 때 복구 전략이 무엇인지 확인한다 😌">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jx2lee.github.io/image/kafka-set_zookeeper_cluster-1.png">
-<meta property="article:published_time" content="2021-05-10T15:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-11T15:16:59.356Z">
+<meta property="article:published_time" content="2021-05-14T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-15T14:30:56.087Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="Bigdata">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jx2lee.github.io/image/kafka-set_zookeeper_cluster-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/kafka-set_zookeeper_cluster/">
+<link rel="canonical" href="https://jx2lee.github.io/kafka-restore_broker/">
 
 
 <script id="page-configurations">
@@ -50,7 +48,7 @@
   };
 </script>
 
-  <title>[Kafka] Zookeeper Cluster 세팅 | go hard</title>
+  <title>[Kafka] 모든 broker 다운 시 복구 시나리오 | go hard</title>
   
 
 
@@ -207,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/kafka-set_zookeeper_cluster/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/kafka-restore_broker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -220,7 +218,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          [Kafka] Zookeeper Cluster 세팅
+          [Kafka] 모든 broker 다운 시 복구 시나리오
         </h1>
 
         <div class="post-meta">
@@ -230,14 +228,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T00:00:00+09:00">2021-05-11</time>
+              <time title="Created: 2021-05-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-15T00:00:00+09:00">2021-05-15</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-12 00:16:59" itemprop="dateModified" datetime="2021-05-12T00:16:59+09:00">2021-05-12</time>
+                <time title="Modified: 2021-05-15 23:30:56" itemprop="dateModified" datetime="2021-05-15T23:30:56+09:00">2021-05-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,8 +256,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/kafka-set_zookeeper_cluster/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="kafka-set_zookeeper_cluster/" itemprop="commentCount"></span>
+    <a title="disqus" href="/kafka-restore_broker/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="kafka-restore_broker/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -273,62 +271,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <center> NHN Cloud 인스턴스를 이용해 zookeeper 클러스터(3-node)를 구축한다 🐒 </center>
+        <center> Kafka 는 partition replication 기능을 제공하여 하나의 broker 가 다운되도 topic 을 유지할 수 있는데 최악의 상황인 전 broker 가 다운되었을 때 복구 전략이 무엇인지 확인한다 😌 </center>
 <br>
 <br>
 
 <a id="more"></a>
 <p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
 <ol>
-<li><a href="#subject01">패키지 설정 및 binary 설정</a></li>
-<li><a href="#subject02">Zookeeper service 실행</a></li>
+<li><a href="#subject01">그s럴 일은 업겠지만 대비해야지</a><ul>
+<li><a href="#subject02">마지막으로 장애가 난 리더가 살아나길 기다린다</a></li>
+<li><a href="#subject02">장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다</a></li>
+</ul>
+</li>
+<li><a href="#subject03">그럼 무슨 전략이 좋을까요?</a></li>
 <li><a href="#reference">Reference</a></li>
 </ol>
-<h1 id="패키지-설정-및-binary-설정"><a href="#패키지-설정-및-binary-설정" class="headerlink" title=" 패키지 설정 및 binary 설정"></a><a name="subject01"></a> 패키지 설정 및 binary 설정</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y java-1.8.0-openjdk</span><br><span class="line">$ wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz</span><br></pre></td></tr></table></figure>
+<h1 id="그럴-일은-업겠지만-대비해야지"><a href="#그럴-일은-업겠지만-대비해야지" class="headerlink" title=" 그럴 일은 업겠지만 대비해야지"></a><a name="subject01"></a> 그럴 일은 업겠지만 대비해야지</h1><p>재수가 없다면 모든 broker 장애가 발생할 수 있다. (딱히 들 수 있는 얘가 없지만..) 이럴 때 kafka 에서 제공하는 복구 전략이 무엇인 지 살펴본다.</p>
+<p>크게 복구 전략은 2가지로 다음과 같다.</p>
+<ul>
+<li>마지막으로 장애가 난 리더(브로커)가 살아나길 기다린다.</li>
+<li>장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다.</li>
+</ul>
+<p>각 전략은 장단점이 존재한다.</p>
+<h2 id="마지막으로-장애가-난-리더가-살아나길-기다린다"><a href="#마지막으로-장애가-난-리더가-살아나길-기다린다" class="headerlink" title=" 마지막으로 장애가 난 리더가 살아나길 기다린다"></a><a name="subject02"></a> 마지막으로 장애가 난 리더가 살아나길 기다린다</h2><ul>
+<li>3개 broker 로 예를 들때, broker01 → broker02 → broker03 순으로 장애가 낫다고 가정하자</li>
+<li>그럼 가장 최근 장애가 난 broker03 의 파티션이 손실이 가장 적다.</li>
+<li>이렇게 메시지 손실이 가장 적은 broker 가 기동되기를 기다리는 전략</li>
+<li>장점: 메세지 손실이 적다</li>
+<li>단점: 장애시간이 길어질 수 있다.(만약 broker03 의 해결이 늦어지면 결국 해당 토픽은 정상화되기까지 시간이 오래 걸린다.)</li>
+</ul>
+<h2 id="장애-상관없이-먼저-복구된-리더-또는-팔로워-브로커-가-자동으로-리더가-된다"><a href="#장애-상관없이-먼저-복구된-리더-또는-팔로워-브로커-가-자동으로-리더가-된다" class="headerlink" title=" 장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다."></a><a name="subject03"></a> 장애 상관없이 먼저 복구된 리더 또는 팔로워(브로커) 가 자동으로 리더가 된다.</h2><ul>
+<li>최근이건 나중이건 먼저 살아나는 브로커의 파티션이(리더 or 팔로워) 자동으로 리더로 승격하는 전략</li>
+<li>장점: 장애시간을 단축할 수 있다.</li>
+<li>단점: 메세지 손실이 발생할 수 있다.<ul>
+<li>만약 모든 브로커가 동시 다운이 된 것이 아니라면</li>
+<li>먼저 다운된 브로커가 모든 브로커 장애 이후 복구가 되면 리더로 승격되어 나머지 복구되는 팔로워들과 싱크 작업을 진행하고</li>
+<li>이는 가장 최근에 장애 난 브로커의 리더 파티션의 메세지도 동기화 되기 때문에</li>
+<li>메세지 손실이 발생한다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="그럼-무슨-전략이-좋을까요"><a href="#그럼-무슨-전략이-좋을까요" class="headerlink" title=" 그럼 무슨 전략이 좋을까요?"></a><a name="subject04"></a> 그럼 무슨 전략이 좋을까요?</h1><p>정답은 없다. 단, kafka 0.11.0.0 이하 버전에서는 두 번째 전략을 default 로 가져가지만 이후 버젼에서는 첫 번째 전략을 default 를 가져간다. 물론, 해당 전략을 변경할 수 있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#server.properties</span></span><br><span class="line">unclean.leader.election.enable=&#123;true_or_false&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>symbolic link</p>
-<ul>
-<li><p>계정의 default home 에 생성</p>
-</li>
-<li><p><code>ln -s /app/zookeeper-3.4.10 zookeeper</code></p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[centos@zookeeper-1 apps]$ ll</span><br><span class="line">합계 0</span><br><span class="line">lrwxrwxrwx 1 centos centos 21  5월  7 14:52 zookeeper -&gt; /app/zookeeper-3.4.10</span><br></pre></td></tr></table></figure>
-</li>
+<li>false: 첫 번째 전략</li>
+<li>true: 두 번재 전략</li>
 </ul>
-</li>
-<li><p>data 경로 지정</p>
-<ul>
-<li><p>/data</p>
-</li>
-<li><p><code>myid</code> 파일을 생성해 각 id 번호를 작성</p>
-</li>
-<li><p>해당 서버를 이미지로 만들어 2개 인스턴스를 생성할 계획이기 때문에 나는 우선 1까지만 생성하였다.(<em>1번 인스턴스 이미지를 생성할 예정</em>) 3개의 서버를 동시에 진행하는 분들은 각 서버에 맞게 myid 파일을 1,2,3 순으로 작성한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[centos@zookeeper-1 data]$ <span class="built_in">pwd</span></span><br><span class="line">/data</span><br><span class="line">[centos@zookeeper-1 data]$ cat myid</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>zoo.cfg 설정</p>
-<ul>
-<li><p>binary 로 설치한 경우 <code>conf/zoo_sample.cfg</code> 를 수정한다.</p>
-</li>
-<li><p><code>vi conf/zoo.cfg</code></p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[centos@zookeeper-1 zookeeper]$ cat conf/zoo.cfg</span><br><span class="line"><span class="comment"># The number of milliseconds of each tick</span></span><br><span class="line"><span class="comment"># 기본 측정 시간</span></span><br><span class="line">tickTime=2000</span><br><span class="line"><span class="comment"># The number of ticks that the initial</span></span><br><span class="line"><span class="comment"># synchronization phase can take</span></span><br><span class="line"><span class="comment"># 팔로워가 리더와 초기에 연결하는 시간에 대한 타임아웃 시간</span></span><br><span class="line">initLimit=10</span><br><span class="line"><span class="comment"># The number of ticks that can pass between</span></span><br><span class="line"><span class="comment"># sending a request and getting an acknowledgement</span></span><br><span class="line"><span class="comment"># 팔로워가 리더와 동기화 하는 시간에 대한 타임 아웃 티켓 수(주키퍼 데이터가 크면 더 늘려야함)</span></span><br><span class="line">syncLimit=5</span><br><span class="line"><span class="comment"># the directory where the snapshot is stored.</span></span><br><span class="line"><span class="comment"># do not use /tmp for storage, /tmp here is just</span></span><br><span class="line"><span class="comment"># example sakes.</span></span><br><span class="line"><span class="comment"># 트랜잭션 로그와 스냅샷이 저장되는 경로</span></span><br><span class="line">dataDir=/data</span><br><span class="line"><span class="comment"># the port at which the clients will connect</span></span><br><span class="line"><span class="comment"># TCP port</span></span><br><span class="line">clientPort=2181</span><br><span class="line"><span class="comment"># 주키퍼 앙상블 구성을 위한 서버 설정, 각 넘버는 myid 값과 일치</span></span><br><span class="line">server.1=zookeeper-1:2888:3888</span><br><span class="line">server.2=zookeeper-2:2888:3888</span><br><span class="line">server.3=zookeeper-3:2888:3888</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>systemd 등록</p>
-<ul>
-<li><p>binary 로 실행할 수 있지만 systemd 로 관리하기 위해 service 등록</p>
-</li>
-<li><p><code>sudo vi /etc/systemd/system/zookeeper-server.service</code></p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=zookeeper-server</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">User=root</span><br><span class="line">Group=root</span><br><span class="line">SyslogIdentifier=zookeeper-server</span><br><span class="line">WorkingDirectory=/home/centos/apps/zookeeper</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=0s</span><br><span class="line">ExecStart=/home/centos/apps/zookeeper/bin/zkServer.sh start</span><br><span class="line">ExecStop=/home/centos/apps/zookeeper/bin/zkServer.sh stop</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="Zookeeper-service-실행"><a href="#Zookeeper-service-실행" class="headerlink" title=" Zookeeper service 실행"></a><a name="subject02"></a> Zookeeper service 실행</h1><p>각 서버(3대)에서 zookeeper 서비스를 systemd 로 실행한다. 아래와 같이 3개 서비스 상태를 확인했을 때 초록불이면 성공이다.</p>
-<p><img src="/image/kafka-set_zookeeper_cluster-1.png" alt="/image/kafka-set_zookeeper_cluster-1.png"></p>
+<p>현재 내가 맡고 있는 데이터플랫폼의 경우 전략은 <code>false</code> 이다. 로그를 수집하는 영역에서 메세지 손실을 최소화 하는게 목표이고 최대한 kafka(0.10.2) 에서 권장하는 옵션(<code>default=false</code>)을 따라간 것으로 보인다. Kafka 의 고가용성 &amp; 손실 최소화를 위해 첫 번째 전략으로 가져가는 게 맞다고 본다. (물론, 저장하지 않고 크게 중요하지 않은 데이터라면 두 번째 전략을 가져가면 될 것 같고 <code>상황에 따라 다르다</code> 가 정답인 것 같다.)</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
 <li>카프카, 데이터플랫폼의 최강자</li>
 </ul>
@@ -372,13 +362,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/kafka-topic_and_partition/" rel="prev" title="[Kafka] Topic & Partition">
-      <i class="fa fa-chevron-left"></i> [Kafka] Topic & Partition
+    <a href="/kafka-set_zookeeper_cluster/" rel="prev" title="[Kafka] Zookeeper Cluster 세팅">
+      <i class="fa fa-chevron-left"></i> [Kafka] Zookeeper Cluster 세팅
     </a></div>
-      <div class="post-nav-item">
-    <a href="/kafka-restore_broker/" rel="next" title="[Kafka] 모든 broker 다운 시 복구 시나리오">
-      [Kafka] 모든 broker 다운 시 복구 시나리오 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -511,9 +498,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://jx2lee.github.io/kafka-set_zookeeper_cluster/";
-    this.page.identifier = "kafka-set_zookeeper_cluster/";
-    this.page.title = "[Kafka] Zookeeper Cluster 세팅";
+    this.page.url = "https://jx2lee.github.io/kafka-restore_broker/";
+    this.page.identifier = "kafka-restore_broker/";
+    this.page.title = "[Kafka] 모든 broker 다운 시 복구 시나리오";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
