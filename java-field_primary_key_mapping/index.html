@@ -22,28 +22,38 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="go hard">
-<meta property="og:url" content="https://jx2lee.github.io/page/12/index.html">
+  <meta name="description" content="JPA 의 필드 및 기본 키 매핑에 대한 내용을 정리한다 ⊸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java] JPA 필드 및 기본 키 매핑">
+<meta property="og:url" content="https://jx2lee.github.io/java-field_primary_key_mapping/index.html">
 <meta property="og:site_name" content="go hard">
+<meta property="og:description" content="JPA 의 필드 및 기본 키 매핑에 대한 내용을 정리한다 ⊸">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jx2lee.github.io/image/field-primary-key-mapping-1.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/field-primary-key-mapping-2.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/field-primary-key-mapping-3.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/field-primary-key-mapping-4.png">
+<meta property="article:published_time" content="2021-06-01T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-06-02T15:19:10.811Z">
 <meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="JPA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/field-primary-key-mapping-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/page/12/">
+<link rel="canonical" href="https://jx2lee.github.io/java-field_primary_key_mapping/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>go hard</title>
+  <title>[Java] JPA 필드 및 기본 키 매핑 | go hard</title>
   
 
 
@@ -193,13 +203,14 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/python-better_way_14/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/java-field_primary_key_mapping/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -211,10 +222,9 @@
       <meta itemprop="name" content="go hard">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/python-better_way_14/" class="post-title-link" itemprop="url">[Python] None을 반환하기보다 예외 발생</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          [Java] JPA 필드 및 기본 키 매핑
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -223,14 +233,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-08-06 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-06T00:00:00+09:00">2019-08-06</time>
+              <time title="Created: 2021-06-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-06-02T00:00:00+09:00">2021-06-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
+                <time title="Modified: 2021-06-03 00:19:10" itemprop="dateModified" datetime="2021-06-03T00:19:10+09:00">2021-06-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +248,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -251,8 +261,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/python-better_way_14/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="python-better_way_14/" itemprop="commentCount"></span>
+    <a title="disqus" href="/java-field_primary_key_mapping/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="java-field_primary_key_mapping/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -266,239 +276,156 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>함수를 이용해 None을 반환하기보다는 예외를 일으키는 방법에 대해 알아본다</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/python-better_way_14/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/database-connect_to_tibero_using_python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JaeJun Lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="go hard">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/database-connect_to_tibero_using_python/" class="post-title-link" itemprop="url">[Database] Connect to Tibero using Python</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-02T00:00:00+09:00">2019-08-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-12 00:20:31" itemprop="dateModified" datetime="2021-05-12T00:20:31+09:00">2021-05-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/database-connect_to_tibero_using_python/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="database-connect_to_tibero_using_python/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <center> docker image로 띄운 Python 에서 Tibero 에 접근하는 방법을 다룬다.</center>
+        <center> JPA 의 필드 및 기본 키 매핑에 대한 내용을 정리한다 ⊸ </center>
 <br>
 <br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/database-connect_to_tibero_using_python/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/ml-introduction_to_grid_search/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JaeJun Lee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="go hard">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/ml-introduction_to_grid_search/" class="post-title-link" itemprop="url">[Machine Learning] Understanding Hyperparameter</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-02T00:00:00+09:00">2019-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-29 00:12:07" itemprop="dateModified" datetime="2021-01-29T00:12:07+09:00">2021-01-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/ml-introduction_to_grid_search/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="ml-introduction_to_grid_search/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Hyperparameter-란"><a href="#Hyperparameter-란" class="headerlink" title="Hyperparameter 란?"></a>Hyperparameter 란?</h1><ul>
-<li>Wiki에 따르면 <em>학습이 시작되기 전 설정된 변수</em> 라고 정의</li>
-<li>즉, 학습 이전 initialized variable</li>
+<a id="more"></a>
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">필드와 컬럼 매핑</a><ul>
+<li><a href="#subject02">매핑 어노테이션 개요</a><ul>
+<li><a href="#subject03">@Column</a></li>
+<li><a href="#subject04">@Temporal</a></li>
+<li><a href="#subject05">@Enumerated</a></li>
+<li><a href="#subject06">@Lob</a></li>
+<li><a href="#subject07">@Transient</a></li>
 </ul>
-<p>학습 parameter는 크게 <strong>Model parameter</strong> 와 <strong>Hyperparameter</strong> 로 구분</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/ml-introduction_to_grid_search/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+</li>
+</ul>
+</li>
+<li><a href="#subject08">기본 키 매핑</a><ul>
+<li><a href="#subject09">자동 할당 전략</a><ul>
+<li><a href="#subject10">IDENTITY</a></li>
+<li><a href="#subject11">SEQUENCE</a></li>
+<li><a href="#subject12">TABLE</a></li>
+<li><a href="#subject13">권장 전략</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="필드와-컬럼-매핑"><a href="#필드와-컬럼-매핑" class="headerlink" title=" 필드와 컬럼 매핑"></a><a name="subject01"></a> 필드와 컬럼 매핑</h1><h2 id="매핑-어노테이션-개요"><a href="#매핑-어노테이션-개요" class="headerlink" title=" 매핑 어노테이션 개요"></a><a name="subject02"></a> 매핑 어노테이션 개요</h2><p><img src="/image/field-primary-key-mapping-1.png" alt="/image/field-primary-key-mapping-1.png"></p>
+<h3 id="Column"><a href="#Column" class="headerlink" title=" @Column"></a><a name="subject03"></a> <code>@Column</code></h3><p><img src="/image/field-primary-key-mapping-2.png" alt="/image/field-primary-key-mapping-2.png"></p>
+<h3 id="Temporal"><a href="#Temporal" class="headerlink" title=" @Temporal"></a><a name="subject04"></a> <code>@Temporal</code></h3><ul>
+<li>Java 8 이상에서는 LocalDate &amp; LocalDateTime 을 지원하므로 8 버젼 이상을 사용하는 사용자에게는 크게 중요하지 않음</li>
+</ul>
+<h3 id="Enumerated"><a href="#Enumerated" class="headerlink" title=" @Enumerated"></a><a name="subject05"></a> <code>@Enumerated</code></h3><ul>
+<li>Java Enum type 매핑 시 사용</li>
+<li>단, ORDINAL 사용 금지<ul>
+<li>why? ORDINAL 을 사용할 경우 enum 순서를 DB 에 저장</li>
+<li>만약에 enum 순서가 변경될 경우 DB Migration 이 필요함</li>
+</ul>
+</li>
+</ul>
+<h3 id="Lob"><a href="#Lob" class="headerlink" title=" @Lob"></a><a name="subject06"></a> <code>@Lob</code></h3><ul>
+<li>CLOB, BLOB 타입과 매핑</li>
+<li>String 만 CLOB, 나머지 타입은 BLOG 이 default</li>
+</ul>
+<h3 id="Transient"><a href="#Transient" class="headerlink" title=" @Transient"></a><a name="subject07"></a> <code>@Transient</code></h3><ul>
+<li>필드 매핑을 원하지 않을 경우 사용</li>
+<li>메모리 상에서 임시로 값을 사용할 때</li>
+</ul>
+<h1 id="기본-키-매핑"><a href="#기본-키-매핑" class="headerlink" title=" 기본 키 매핑"></a><a name="subject08"></a> 기본 키 매핑</h1><ul>
+<li>두 가지 annotation 존재</li>
+<li><code>@Id</code> : 직접 할당</li>
+<li><code>@GeneratedValue</code> : 자동 할당</li>
+</ul>
+<h2 id="자동-할당-전략"><a href="#자동-할당-전략" class="headerlink" title=" 자동 할당 전략"></a><a name="subject09"></a> 자동 할당 전략</h2><h3 id="IDENTITY"><a href="#IDENTITY" class="headerlink" title=" IDENTITY"></a><a name="subject10"></a> IDENTITY</h3><ul>
+<li>데이터베이스에 위임하는 전략 (MYSQL)<ul>
+<li>주로 MySQL, PostgreSQL, SQL Server, DB2 에서 사용</li>
+<li>JPA 는 트랜잭션 커밋 이후 insert query 를 날리는데, auto_increment 의 경우 데이터베이스에 저장된 이후에 id 값을 알 수 있다.</li>
+<li><strong>조금 특이하게 em.persist 시점에 insert query 가 발생한다.</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="SEQUENCE"><a href="#SEQUENCE" class="headerlink" title=" SEQUENCE"></a><a name="subject11"></a> SEQUENCE</h3><ul>
+<li>데이터베이스의 sequence object 이용하는 전략 (ORACLE)</li>
+<li><code>@SequenceGenerator</code></li>
+<li>allocationSize<ul>
+<li>sequence 한 번 호출에 증가하는 수로 sequence 값을 1씩 증가하도록 설정하면 반드시 1로 설정한다.</li>
+<li>성능 최적화를 위해 JPA 에서는 50 을 default 로 가져간다.<ul>
+<li>why? sequence 를 DB 에 호출하는 횟수를 줄이기 위함인데, 너무 큰 숫자를 두게되면 메모리에 저장되어 있기 때문에 웹서버가 다운 시 비어있는 숫자가 발생한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>속성값<ul>
+<li><img src="/image/field-primary-key-mapping-3.png" alt="/image/field-primary-key-mapping-3.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="TABLE"><a href="#TABLE" class="headerlink" title=" TABLE"></a><a name="subject12"></a> TABLE</h3><ul>
+<li>키 생성용 테이블 이용하는 전략</li>
+<li><code>@TableGenerator</code></li>
+<li>데이터베이스의 sequence 를 흉내내는 전략으로 모든 데이터베이스에 적용할 수 있지만 성능의 문제가 발생할 수 있음</li>
+<li>속성값<ul>
+<li><img src="/image/field-primary-key-mapping-4.png" alt="/image/field-primary-key-mapping-4.png"></li>
+</ul>
+</li>
+</ul>
+<h3 id="권장-전략"><a href="#권장-전략" class="headerlink" title=" 권장 전략"></a><a name="subject13"></a> 권장 전략</h3><ul>
+<li>데이터베이스 입장에서 기본키는 null 이면 안되며 유일 및 변경되면 안됨</li>
+<li>위 조건을 만족하는 자연키(nature key? 심지어 주민등록번호라도 기본키로 사용하면 안된다. 물론 현재에는 불가하지만)</li>
+</ul>
+<blockquote>
+<p>answer: <strong><em>Long + 대체키(UUID) + 키 생성</em></strong></p>
+</blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">https://www.inflearn.com/course/ORM-JPA-Basic/dashboard</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
+
     </div>
 
     
     
     
       
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_persistence_context/" rel="bookmark">[Java] JPA 영속성 관리</a></div>
+    </li>
+  </ul>
+
 
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/JPA/" rel="tag"># JPA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/java-jpa_persistence_context/" rel="prev" title="[Java] JPA 영속성 관리">
+      <i class="fa fa-chevron-left"></i> [Java] JPA 영속성 관리
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
-  </nav>
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -609,6 +536,26 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/java-field_primary_key_mapping/";
+    this.page.identifier = "java-field_primary_key_mapping/";
+    this.page.title = "[Java] JPA 필드 및 기본 키 매핑";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-jaejuning-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
 </script>
 
 </body>

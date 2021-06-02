@@ -9,8 +9,16 @@
 
 
     <url>
+        <loc>https://jx2lee.github.io/java-field_primary_key_mapping/</loc>
+        <lastmod>2021-06-02T15:19:10.811Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jx2lee.github.io/java-jpa_persistence_context/</loc>
-        <lastmod>2021-06-02T13:44:03.396Z</lastmod>
+        <lastmod>2021-06-02T15:19:05.633Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
