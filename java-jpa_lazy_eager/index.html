@@ -22,27 +22,23 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="영한님 강의를 들으며 정리한 부분을 공유한다 🏄‍">
+  <meta name="description" content="JPA 의 지연(LAZY) &amp; 즉시(EAGER) 로딩을 정리한다 👽">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Java] JPA 영속성 관리">
-<meta property="og:url" content="https://jx2lee.github.io/java-jpa_persistence_context/index.html">
+<meta property="og:title" content="[Java] JPA EAGER &amp; LAZY 로딩">
+<meta property="og:url" content="https://jx2lee.github.io/java-jpa_lazy_eager/index.html">
 <meta property="og:site_name" content="go hard">
-<meta property="og:description" content="영한님 강의를 들으며 정리한 부분을 공유한다 🏄‍">
+<meta property="og:description" content="JPA 의 지연(LAZY) &amp; 즉시(EAGER) 로딩을 정리한다 👽">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-1.png">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-2.png">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-3.png">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-4.png">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-5.png">
-<meta property="og:image" content="https://jx2lee.github.io/image/persistence-context-6.png">
-<meta property="article:published_time" content="2021-05-30T15:00:00.000Z">
-<meta property="article:modified_time" content="2021-06-02T15:19:05.633Z">
+<meta property="og:image" content="https://jx2lee.github.io/image/jpa-lazy-eager-loading-1.png">
+<meta property="og:image" content="https://jx2lee.github.io/image/jpa-lazy-eager-loading-2.png">
+<meta property="article:published_time" content="2021-07-10T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-11T12:27:57.695Z">
 <meta property="article:author" content="JaeJun Lee">
 <meta property="article:tag" content="JPA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jx2lee.github.io/image/persistence-context-1.png">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/jpa-lazy-eager-loading-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/java-jpa_persistence_context/">
+<link rel="canonical" href="https://jx2lee.github.io/java-jpa_lazy_eager/">
 
 
 <script id="page-configurations">
@@ -55,7 +51,7 @@
   };
 </script>
 
-  <title>[Java] JPA 영속성 관리 | go hard</title>
+  <title>[Java] JPA EAGER & LAZY 로딩 | go hard</title>
   
 
 
@@ -212,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/java-jpa_persistence_context/">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/java-jpa_lazy_eager/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -225,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          [Java] JPA 영속성 관리
+          [Java] JPA EAGER & LAZY 로딩
         </h1>
 
         <div class="post-meta">
@@ -235,14 +231,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-05-31 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-31T00:00:00+09:00">2021-05-31</time>
+              <time title="Created: 2021-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-11T00:00:00+09:00">2021-07-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-06-03 00:19:05" itemprop="dateModified" datetime="2021-06-03T00:19:05+09:00">2021-06-03</time>
+                <time title="Modified: 2021-07-11 21:27:57" itemprop="dateModified" datetime="2021-07-11T21:27:57+09:00">2021-07-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,8 +259,8 @@
       </span>
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/java-jpa_persistence_context/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="java-jpa_persistence_context/" itemprop="commentCount"></span>
+    <a title="disqus" href="/java-jpa_lazy_eager/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="java-jpa_lazy_eager/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -278,103 +274,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <center> 영한님 강의를 들으며 정리한 부분을 공유한다 🏄‍ </center>
+        <center> JPA 의 지연(LAZY) & 즉시(EAGER) 로딩을 정리한다 👽 </center>
 <br>
 <br>
 
 <a id="more"></a>
 <p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
 <ol>
-<li><a href="#subject01">JPA</a></li>
-<li><a href="#subject02">JPA 핵심</a></li>
-<li><a href="#subject03">Entity 생명 주기</a></li>
-<li><a href="#subject04">영속성 컨텍스트 feature</a></li>
-<li><a href="#subject05">flush</a></li>
+<li><a href="#subject01">EAGER 로딩 (즉시)</a></li>
+<li><a href="#subject02">LAZY 로딩 (지연)</a></li>
 <li><a href="#reference">Reference</a></li>
 </ol>
-<h1 id="JPA"><a href="#JPA" class="headerlink" title=" JPA"></a><a name="subject01"></a> JPA</h1><blockquote>
-<p><em>JPA(Java Persistence API, JPA)는 자바 플랫폼 SE와 자바 플랫폼 EE를 사용하는 응용프로그램에서 관계형 데이터베이스의 관리를 표현하는 자바 API이다. (by wiki)</em></p>
-</blockquote>
+<h1 id="EAGER-로딩-즉시"><a href="#EAGER-로딩-즉시" class="headerlink" title=" EAGER 로딩 (즉시)"></a><a name="subject01"></a> EAGER 로딩 (즉시)</h1><p><img src="/image/jpa-lazy-eager-loading-1.png" alt="/image/jpa-lazy-eager-loading-1.png"></p>
 <ul>
-<li>ORM<ul>
-<li>Object Relational mapping (객체 관계 매핑)</li>
-<li>객체는 객체대로, RDB 는 RDB 대로 설계하는 것이 목적</li>
-<li>객체와 RDB 사이에 존재하는 기술로 대부분의 언어에는 ORM 기술이 존재</li>
+<li>entity 를 직접 조회하는 로딩 기법</li>
+<li>Join 을 사용해서 SQL 한 번에 조회하는 특징</li>
+</ul>
+<h1 id="LAZY-로딩-지연"><a href="#LAZY-로딩-지연" class="headerlink" title=" LAZY 로딩 (지연)"></a><a name="subject02"></a> LAZY 로딩 (지연)</h1><ul>
+<li><p>entity 를 직접 조회하지 않고 Proxy 객체를 조회하는 로딩 기법</p>
+<ul>
+<li>Proxy 객체는 빈 껍데기 (<u>가짜!</u>)</li>
+<li>Proxy 초기화가 발생한 시점에 직접 DB 조회하여 실제 Entity 가 영속성 컨텍스트에 생성<ul>
+<li>초기화는 연관관계를 가진 entity 에서 다른 entity 를 사용하는 시점에 Proxy 초기화를 진행</li>
 </ul>
 </li>
-<li>JPA 는 Hibernate (ORM framework 중 하나) 기반 Java ORM 표준<ul>
-<li>애플리케이션과 JDBC 사이에서 동작</li>
-<li>특정 DB 에 종속 X</li>
-<li>Java Interface 로 구현되어 있음</li>
-</ul>
-</li>
-</ul>
-<p><img src="/image/persistence-context-1.png" alt="/image/persistence-context-1.png"></p>
-<center>영한님 강의자료</center>
-
-<h1 id="JPA-핵심"><a href="#JPA-핵심" class="headerlink" title=" JPA 핵심"></a><a name="subject02"></a> JPA 핵심</h1><ul>
-<li>ORM</li>
-<li>영속성 컨텍스트<ul>
-<li>Entity 를 영구 저장하는 환경</li>
-<li>논리적인 개념으로 눈에 보이지 않고 EntityManger 를 통해 영속성 컨텍스트에 접근할 수 있다.<ul>
-<li>EntityManger 와 영속성 컨텍스트가 1:1 매핑</li>
-<li>but, Spring 에서는 N:1</li>
-</ul>
-</li>
-<li><code>EniityManager.persist(entity)</code></li>
-<li>EntityManagerFactory &amp; EntityManager<ul>
-<li><img src="/image/persistence-context-2.png" alt="/image/persistence-context-2.png"></li>
+<li>Proxy 객체는 실제 생성된 entity 에 조회하는 방식으로 동작</li>
+<li>그림 참고<ul>
+<li><img src="/image/jpa-lazy-eager-loading-2.png" alt="/image/jpa-lazy-eager-loading-2.png"></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-<h1 id="Entity-생명-주기"><a href="#Entity-생명-주기" class="headerlink" title=" Entity 생명 주기"></a><a name="subject03"></a> Entity 생명 주기</h1><ul>
-<li>비영속: 전혀 관계가 없음</li>
-<li>영속: 영속성 컨텍스트에 관리되는 상태<ul>
-<li><code>em.persist</code></li>
-<li><img src="/image/persistence-context-3.png" alt="/image/persistence-context-3.png"></li>
-<li><img src="/image/persistence-context-4.png" alt="/image/persistence-context-4.png"> </li>
-</ul>
-</li>
-<li>준영속: 관리되었다 분리된 상태 (더이상 관여 없음 → 영속에서 비영속으로 변경)<ul>
-<li>관리되지 않고 있기 때문에 영속성 컨텍스트가 제공하는 기능을 수행하지 못한다.</li>
-<li><code>em.detach</code> &amp; <code>em.clear</code> &amp; <code>em.close</code></li>
-</ul>
-</li>
-<li>삭제: 삭제 상태<ul>
-<li><code>em.remove</code></li>
-</ul>
-</li>
-</ul>
-<h1 id="영속성-컨텍스트-feature"><a href="#영속성-컨텍스트-feature" class="headerlink" title=" 영속성 컨텍스트 feature"></a><a name="subject04"></a> 영속성 컨텍스트 feature</h1><ul>
-<li>1차 캐시</li>
-<li>동일성(identity) 보장  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Member a = em.find(Member.class, <span class="string">&quot;member1&quot;</span>);</span><br><span class="line">Member b = em.find(Member.class, <span class="string">&quot;member1&quot;</span>);</span><br><span class="line">System.out.println(a == b) <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
-<li>쓰기 지연(transactional write-behind)<ul>
-<li><img src="/image/persistence-context-5.png" alt="/image/persistence-context-5.png"></li>
-<li>commit 시 쓰기 지연 SQL 저장소에 있는 update query 가 DB 로 전송 및 수행</li>
-</ul>
-</li>
-<li>변경 감지(dirty checking)<ul>
-<li>1차 캐시에 snapshot 이 존재하여 entity 와 비교해 변경된 부분을 감지하여 update query 를 쓰기 지연 SQL 저장소에 저장</li>
-<li><img src="/image/persistence-context-6.png" alt="/image/persistence-context-6.png"></li>
-</ul>
-</li>
-<li>지연 로딩(lazy loading)</li>
-</ul>
-<h1 id="flush"><a href="#flush" class="headerlink" title=" flush"></a><a name="subject05"></a> flush</h1><ul>
-<li>영속성 컨텍스트의 변경내용을 DB에 반영 (<code>동기화</code>)</li>
-<li>em.flush 가 호출되면 쓰기 지연 SQL 저장소의 udpate query 를 몽땅 DB 에 반영</li>
-<li>flush 방법 3가지<ul>
-<li>em.flush</li>
-<li>Transaction commit</li>
-<li>JPQL 실행<ul>
-<li>why? 영속된 Entity 를 만약에 호출하는 경우 이는 DB 에 반영되어 있지 않기 때문에 내부적으로 JPQL 이 호출되면 flush 를 통해 영속성 컨텍스트의 Entity 를 DB 에 저장</li>
+<li><p><strong><em>실무에서 모든 연관관계에는 반드시 lazy 로딩으로 설정하자! (필수)</em></strong></p>
+<ul>
+<li><code>@ManyToOne</code> &amp; <code>@OneToOne</code> 은 기본이 eager 로딩이므로 lazy 로 변경하자</li>
+<li><code>@OneToMany</code> &amp; <code>@ManyToMany</code> 는 기본이 lazy!</li>
+<li>왜 eager 타입 지정을 꺼려하는 걸까?<ul>
+<li>eager type 의 경우 예상치 못한 SQL 발생</li>
+<li>JPQL 에서 N + 1 문제 발생</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>flush 는 영속성 컨텍스트를 비우지 않는다.</li>
+<li><p>lazy 로딩을 사용하며 JPQL fetch join, entity 그래프 기능을 활용</p>
+</li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">https://www.inflearn.com/course/ORM-JPA-Basic/dashboard</a></li>
@@ -391,6 +334,9 @@
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_persistence_context/" rel="bookmark">[Java] JPA 영속성 관리</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/java-field_primary_key_mapping/" rel="bookmark">[Java] JPA 필드 및 기본 키 매핑</a></div>
     </li>
     <li class="popular-posts-item">
@@ -401,9 +347,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/java-jpa_association_mapping/" rel="bookmark">[Java] JPA 연관관계 매핑 살펴보기</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/java-jpa_lazy_eager/" rel="bookmark">[Java] JPA EAGER & LAZY 로딩</a></div>
     </li>
   </ul>
 
@@ -419,12 +362,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/java-singleton/" rel="prev" title="[Java] Singleton with java">
-      <i class="fa fa-chevron-left"></i> [Java] Singleton with java
+    <a href="/java-field_primary_key_mapping/" rel="prev" title="[Java] JPA 필드 및 기본 키 매핑">
+      <i class="fa fa-chevron-left"></i> [Java] JPA 필드 및 기본 키 매핑
     </a></div>
       <div class="post-nav-item">
-    <a href="/java-field_primary_key_mapping/" rel="next" title="[Java] JPA 필드 및 기본 키 매핑">
-      [Java] JPA 필드 및 기본 키 매핑 <i class="fa fa-chevron-right"></i>
+    <a href="/java-jpa_association_mapping/" rel="next" title="[Java] JPA 연관관계 매핑 살펴보기">
+      [Java] JPA 연관관계 매핑 살펴보기 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -558,9 +501,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://jx2lee.github.io/java-jpa_persistence_context/";
-    this.page.identifier = "java-jpa_persistence_context/";
-    this.page.title = "[Java] JPA 영속성 관리";
+    this.page.url = "https://jx2lee.github.io/java-jpa_lazy_eager/";
+    this.page.identifier = "java-jpa_lazy_eager/";
+    this.page.title = "[Java] JPA EAGER & LAZY 로딩";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
