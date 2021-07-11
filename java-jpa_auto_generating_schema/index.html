@@ -22,15 +22,20 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="go hard">
-<meta property="og:url" content="https://jx2lee.github.io/archives/page/8/index.html">
+  <meta name="description" content="DB 스키마를 미리 지정하는 방법에 대해 살펴본다 🤡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java] JPA 데이터베이스 스키마 자동생성">
+<meta property="og:url" content="https://jx2lee.github.io/java-jpa_auto_generating_schema/index.html">
 <meta property="og:site_name" content="go hard">
+<meta property="og:description" content="DB 스키마를 미리 지정하는 방법에 대해 살펴본다 🤡">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-10T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-11T10:29:20.922Z">
 <meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="JPA">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://jx2lee.github.io/archives/page/8/">
+<link rel="canonical" href="https://jx2lee.github.io/java-jpa_auto_generating_schema/">
 
 
 <script id="page-configurations">
@@ -38,12 +43,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | go hard</title>
+  <title>[Java] JPA 데이터베이스 스키마 자동생성 | go hard</title>
   
 
 
@@ -193,240 +198,171 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/java-jpa_auto_generating_schema/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Java] JPA 데이터베이스 스키마 자동생성
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-11T00:00:00+09:00">2021-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-11 19:29:20" itemprop="dateModified" datetime="2021-07-11T19:29:20+09:00">2021-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Good! 114 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/java-jpa_auto_generating_schema/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="java-jpa_auto_generating_schema/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
-    </div>
+        <center> DB 스키마를 미리 지정하는 방법에 대해 살펴본다 🤡 </center>
+<br>
+<br>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-07T00:00:00+09:00"
-              content="2019-11-07">
-          11-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-sqoop_example/" itemprop="url">
-            <span itemprop="name">[Hadoop] Sqoop을 이용한 Table 조회</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-07T00:00:00+09:00"
-              content="2019-11-07">
-          11-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-sqoop_import_error/" itemprop="url">
-            <span itemprop="name">[Hadoop] Hive Import 시 Could not initialize class org.apache.derby.jdbc.EmbeddedDriver 문제해결</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-06T00:00:00+09:00"
-              content="2019-11-06">
-          11-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/database-install_mysql/" itemprop="url">
-            <span itemprop="name">[Database] Install MySQL 8.0</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-06T00:00:00+09:00"
-              content="2019-11-06">
-          11-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-install_hive/" itemprop="url">
-            <span itemprop="name">[Hadoop] Install Hive</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-31T00:00:00+09:00"
-              content="2019-10-31">
-          10-31
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/python-map_reduce/" itemprop="url">
-            <span itemprop="name">[Python] Mappers and Reducers</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-30T00:00:00+09:00"
-              content="2019-10-30">
-          10-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-15_days_of_learning/" itemprop="url">
-            <span itemprop="name">[SQL] 15 Days of Learning</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-30T00:00:00+09:00"
-              content="2019-10-30">
-          10-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-sqoop_jdbc_error/" itemprop="url">
-            <span itemprop="name">[Hadoop] Sqoop import 시 JDBC-90401:Connection refused by the server Error 발생</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-30T00:00:00+09:00"
-              content="2019-10-30">
-          10-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-sqoop_with_tibero/" itemprop="url">
-            <span itemprop="name">[Hadoop] Sqoop import/export with Tibero</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-28T00:00:00+09:00"
-              content="2019-10-28">
-          10-28
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hackerrank-interviews/" itemprop="url">
-            <span itemprop="name">[SQL] Interviews</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-25T00:00:00+09:00"
-              content="2019-10-25">
-          10-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-install_hadoop_using_docker/" itemprop="url">
-            <span itemprop="name">[Hadoop] Install Hadoop using Docker</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">개요</a></li>
+<li><a href="#subject02">hibernate.hbm2ddl.auto</a></li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="개요"><a href="#개요" class="headerlink" title=" 개요"></a><a name="subject01"></a> 개요</h1><ul>
+<li>DDL 을 애플리케이션 실행 시점에 자동으로 생성</li>
+<li>DDL 은 반드시 개발 장비에서만 사용<ul>
+<li>운영 서버에는 절대 사용하지 않고 다듬은 후 운영 서버에 반영하는 것이 최선</li>
+</ul>
+</li>
+</ul>
+<h1 id="hibernate-hbm2ddl-auto-옵션"><a href="#hibernate-hbm2ddl-auto-옵션" class="headerlink" title=" hibernate.hbm2ddl.auto 옵션"></a><a name="subject02"></a> hibernate.hbm2ddl.auto 옵션</h1><ul>
+<li>create: 기존테이블 삭제 후 다시 생성 (drop → create)</li>
+<li>create-drop: create 와 동일하지만 애플리케이션 종료 이후 drop</li>
+<li>update: 변경 부분만 반영</li>
+<li>validate: 엔티티 &lt;-&gt; 테이블 매핑만 확인</li>
+<li>none: 사용하지 않음<ul>
+<li>운영 장비에는 create &amp; create-drop &amp; update 절대 사용하지 않도록 주의</li>
+<li>개발 초기: create or update</li>
+<li>테스트 서버: update or validate</li>
+<li>스테이징 및 운영 서버: validate or none</li>
+</ul>
+</li>
+<li><code>@Column</code> annotation 으로 제약 조건 추가가 가능<ul>
+<li>단, DB 설정을 변경하는 것이지 JPA 실행 로직에는 전혀 영향이 없음</li>
+</ul>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.inflearn.com/course/ORM-JPA-Basic/dashboard">https://www.inflearn.com/course/ORM-JPA-Basic/dashboard</a></li>
+</ul>
+<hr>
+<p>made by <em>jaejun.lee</em></p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_persistence_context/" rel="bookmark">[Java] JPA 영속성 관리</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-field_primary_key_mapping/" rel="bookmark">[Java] JPA 필드 및 기본 키 매핑</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JPA/" rel="tag"># JPA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/java-field_primary_key_mapping/" rel="prev" title="[Java] JPA 필드 및 기본 키 매핑">
+      <i class="fa fa-chevron-left"></i> [Java] JPA 필드 및 기본 키 매핑
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/archives/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/12/">12</a><a class="extend next" rel="next" href="/archives/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  
+  
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -537,6 +473,26 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/java-jpa_auto_generating_schema/";
+    this.page.identifier = "java-jpa_auto_generating_schema/";
+    this.page.title = "[Java] JPA 데이터베이스 스키마 자동생성";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-jaejuning-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
 </script>
 
 </body>
