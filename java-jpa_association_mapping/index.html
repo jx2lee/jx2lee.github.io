@@ -22,15 +22,22 @@
     var CONFIG = {"hostname":"jx2lee.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"remove","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"Z4A3UF1R2X","apiKey":"dee49d5f8367c0f900b64906cfe42f19","indexName":"my_blog","hits":{"per_page":10},"labels":{"input_placeholder":"무엇을 검색하시나요?","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="go hard">
-<meta property="og:url" content="https://jx2lee.github.io/archives/page/2/index.html">
+  <meta name="description" content="JPA 에서 제공하는 객체 간 연관관계 매핑의 종류를 살펴본다 🤪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java] JPA 연관관계 매핑 살펴보기">
+<meta property="og:url" content="https://jx2lee.github.io/java-jpa_association_mapping/index.html">
 <meta property="og:site_name" content="go hard">
+<meta property="og:description" content="JPA 에서 제공하는 객체 간 연관관계 매핑의 종류를 살펴본다 🤪">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jx2lee.github.io/image/jpa-association-mapping-1.png">
+<meta property="article:published_time" content="2021-07-10T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-11T12:05:57.122Z">
 <meta property="article:author" content="JaeJun Lee">
+<meta property="article:tag" content="JPA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jx2lee.github.io/image/jpa-association-mapping-1.png">
 
-<link rel="canonical" href="https://jx2lee.github.io/archives/page/2/">
+<link rel="canonical" href="https://jx2lee.github.io/java-jpa_association_mapping/">
 
 
 <script id="page-configurations">
@@ -38,12 +45,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | go hard</title>
+  <title>[Java] JPA 연관관계 매핑 살펴보기 | go hard</title>
   
 
 
@@ -193,240 +200,169 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jx2lee.github.io/java-jpa_association_mapping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JaeJun Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="go hard">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Java] JPA 연관관계 매핑 살펴보기
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-11T00:00:00+09:00">2021-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-11 21:05:57" itemprop="dateModified" datetime="2021-07-11T21:05:57+09:00">2021-07-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">Good! 116 posts in total. Keep on posting.</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/java-jpa_association_mapping/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="java-jpa_association_mapping/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
+        <center> JPA 에서 제공하는 객체 간 연관관계 매핑의 종류를 살펴본다 🤪 </center>
+<br>
+<br>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-06T00:00:00+09:00"
-              content="2021-05-06">
-          05-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/es-shard_segment/" itemprop="url">
-            <span itemprop="name">[ElasticSearch] Shard 와 Segment</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-06T00:00:00+09:00"
-              content="2021-05-06">
-          05-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/kafka-install_and_simple_test/" itemprop="url">
-            <span itemprop="name">[Kafka] kafka 설치 및 간단한 테스트</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-05-01T00:00:00+09:00"
-              content="2021-05-01">
-          05-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/network-introduction_to_ngrok/" itemprop="url">
-            <span itemprop="name">[Network] ngrok?</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-16T00:00:00+09:00"
-              content="2021-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/es-run_cluster_in_node/" itemprop="url">
-            <span itemprop="name">[ElasticSearch] 하나의 서버에서 여러 ES node 실행</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-16T00:00:00+09:00"
-              content="2021-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/linux-switch_root_error/" itemprop="url">
-            <span itemprop="name">[Linux] switch root 시 cannot open session: 모듈을 알 수 없음 Error</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-16T00:00:00+09:00"
-              content="2021-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/network-introduction_to_haproxy/" itemprop="url">
-            <span itemprop="name">[Network] HAProxy 간단히 살펴보기</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-03-16T00:00:00+09:00"
-              content="2021-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/network-introduction_to_restapi/" itemprop="url">
-            <span itemprop="name">[Network] REST API 간단히 살펴보기</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-02-18T00:00:00+09:00"
-              content="2021-02-18">
-          02-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/cloud-events_at_pod_deletion/" itemprop="url">
-            <span itemprop="name">[Kubernetes] Pod 삭제 이벤트 마슬러보기</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-01-10T00:00:00+09:00"
-              content="2021-01-10">
-          01-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/hadoop-troubleshoot_hadoop_client/" itemprop="url">
-            <span itemprop="name">[Hadoop] Hadoop Client 환경 구성 시 발생한 에러 정리</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-01-10T00:00:00+09:00"
-              content="2021-01-10">
-          01-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/python-pyenv/" itemprop="url">
-            <span itemprop="name">[Python] Python 환경 구축 with pyenv</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<p><strong><span class="github-emoji" alias="sparkles" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png?v8">&#x2728;</span> Contents:</strong>  </p>
+<ol>
+<li><a href="#subject01">객체 간 매핑 시 고려사항</a></li>
+<li><a href="#subject02">종류</a><ul>
+<li><a href="#subject03">다대일</a></li>
+<li><a href="#subject03"></a></li>
+<li><a href="#subject03"></a></li>
+<li><a href="#subject03"></a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ol>
+<h1 id="객체-간-매핑-시-고려사항"><a href="#객체-간-매핑-시-고려사항" class="headerlink" title=" 객체 간 매핑 시 고려사항"></a><a name="subject01"></a> 객체 간 매핑 시 고려사항</h1><ul>
+<li>다중성</li>
+<li>단방향 vs 양방향<ul>
+<li>왠만하면 설계 초기에는 단방향으로</li>
+</ul>
+</li>
+<li>연관관계 주인</li>
+</ul>
+<h1 id="종류"><a href="#종류" class="headerlink" title=" 종류"></a><a name="subject02"></a> 종류</h1><h2 id="다대일"><a href="#다대일" class="headerlink" title=" 다대일"></a><a name="subject03"></a> 다대일</h2><p><img src="/image/jpa-association-mapping-1.png" alt="/image/jpa-association-mapping-1.png"></p>
+<h1 id=""><a href="#" class="headerlink" title=""></a><a name="subject03"></a></h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a><a name="subject03"></a></h1><h1 id="-2"><a href="#-2" class="headerlink" title=""></a><a name="subject03"></a></h1><p>…</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title=" Reference"></a><a name="reference"></a> Reference</h1><hr>
+<p>made by <em>jaejun.lee</em></p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_persistence_context/" rel="bookmark">[Java] JPA 영속성 관리</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-field_primary_key_mapping/" rel="bookmark">[Java] JPA 필드 및 기본 키 매핑</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_auto_generating_schema/" rel="bookmark">[Java] JPA 데이터베이스 스키마 자동생성</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/java-jpa_associated_owner/" rel="bookmark">[Java] JPA 양방향 연관관계 주인</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JPA/" rel="tag"># JPA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/java-field_primary_key_mapping/" rel="prev" title="[Java] JPA 필드 및 기본 키 매핑">
+      <i class="fa fa-chevron-left"></i> [Java] JPA 필드 및 기본 키 매핑
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/java-jpa_associated_owner/" rel="next" title="[Java] JPA 양방향 연관관계 주인">
+      [Java] JPA 양방향 연관관계 주인 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/12/">12</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  
+  
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -537,6 +473,26 @@
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://jx2lee.github.io/java-jpa_association_mapping/";
+    this.page.identifier = "java-jpa_association_mapping/";
+    this.page.title = "[Java] JPA 연관관계 매핑 살펴보기";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-jaejuning-github-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
 </script>
 
 </body>
